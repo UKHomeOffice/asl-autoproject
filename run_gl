@@ -1,0 +1,12 @@
+#! /bin/bash
+pkill chrome
+[ -z ${TPW} ] && echo "No password set. Run 'source setPassword.sh' " && exit 1;
+echo "Grant licence test"
+if [ "${1}" = "pub" ]; then
+   URL=${INT_PRE}
+else
+   URL=${INT_DEV}
+fi
+
+./test_gl.pl ${2} ${TPW} ${URL} text.txt ${3} 
+

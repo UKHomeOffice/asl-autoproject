@@ -19,8 +19,7 @@ my $password = shift || die "No password";
 my $url = shift || die "No URL";
 my $textfile = shift || die "No text file";
 my $nonce = shift;
-my $establishment = shift // 'University of Croydon';
-
+$FAIL_WAIT = "die";
 ##my $driver = Selenium::Chrome->new;
 my $driver = Selenium::Chrome->new(
             browser_name       => 'chrome',
@@ -30,19 +29,22 @@ my $driver = Selenium::Chrome->new(
             },    
         );
 
-# when you're done
 $driver->get($url);
 my $element;
-$FAIL_WAIT = 'die';
 
 login($driver, $username, $password);
-clickOnThing($driver, 'h3', 'tag_name', $establishment);
-clickOnThing($driver, 'a', 'tag_name', 'View establishment information');
+clickOnThing($driver, 'a', 'tag_name', 'In progress');
+clickOnThing($driver, 'a', 'tag_name', 'Outstanding');
+clickOnThing($driver, 'a', 'tag_name', 'Received');
+$driver->pause(1000);
+clickOnThing($driver, 'a', 'tag_name', 'Received');
+$driver->pause(1000);
+clickOnThing($driver, 'a', 'tag_name', 'PPL application');
+clickOnThing($driver, "//h3[contains(text(),\'$nonce\')]");
+selectThing($driver, '//*[@id="status-inspector-recommended"]');
+clickOnThing($driver, 'button', 'tag_name', 'Continue');
+clickOnThing($driver, '//*[@id="comment"]', 'xpath');
+replaceTextInThing($driver, someText(10, $textfile));
+clickOnThing($driver, 'button', 'tag_name', 'Recommend');
+success($driver, 'Recommendation sent');
 
-clickOnThing($driver, 'a', 'tag_name', 'Projects');
-clickOnThing($driver, 'a', 'tag_name', 'Drafts');
-	clickOnThing($driver, 'button', 'tag_name','Apply for project licence');
-        clickOnThing($driver, 'a', 'tag_name', 'Introductory details');
-        clickOnThing($driver, 'button', 'tag_name', 'Continue');
-fillInPPL($driver, $textfile, $nonce);
-success($driver, 'Application submitted to inspector');

@@ -77,13 +77,13 @@ sub selectThing {
     ##//die "Didn't find anything to click.";
     say "Something went wrong Didn\'t find anything to click.";
 	say STDERR "FAIL WAIT is".$FAIL_WAIT;
-    if($FAIL_WAIT =~ /die/)
-    {
-        die;
-    }
     if($FAIL_WAIT =~ /wait/)
     {
             $page->pause(1000000);
+    }
+    else
+    {
+	    die;
     }
     return 0;
 }
