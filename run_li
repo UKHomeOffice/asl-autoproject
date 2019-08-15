@@ -1,0 +1,13 @@
+#! /bin/bash
+pkill chrome
+[ -z ${TPW} ] && echo "No password set. Run 'source setPassword.sh' " && exit 1;
+if [ "${1}" = "pub" ]; then
+   URL=${PUB_PRE}
+elif [ "${1}" = "ppl" ]; then
+   URL=${DT_PROD}
+else
+   URL=${PUB_DEV}
+fi
+
+./test_li.pl ${2} ${TPW} ${URL} text.txt ${3}
+
