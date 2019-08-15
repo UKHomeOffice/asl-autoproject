@@ -21,7 +21,15 @@ my $textfile = shift || die "No text file";
 my $nonce = shift;
 my $establishment = shift // 'University of Croydon';
 
-my $driver = Selenium::Chrome->new;
+##my $driver = Selenium::Chrome->new;
+my $driver = Selenium::Chrome->new(
+            browser_name       => 'chrome',
+            extra_capabilities => {
+                chromeOptions =>
+                  { args => ['headless', ] }
+            },    
+        );
+
 # when you're done
 $driver->get($url);
 my $element;
@@ -37,4 +45,4 @@ clickOnThing($driver, 'a', 'tag_name', 'Drafts');
         clickOnThing($driver, 'a', 'tag_name', 'Introductory details');
         clickOnThing($driver, 'button', 'tag_name', 'Continue');
 fillInPPL($driver, $textfile, $nonce);
-success($driver, 'Application submitted to inspector');$driver->pause(10000);
+success($driver, 'Application submitted to inspector');
