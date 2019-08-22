@@ -7,6 +7,7 @@ I created an image using:
 Example run: this fills in a PPL application completely.
 * Logs in as holc and creates an application starting TESTNNNNN where NNNNN is a random number
 * Then logs in as inspector and recommends that the licence be granted.
+* Then logs in as licencing and grants the licence
 
 Currently this is *ONLY* in the dev environment.
 
