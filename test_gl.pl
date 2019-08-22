@@ -1,4 +1,5 @@
-#! /usr/local/bin/perl
+#! /usr/bin/perl
+###! /usr/local/bin/perl
 use strict;
 use warnings;
 use Cwd;
@@ -20,12 +21,13 @@ my $url = shift || die "No URL";
 my $textfile = shift || die "No text file";
 my $nonce = shift;
 
-##my $driver = Selenium::Chrome->new;
-my $driver = Selenium::Chrome->new(
+my $driver = Selenium::Remote::Driver->new(
             browser_name       => 'chrome',
             extra_capabilities => {
                 chromeOptions =>
-                  { args => ['headless', ] }
+                  { 
+			  args => ['headless', 'disable-gpu'] 
+		  }
             },    
         );
 
