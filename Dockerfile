@@ -22,4 +22,4 @@ COPY ./*.pm /script/
 COPY ./*.txt /script/
 COPY ./run* /script/
 
-ENTRYPOINT ["bash"]
+CMD ./run_ppl dev "$TPW"
