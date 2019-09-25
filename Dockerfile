@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-
 ENV DEBIAN_FRONTEND=noninteractive LANG=en_US.UTF-8 LC_ALL=C.UTF-8 LANGUAGE=en_US.UTF-8
 
 RUN apt-get update && \
@@ -23,4 +22,4 @@ COPY ./*.pm /script/
 COPY ./*.txt /script/
 COPY ./run* /script/
 
-CMD ./run_ppl dev "$TPW"
+ENTRYPOINT ["bash"]
