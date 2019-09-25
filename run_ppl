@@ -1,5 +1,5 @@
 #! /bin/bash
-##export TPW=${1}
+export TPW=${2}
 export TEST_START="TEST${RANDOM}"
 export PUB_PROD="https://public-ui.prod.asl.homeoffice.gov.uk/"
 export INT_PROC="https://internal-ui.prod.asl.homeoffice.gov.uk/"
