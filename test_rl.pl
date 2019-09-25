@@ -19,15 +19,20 @@ my $password = shift || die "No password";
 my $url = shift || die "No URL";
 my $textfile = shift || die "No text file";
 my $nonce = shift;
+my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 $FAIL_WAIT = "die";
-##my $driver = Selenium::Chrome->new;
+
+print "Selenium server is $hostname\n";
+
 my $driver = Selenium::Remote::Driver->new(
-            browser_name       => 'chrome',
-            extra_capabilities => {
-                chromeOptions =>
-                  { args => ['headless', 'disable-gpu'] }
-            },    
-        );
+  remote_server_addr => $hostname,
+  browser_name       => 'chrome',
+  extra_capabilities => {
+    chromeOptions => {
+      args => ['headless', 'disable-gpu']
+    }
+  },
+);
 
 $driver->get($url);
 my $element;

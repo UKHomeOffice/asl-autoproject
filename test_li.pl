@@ -20,14 +20,19 @@ my $url = shift || die "No URL";
 my $textfile = shift || die "No text file";
 my $nonce = shift;
 my $establishment = shift // 'University of Croydon';
+my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
+
+print "Selenium server is $hostname\n";
 
 my $driver = Selenium::Remote::Driver->new(
-            browser_name       => 'chrome',
-            extra_capabilities => {
-                chromeOptions =>
-                  { args => ['headless', 'disable-gpu'] }
-            },    
-        );
+  remote_server_addr => $hostname,
+  browser_name       => 'chrome',
+  extra_capabilities => {
+    chromeOptions => {
+      args => ['headless', 'disable-gpu']
+    }
+  },
+);
 
 # when you're done
 $driver->get($url);
