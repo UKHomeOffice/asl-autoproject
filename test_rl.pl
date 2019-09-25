@@ -22,8 +22,6 @@ my $nonce = shift;
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 $FAIL_WAIT = "die";
 
-print "Selenium server is $hostname\n";
-
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,
   browser_name       => 'chrome',
@@ -40,9 +38,9 @@ my $element;
 login($driver, $username, $password);
 clickOnThing($driver, 'a', 'tag_name', 'In progress');
 clickOnThing($driver, 'a', 'tag_name', 'Outstanding');
-clickOnThing($driver, 'a', 'tag_name', 'Received');
+clickOnThing($driver, 'a', 'tag_name', 'Last changed');
 $driver->pause(1000);
-clickOnThing($driver, 'a', 'tag_name', 'Received');
+clickOnThing($driver, 'a', 'tag_name', 'Last changed');
 $driver->pause(1000);
 clickOnThing($driver, 'a', 'tag_name', 'PPL application');
 clickOnThing($driver, "//h3[contains(text(),\'$nonce\')]");

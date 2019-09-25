@@ -203,18 +203,18 @@ sub replaceTextInMultiple {
     }
     foreach my $question (@questions) {
 
-        my @elements; 
+        my @elements;
 	if ($question =~ /\'/)
 	{
 		my @bits = split ($question, /\'/);
 		my $query= '//label[';
-		
+
 		foreach my $bit (@bits)
 		{
 			$query .= "contains(\'$bit\') and";
 		}
-		$query = substr($query, 0, -3);	
-		$query .= ']';	
+		$query = substr($query, 0, -3);
+		$query .= ']';
 		@elements = $driver->
                         find_elements($query);
 	}
@@ -222,7 +222,7 @@ sub replaceTextInMultiple {
 	{
 		@elements = $driver->
 			find_elements( '//label[contains(.,\'' . $question . '\')]/following::div[1]');
-	}	
+	}
 
 
 	foreach my $element( @elements)

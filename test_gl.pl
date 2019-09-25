@@ -22,8 +22,6 @@ my $textfile = shift || die "No text file";
 my $nonce = shift;
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 
-print "Selenium server is $hostname\n";
-
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,
   browser_name       => 'chrome',
@@ -43,9 +41,9 @@ login($driver, $username, $password);
 clickOnThing($driver, 'a', 'tag_name', 'In progress');
 clickOnThing($driver, 'a', 'tag_name', 'Outstanding');
 $driver->pause(1000);
-clickOnThing($driver, 'a', 'tag_name', 'Received');
+clickOnThing($driver, 'a', 'tag_name', 'Last changed');
 $driver->pause(1000);
-clickOnThing($driver, 'a', 'tag_name', 'Received');
+clickOnThing($driver, 'a', 'tag_name', 'Last changed');
 
 clickOnThing($driver, 'a', 'tag_name', 'PPL application');
 clickOnThing($driver, "//h3[contains(text(),\'$nonce\')]");

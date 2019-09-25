@@ -22,8 +22,6 @@ my $nonce = shift;
 my $establishment = shift // 'University of Croydon';
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 
-print "Selenium server is $hostname\n";
-
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,
   browser_name       => 'chrome',
