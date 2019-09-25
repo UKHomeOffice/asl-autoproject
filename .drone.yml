@@ -1,0 +1,27 @@
+pipeline:
+
+  build:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker build -t asl-autoproject .
+    when:
+      branch: master
+      event: push
+
+  image_to_quay:
+    image: docker:17.09.1
+    secrets:
+      - docker_password
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+asl" -p=$${DOCKER_PASSWORD} quay.io
+      - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
+      - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:latest
+      - docker push quay.io/ukhomeofficedigital/asl-autoproject:latest
+    when:
+      branch: master
+      event: push
