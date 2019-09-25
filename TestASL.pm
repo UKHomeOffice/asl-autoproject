@@ -21,6 +21,7 @@ our ($FAIL_WAIT);
 
 my $file_content;
 my $word_count;
+my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 
 sub startBrowser {
     my $headless = shift // "";
@@ -28,6 +29,7 @@ sub startBrowser {
     if ( !$headless ) {
 
         $driver = Selenium::Chrome->new(
+            remote_server_addr => $hostname,
             'browser_name'       => 'chrome',
             'extra_capabilities' => {
                 'chromeOptions' => {
@@ -41,6 +43,7 @@ sub startBrowser {
     }
     else {
         $driver = Selenium::Chrome->new(
+            remote_server_addr => $hostname,
             browser_name       => 'chrome',
             extra_capabilities => {
                 chromeOptions =>
