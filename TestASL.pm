@@ -16,7 +16,7 @@ use File::Copy "cp";
 use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT =
-  qw(yesOrNo deSelectThing startBrowser success isOnPage replaceTextInMultiple clickOnThing replaceTextInThing someText selectThing $FAIL_WAIT);
+  qw(yesOrNo startBrowser success isOnPage replaceTextInMultiple clickOnThing replaceTextInThing someText selectThing $FAIL_WAIT);
 our ($FAIL_WAIT);
 
 my $file_content;
@@ -84,38 +84,6 @@ sub selectThing {
     if($FAIL_WAIT =~ /wait/)
     {
             $page->pause(1000000);
-    }
-    return 0;
-}
-
-sub deSelectThing {
-    my $page   = shift;
-    my $query  = shift;
-    my $regexp = shift;
-    if ( !$regexp ) { $regexp = 0; }
-    my @elements = $page->find_elements($query);
-
-    say STDERR "Trying to click on $query $regexp";
-    foreach my $element (@elements) {
-        my $id_text = $element->get_attribute('id');
-        if ( ( $id_text =~ /$regexp/i ) || !$regexp ) {
-            if ( $element->get_attribute('checked') ) {
-                $element->click();
-                $page->pause(1000);
-            }
-            return 1;
-        }
-    }
-    ##//die "Didn't find anything to click.";
-    say STDERR "Something went wrong Didn\'t find anything to click.";
-    say STDERR "FAIL WAIT is".$FAIL_WAIT;
-    if($FAIL_WAIT =~ /die/)
-    {
-	die;
-    }
-    if($FAIL_WAIT =~ /wait/)
-    {
-	    $page->pause(1000000);
     }
     return 0;
 }
