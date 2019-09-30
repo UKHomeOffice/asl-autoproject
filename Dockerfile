@@ -1,25 +1,12 @@
-FROM ubuntu:18.04
+FROM quay.io/ukhomeofficedigital/asl-base:v1
 
-ENV DEBIAN_FRONTEND=noninteractive LANG=en_US.UTF-8 LC_ALL=C.UTF-8 LANGUAGE=en_US.UTF-8
+RUN apk upgrade --no-cache
 
-RUN apt-get update && \
-    apt-get install -y apt-utils && \
-    apt-get upgrade -y && \
-    apt-get install -y libxml-libxml-perl && \
-    apt-get install -y libexpat1-dev && \
-    apt-get -fy install && \
-    apt-get install -y make && \
-    apt-get install -y cpanminus
+USER 999
 
-RUN cpanm Selenium::Remote::Driver@1.20
-RUN cpanm Selenium::Chrome@1.20
-RUN cpan Selenium::Remote::WDKeys@1.20
-# install modules that are needed
-RUN ["cpanm", "Test::Assert", "File::Slurp", "Path::Tiny"]
-WORKDIR /script
-COPY ./*.pl /script/
-COPY ./*.pm /script/
-COPY ./*.txt /script/
-COPY ./run* /script/
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
+RUN npm ci --production --no-optional --ignore-scripts
+COPY . /app
 
-CMD ./run_ppl dev "$TPW"
+CMD npm test -- --env dev

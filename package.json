@@ -1,0 +1,32 @@
+{
+  "name": "asl-autoproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "bin/test",
+    "test:run": "npm run test:apply && npm run test:recommend && npm run test:grant",
+    "test:apply": "asl-test ./test/apply/config.js",
+    "test:recommend": "asl-test ./test/recommend/config.js",
+    "test:grant": "asl-test ./test/grant/config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UKHomeOffice/asl-autoproject.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UKHomeOffice/asl-autoproject/issues"
+  },
+  "homepage": "https://github.com/UKHomeOffice/asl-autoproject#readme",
+  "dependencies": {
+    "@ukhomeoffice/asl-functional-testing": "^1.2.4",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.0",
+    "wdio-tap-reporter": "0.0.5"
+  },
+  "devDependencies": {
+    "dotenv": "^8.1.0"
+  }
+}
