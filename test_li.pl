@@ -22,7 +22,9 @@ my $nonce = shift;
 my $establishment = shift // 'University of Croydon';
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 
-print "Testing against $url";
+print "Running application journey\n";
+print "Testing against $url\n";
+print "\n\n\n";
 
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,

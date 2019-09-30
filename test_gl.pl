@@ -22,7 +22,9 @@ my $textfile = shift || die "No text file";
 my $nonce = shift;
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 
-print "Testing against $url";
+print "Running grant journey\n";
+print "Testing against $url\n";
+print "\n\n\n";
 
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,
