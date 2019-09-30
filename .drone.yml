@@ -17,7 +17,7 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
-      - docker run -e SELENIUM_HOST=selenium asl-autoproject ./run_ppl preprod $${KEYCLOAK_PASSWORD}
+      - docker run -e SELENIUM_HOST=selenium --net=host asl-autoproject ./run_ppl preprod $${KEYCLOAK_PASSWORD}
     when:
       branch: master
       event: push
