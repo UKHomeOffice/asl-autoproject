@@ -2,6 +2,8 @@
 pkill chrome
 [ -z ${TPW} ] && echo "No password set. Run 'source setPassword.sh' " && exit 1;
 echo "Grant licence test"
+echo "Testing on env ${1}"
+
 if [ "${1}" = "preprod" ]; then
    URL=${INT_PRE}
 elif [ "${1}" = "dev" ]; then

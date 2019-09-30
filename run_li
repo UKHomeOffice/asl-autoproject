@@ -1,6 +1,9 @@
 #! /bin/bash
 
 [ -z ${TPW} ] && echo "No password set.' " && exit 1;
+
+echo "Testing on env ${1}"
+
 if [ "${1}" = "preprod" ]; then
    URL=${PUB_PRE}
 elif [ "${1}" = "dev" ]; then
