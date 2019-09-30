@@ -22,6 +22,8 @@ my $nonce = shift;
 my $hostname = $ENV{'SELENIUM_HOST'} || 'localhost';
 $FAIL_WAIT = "die";
 
+print "Testing against $url";
+
 my $driver = Selenium::Remote::Driver->new(
   remote_server_addr => $hostname,
   browser_name       => 'chrome',
