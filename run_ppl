@@ -13,6 +13,6 @@ export DT_PROD='https://ppl-prototype.herokuapp.com/'
 
 echo "The password is $TPW"
 echo "PPL application starts ${TEST_START}"
-./run_li ${TEST_ENV} holc ${TEST_START}
-./run_rl ${TEST_ENV} inspector ${TEST_START}
+./run_li ${TEST_ENV} holc ${TEST_START} && \
+./run_rl ${TEST_ENV} inspector ${TEST_START} && \
 ./run_gl ${TEST_ENV} licensing ${TEST_START}
