@@ -10,6 +10,18 @@ pipeline:
       branch: master
       event: push
 
+  test:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    secrets:
+      - keycloak_password
+    commands:
+      - docker run -e SELENIUM_HOST=selenium -c ./run_ppl preprod $${KEYCLOAK_PASSWORD}
+    when:
+      branch: master
+      event: push
+
   image_to_quay:
     image: docker:17.09.1
     secrets:
@@ -25,3 +37,7 @@ pipeline:
     when:
       branch: master
       event: push
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:3.141.0
