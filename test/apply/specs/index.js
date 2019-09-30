@@ -75,7 +75,7 @@ describe('PPL Application', () => {
     browser.click('input[name="other-establishments"][value="true"]');
     browser.$('.control-panel').click('button=Continue');
 
-    browser.$('input[name*="establishment-name"]').setValue('Marvell Pharmaceutical');
+    browser.$('input[name$="establishment-name"]').setValue('Marvell Pharmaceutical');
     completeRichTextField(browser, 'establishment-about');
     completeRichTextField(browser, 'establishment-supervisor');
     browser.$('.control-panel').click('button=Continue');
@@ -84,6 +84,36 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 4);
+
+    // complete transfer and movement of animals
+    browser.click('a=Transfer and movement of animals');
+    browser.click('input[name="transfer"][value="true"]');
+    completeRichTextField(browser, 'transfer-why');
+    completeRichTextField(browser, 'transfer-how');
+    completeRichTextField(browser, 'transfer-measures');
+    browser.click('input[name="transfer-recovery"][value="true"]');
+    browser.click('input[name="transfer-acclimatisation"][value="true"]');
+    continueAndComplete(browser);
+
+    assert.equal(browser.$$('.badge.complete').length, 5);
+
+    //complete poles
+    browser.click('a=Places other than a licensed establishment (POLEs)');
+    browser.click('input[name="poles"][value="true"]');
+    completeRichTextField(browser, 'poles-justification');
+    browser.$('.control-panel').click('button=Continue');
+
+    browser.$('input[name$="title"]').setValue('First POLE');
+    completeRichTextField(browser, 'pole-info');
+    browser.$('.control-panel').click('button=Continue');
+
+    completeRichTextField(browser, 'poles-inspection');
+    completeRichTextField(browser, 'poles-environment');
+    browser.click('input[name="poles-transfer"][value="false"]');
+    continueAndComplete(browser);
+
+    assert.equal(browser.$$('.badge.complete').length, 6);
+
   });
 
 });
