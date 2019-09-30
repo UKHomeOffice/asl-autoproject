@@ -15,4 +15,3 @@ echo "PPL application starts ${TEST_START}"
 ./run_li ${2} holc ${TEST_START}
 ./run_rl ${2} inspector ${TEST_START}
 ./run_gl ${2} licensing ${TEST_START}
-

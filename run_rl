@@ -2,9 +2,9 @@
 pkill chrome
 [ -z ${TPW} ] && echo "No password set." && exit 1;
 echo "Recommend licence test"
-if [ "${1}" = "pub" ]; then
+if [ "${1}" = "preprod" ]; then
    URL=${INT_PRE}
-else
+elif [ "${1}" = "dev" ]; then
    URL=${INT_DEV}
 fi
 
