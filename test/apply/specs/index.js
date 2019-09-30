@@ -97,7 +97,7 @@ describe('PPL Application', () => {
 
     assert.equal(browser.$$('.badge.complete').length, 5);
 
-    //complete poles
+    // complete poles
     browser.click('a=Places other than a licensed establishment (POLEs)');
     browser.click('input[name="poles"][value="true"]');
     completeRichTextField(browser, 'poles-justification');
