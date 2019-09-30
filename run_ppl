@@ -1,4 +1,5 @@
 #! /bin/bash
+export TEST_ENV=${1}
 export TPW=${2}
 export TEST_START="TEST${RANDOM}"
 export PUB_PROD="https://public-ui.prod.asl.homeoffice.gov.uk/"
@@ -12,6 +13,6 @@ export DT_PROD='https://ppl-prototype.herokuapp.com/'
 
 echo "The password is $TPW"
 echo "PPL application starts ${TEST_START}"
-./run_li ${2} holc ${TEST_START}
-./run_rl ${2} inspector ${TEST_START}
-./run_gl ${2} licensing ${TEST_START}
+./run_li ${TEST_ENV} holc ${TEST_START}
+./run_rl ${TEST_ENV} inspector ${TEST_START}
+./run_gl ${TEST_ENV} licensing ${TEST_START}
