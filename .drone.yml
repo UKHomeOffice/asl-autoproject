@@ -5,7 +5,6 @@ pipeline:
     commands:
       - npm ci --production
     when:
-      branch: [master, feature/nodify]
       event: push
 
   test:
@@ -13,9 +12,8 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
-      - npm test -- --env preprod
+      - npm test -- --env dev
     when:
-      branch: [master, feature/nodify]
       event: push
 
   build:
@@ -25,7 +23,6 @@ pipeline:
     commands:
       - docker build -t asl-autoproject .
     when:
-      branch: [master, feature/nodify]
       event: push
 
   image_to_quay:
