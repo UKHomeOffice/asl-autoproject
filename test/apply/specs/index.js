@@ -13,6 +13,19 @@ const continueAndComplete = browser => {
   browser.click('button=Continue');
 };
 
+const waitForSync = browser => {
+  browser.waitUntil(() => {
+    browser.refresh();
+    try {
+      browser.$('.header-title a').getText();
+      return true;
+    } catch (err) {
+      browser.alertDismiss();
+      return false;
+    }
+  });
+};
+
 describe('PPL Application', () => {
 
   after(() => new Promise(resolve => setTimeout(resolve, 2000)));
@@ -352,7 +365,9 @@ describe('PPL Application', () => {
     console.log('Completed NTS review');
 
     // submit application
+    waitForSync(browser);
     browser.click('button=Continue');
+
     browser.click('input[name="authority"][value="Yes"]');
     browser.$('input[name="authority-pelholder-name"]').setValue('Bruce Banner');
     browser.$('input[name="authority-endorsement-date"]').setValue('1/3/2019');
