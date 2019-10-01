@@ -4,9 +4,13 @@ describe('PPL Grant', () => {
     browser.withUser('licensing');
 
     browser.click('a=In progress');
+    browser.waitForExist('table:not(.loading)');
     browser.click('a=Outstanding');
+    browser.waitForExist('table:not(.loading)');
     browser.click('a=Last changed');
+    browser.waitForExist('table:not(.loading)');
     browser.click('a=Last changed');
+    browser.waitForExist('table:not(.loading)');
 
     // find task in task list
     assert.ok(browser.isVisible(`[title=${process.env.PROJECT_TITLE}]`));
