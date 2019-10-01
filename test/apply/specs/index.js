@@ -173,7 +173,7 @@ describe('PPL Application', () => {
     browser.click('input[name$=".severity"][value="moderate"]');
     completeRichTextField(browser, '.severity-proportion');
     completeRichTextField(browser, '.severity-details');
-    browser.click('input[name$=".location"][value="University of Croydon"]');
+    browser.click('input[name$=".locations"][value="University of Croydon"]');
     completeRichTextField(browser, '.outputs');
 
     browser.click('h3=Animals used in this protocol');
