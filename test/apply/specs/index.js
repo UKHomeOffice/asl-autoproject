@@ -30,6 +30,7 @@ describe('PPL Application', () => {
     browser.click('button=Apply for project licence');
 
     assert.ok(browser.isVisible('h2=Untitled project'));
+    console.log('Created project');
 
     // complete introductory details
     browser.click('a=Introductory details');
@@ -46,6 +47,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
+    console.log('Completed introductory details');
 
     // complete experience
     browser.click('a=Experience');
@@ -60,6 +62,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 2);
+    console.log('Completed experience');
 
     // complete funding
     browser.click('a=Funding');
@@ -69,6 +72,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 3);
+    console.log('Completed funding');
 
     // complete establishments
     browser.click('a=Establishments');
@@ -84,6 +88,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 4);
+    console.log('Completed establishments');
 
     // complete transfer and movement of animals
     browser.click('a=Transfer and movement of animals');
@@ -96,6 +101,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 5);
+    console.log('Completed transfer and movement');
 
     // complete poles
     browser.click('a=Places other than a licensed establishment (POLEs)');
@@ -113,6 +119,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 6);
+    console.log('Completed POLES');
 
     // complete scientific background
     browser.click('a=Scientific background');
@@ -129,6 +136,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 7);
+    console.log('Completed scientific background');
 
     // complete action plan
     browser.click('a=Action plan');
@@ -144,6 +152,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 8);
+    console.log('Completed action plan');
 
     // complete general principles
     browser.click('a=General principles');
@@ -152,6 +161,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 9);
+    console.log('Completed general principles');
 
     // complete benefits
     browser.click('a=Benefits');
@@ -164,6 +174,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 10);
+    console.log('Completed benefits');
 
     // complete protocols
     browser.click('a=Protocols');
@@ -223,6 +234,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 11);
+    console.log('Completed protocols');
 
     // complete project harms
     browser.click('a=Project harms');
@@ -235,6 +247,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 12);
+    console.log('Completed project harms');
 
     // complete fate of animals
     browser.click('a=Fate of animals');
@@ -243,6 +256,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 13);
+    console.log('Completed fate of animals');
 
     // complete purpose bred animals
     browser.click('a=Purpose bred animals');
@@ -250,6 +264,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 14);
+    console.log('Completed purpose bred animals');
 
     // complete endangered animals
     browser.click('a=Endangered animals');
@@ -257,6 +272,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 15);
+    console.log('Completed endangered animals');
 
     // complete animals taken from the wild
     browser.click('a=Animals taken from the wild');
@@ -264,6 +280,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 16);
+    console.log('Completed animals taken from wild');
 
     // complete feral animals
     browser.click('a=Feral animals');
@@ -271,6 +288,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 17);
+    console.log('Completed feral animals');
 
     // complete commercial slaugher
     browser.click('a=Commercial slaughter');
@@ -278,6 +296,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 18);
+    console.log('Completed commercial slaughter');
 
     // complete human material
     browser.click('a=Animals containing human material');
@@ -285,6 +304,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 19);
+    console.log('Completed human material');
 
     // complete replacement
     browser.click('a=Replacement');
@@ -295,6 +315,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 20);
+    console.log('Completed replacement');
 
     // complete reduction
     browser.click('a=Reduction');
@@ -307,6 +328,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 21);
+    console.log('Completed reduction');
 
     // complete refinement
     browser.click('a=Refinement');
@@ -319,6 +341,7 @@ describe('PPL Application', () => {
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 22);
+    console.log('Completed refinement');
 
     // complete nts review
     browser.click('a=Review');
@@ -326,6 +349,7 @@ describe('PPL Application', () => {
     browser.click('button=Continue');
 
     assert.equal(browser.$$('.badge.complete').length, 23);
+    console.log('Completed NTS review');
 
     // submit application
     browser.click('button=Continue');
@@ -338,6 +362,7 @@ describe('PPL Application', () => {
     browser.click('button=Submit PPL application');
 
     assert.ok(browser.isVisible('h1=Application sent'));
+    console.log('Submitted application');
 
   });
 
