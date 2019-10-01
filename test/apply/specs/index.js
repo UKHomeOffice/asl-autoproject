@@ -133,7 +133,7 @@ describe('PPL Application', () => {
     // complete action plan
     browser.click('a=Action plan');
     browser.$('input[name$=".title"]').setValue('First objective');
-    completeRichTextField(browser, '.objective-relation');
+    completeRichTextField(browser, 'objective-relation');
     browser.$('.control-panel').click('button=Continue');
 
     completeRichTextField(browser, 'objectives-alternatives');
