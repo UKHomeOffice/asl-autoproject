@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 describe('PPL Grant', () => {
 
   it('can grant a PPL', () => {
@@ -6,16 +8,16 @@ describe('PPL Grant', () => {
     browser.click('a=In progress');
     browser.waitForExist('table:not(.loading)');
     browser.click('a=Outstanding');
-    browser.waitForExist('table:not(.loading)');
+    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
     browser.click('a=Last changed');
-    browser.waitForExist('table:not(.loading)');
+    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
     browser.click('a=Last changed');
     browser.waitForExist('table:not(.loading)');
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title=${process.env.PROJECT_TITLE}]`));
+    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
     console.log('Found task for project');
-    browser.$(`[title=${process.env.PROJECT_TITLE}]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
 
     browser.click('a=View latest submission');
 
@@ -30,14 +32,10 @@ describe('PPL Grant', () => {
 
     browser.click('button=Continue');
 
-    browser.click('button=Recommend for approval');
+    browser.click('button=Grant licence');
 
     assert.ok(browser.isVisible('h1=Licence granted'));
-    console.log('Recommended application');
-
-  });
-
-});
+    console.log('Granted licence');
 
   });
 

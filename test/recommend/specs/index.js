@@ -1,17 +1,23 @@
+const assert = require('assert');
+
 describe('PPL Recommendation', () => {
 
   it('can recommend a PPL', () => {
     browser.withUser('inspector');
 
     browser.click('a=In progress');
+    browser.waitForExist('table:not(.loading)');
     browser.click('a=Outstanding');
+    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
     browser.click('a=Last changed');
+    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
     browser.click('a=Last changed');
+    browser.waitForExist('table:not(.loading)');
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title=${process.env.PROJECT_TITLE}]`));
+    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
     console.log('Found task for project');
-    browser.$(`[title=${process.env.PROJECT_TITLE}]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
 
     browser.click('a=View latest submission');
 
