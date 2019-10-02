@@ -1,5 +1,21 @@
 pipeline:
 
+  install:
+    image: node:10
+    commands:
+      - npm ci --production
+    when:
+      event: push
+
+  test:
+    image: node:10
+    secrets:
+      - keycloak_password
+    commands:
+      - npm test -- --env dev
+    when:
+      event: push
+
   build:
     image: docker:17.09.1
     environment:
@@ -7,10 +23,9 @@ pipeline:
     commands:
       - docker build -t asl-autoproject .
     when:
-      branch: master
       event: push
 
-  image_to_quay_hash:
+  image_to_quay:
     image: docker:17.09.1
     secrets:
       - docker_password
@@ -20,31 +35,6 @@ pipeline:
       - docker login -u="ukhomeofficedigital+asl" -p=$${DOCKER_PASSWORD} quay.io
       - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
-    when:
-      branch: master
-      event: push
-
-  test:
-    image: quay.io/ukhomeofficedigital/asl-autoproject:${DRONE_COMMIT_SHA}
-    secrets:
-      - keycloak_password
-    environment:
-      SELENIUM_HOST: selenium
-    commands:
-      - cd /script
-      - ./run_ppl preprod $${KEYCLOAK_PASSWORD}
-    when:
-      branch: master
-      event: push
-
-  image_to_quay_latest:
-    image: docker:17.09.1
-    secrets:
-      - docker_password
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-    commands:
-      - docker login -u="ukhomeofficedigital+asl" -p=$${DOCKER_PASSWORD} quay.io
       - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:latest
       - docker push quay.io/ukhomeofficedigital/asl-autoproject:latest
     when:
