@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { paragraphs } = require('../../utils');
+const { words, paragraphs } = require('../../utils');
 
 const completeRichTextField = (browser, name) => {
   const value = paragraphs();
@@ -24,6 +24,63 @@ const waitForSync = browser => {
       return false;
     }
   });
+};
+
+const addProtocol = browser => {
+  browser.$('input[name$=".title"]').setValue(words(6));
+  browser.$('.protocol').click('button=Continue');
+  completeRichTextField(browser, '.description');
+  browser.click('input[name$=".severity"][value="moderate"]');
+  completeRichTextField(browser, '.severity-proportion');
+  completeRichTextField(browser, '.severity-details');
+  browser.click('input[name$=".locations"][value="University of Croydon"]');
+  completeRichTextField(browser, '.outputs');
+
+  browser.click('h3=Animals used in this protocol');
+  browser.click('input[name$=".species"][value="mice"]');
+  browser.click('input[name$=".life-stages"][value="adult"]');
+  browser.click('input[name$=".continued-use"][value="false"]');
+  browser.click('input[name$=".reuse"][value="false"]');
+  browser.$('input[name$=".maximum-animals"]').setValue('100');
+  browser.$('input[name$=".maximum-times-used"]').setValue('1');
+
+  browser.click('h3=Genetically altered animals (GAA)');
+  browser.click('input[name$=".gaas"][value="false"]');
+
+  browser.click('h3=Steps');
+  completeRichTextField(browser, '.title');
+  browser.click('input[name$=".nmbas"][value="false"]');
+  browser.click('input[name$=".optional"][value="false"]');
+  browser.click('input[name$=".adverse"][value="false"]');
+  browser.click('button=Save step');
+  browser.click('button=Add another step');
+  completeRichTextField(browser, '.title');
+  browser.click('input[name$=".nmbas"][value="false"]');
+  browser.click('input[name$=".optional"][value="false"]');
+  browser.click('input[name$=".adverse"][value="false"]');
+  browser.click('button=Save step');
+
+  browser.click('h3=Animal experience');
+  completeRichTextField(browser, '.experience-summary');
+  completeRichTextField(browser, '.experience-endpoints');
+
+  browser.click('h3=Experimental design');
+  browser.click('input[name$=".quantitative-data"][value="false"]');
+
+  browser.click('h3=Protocol justification');
+  completeRichTextField(browser, '.most-appropriate');
+  completeRichTextField(browser, '.most-refined');
+  completeRichTextField(browser, '.scientific-endpoints');
+  completeRichTextField(browser, '.scientific-suffering');
+  completeRichTextField(browser, '.scientific-endpoints-justification');
+  browser.click('input[name$=".justification-substances"][value="false"]');
+
+  browser.click('h3=Fate of animals');
+  browser.click('input[name$=".fate"][value="killed"]');
+
+  browser.click('input[name="complete"][value="true"]');
+  browser.$('.protocol').click('button=Continue');
+
 };
 
 describe('PPL Application', () => {
@@ -191,59 +248,8 @@ describe('PPL Application', () => {
 
     // complete protocols
     browser.click('a=Protocols');
-    browser.$('input[name$=".title"]').setValue('First protocol');
-    browser.$('.protocol').click('button=Continue');
-    completeRichTextField(browser, '.description');
-    browser.click('input[name$=".severity"][value="moderate"]');
-    completeRichTextField(browser, '.severity-proportion');
-    completeRichTextField(browser, '.severity-details');
-    browser.click('input[name$=".locations"][value="University of Croydon"]');
-    completeRichTextField(browser, '.outputs');
 
-    browser.click('h3=Animals used in this protocol');
-    browser.click('input[name$=".species"][value="mice"]');
-    browser.click('input[name$=".life-stages"][value="adult"]');
-    browser.click('input[name$=".continued-use"][value="false"]');
-    browser.click('input[name$=".reuse"][value="false"]');
-    browser.$('input[name$=".maximum-animals"]').setValue('100');
-    browser.$('input[name$=".maximum-times-used"]').setValue('1');
-
-    browser.click('h3=Genetically altered animals (GAA)');
-    browser.click('input[name$=".gaas"][value="false"]');
-
-    browser.click('h3=Steps');
-    completeRichTextField(browser, '.title');
-    browser.click('input[name$=".nmbas"][value="false"]');
-    browser.click('input[name$=".optional"][value="false"]');
-    browser.click('input[name$=".adverse"][value="false"]');
-    browser.click('button=Save step');
-    browser.click('button=Add another step');
-    completeRichTextField(browser, '.title');
-    browser.click('input[name$=".nmbas"][value="false"]');
-    browser.click('input[name$=".optional"][value="false"]');
-    browser.click('input[name$=".adverse"][value="false"]');
-    browser.click('button=Save step');
-
-    browser.click('h3=Animal experience');
-    completeRichTextField(browser, '.experience-summary');
-    completeRichTextField(browser, '.experience-endpoints');
-
-    browser.click('h3=Experimental design');
-    browser.click('input[name$=".quantitative-data"][value="false"]');
-
-    browser.click('h3=Protocol justification');
-    completeRichTextField(browser, '.most-appropriate');
-    completeRichTextField(browser, '.most-refined');
-    completeRichTextField(browser, '.scientific-endpoints');
-    completeRichTextField(browser, '.scientific-suffering');
-    completeRichTextField(browser, '.scientific-endpoints-justification');
-    browser.click('input[name$=".justification-substances"][value="false"]');
-
-    browser.click('h3=Fate of animals');
-    browser.click('input[name$=".fate"][value="killed"]');
-
-    browser.click('input[name="complete"][value="true"]');
-    browser.$('.protocol').click('button=Continue');
+    addProtocol(browser);
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 11);

@@ -12,9 +12,9 @@ const words = n => {
   return sampleSize(corpus, n).join(' ');
 };
 
-const sentence = (min = 10, max = 60) => {
+const sentence = (min = 10, max = 60, newline = true) => {
   const txt = words(between(min, max)) + '.';
-  return txt.replace(/^\w/, c => c.toUpperCase()) + '\n';
+  return txt.replace(/^\w/, c => c.toUpperCase()) + (newline ? '\n' : '');
 };
 
 const paragraphs = (min = 1, max = 3) => {
