@@ -1,23 +1,49 @@
-The environment variable TPW needs to be set to the password for development and preprod environments
+# asl-autoproject
 
-I created an image using:
+Performs an end-to-end project application, including:
 
-	docker build -t mydocker .
+* Filling out a complete PPL application with dummy data
+* Submitting to ASRU
+* Inspector recommending the application
+* Licensing officer granting the licence
 
-Example run: this fills in a PPL application completely.
-* Logs in as holc and creates an application starting TESTNNNNN where NNNNN is a random number
-* Then logs in as inspector and recommends that the licence be granted.
-* Then logs in as licencing and grants the licence
+## Usage
 
-Currently this is *ONLY* in the dev environment.
+### Locally
 
-	docker run --net=host -e TPW="$TPW" mydocker
+With a selenium server running on port 4444:
 
-whilst at the same time running 
+```
+./bin/test [options]
+```
 
-	docker run --net=host -it -p 4444:4444 selenium/standalone-chrome-debug:3.141.59-oxygen
+### In CI
 
-To Do:
-	* Turn the scripts into proper tests with a test runner
-	* add specific versions of perl modules for all the perl modules
-	* handle a parameter for the environment which is tested
+```yaml
+pipeline:
+  autoproject:
+    image: quay.io/ukhomeofficedigital/asl-autoproject:latest
+    pull: true
+    secrets:
+      - keycloak_password
+    commands:
+      - cd /app
+      - ./bin/test --env preprod
+```
+
+## Options
+
+* `--env` - environment to run in `local|dev|preprod` - default `local`
+* `--title` - the title to use for the project - default randomly generated string
+* `--password` - password to use for logging in - default `process.env.KEYCLOAK_PASSWORD`
+
+## Notes
+
+Answers to free text fields are generated from random strings created from the content of `text.txt` - this currently contains the content from the "Biochemistry" and "Pharmacology" wikipedia articles in order to make it appear _science-y_.
+
+## To Do:
+
+* Add flag to support a minimal, maximal or random application
+* Add a flag to set the number of protocols
+* Add a flag to stop at a particular point in the application - i.e. leave as submitted or recommended without granting
+* Add some comments/feedback to the inspector journey
