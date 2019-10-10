@@ -112,8 +112,8 @@ describe('PPL Application', () => {
     browser.selectByVisibleText('select[name="years"]', '5');
     browser.selectByVisibleText('select[name="months"]', '0');
     browser.click('summary=Small animals');
-    browser.click('input[name="species"][value="mice"]');
-    browser.click('input[name="species"][value="rats"]');
+    browser.click('input[name="SA"][value="mice"]');
+    browser.click('input[name="SA"][value="rats"]');
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
