@@ -85,8 +85,6 @@ const addProtocol = browser => {
 
 describe('PPL Application', () => {
 
-  after(() => new Promise(resolve => setTimeout(resolve, 2000)));
-
   it('can apply for a PPL', () => {
     browser.withUser('basic');
 
@@ -389,21 +387,6 @@ describe('PPL Application', () => {
     browser.click('a=In progress');
 
     assert.ok(browser.$('a=PPL application').isExisting());
-  });
-
-  it('can be endorsed by an admin user', () => {
-    browser.withUser('holc');
-    browser.url('/');
-
-    browser
-      .click('a=PPL application')
-      .click('label=Endorse application')
-      .click('button=Continue')
-      .click('button=Endorse application');
-
-    assert.equal(browser.getText('h1'), 'Application endorsed');
-
-    console.log('Endorsed application');
   });
 
 });
