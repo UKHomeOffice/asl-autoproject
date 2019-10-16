@@ -85,10 +85,8 @@ const addProtocol = browser => {
 
 describe('PPL Application', () => {
 
-  after(() => new Promise(resolve => setTimeout(resolve, 2000)));
-
   it('can apply for a PPL', () => {
-    browser.withUser('holc');
+    browser.withUser('basic');
 
     browser.url('/');
 
@@ -385,6 +383,10 @@ describe('PPL Application', () => {
     assert.ok(browser.isVisible('h1=Application sent'));
     console.log('Submitted application');
 
+    browser.url('/');
+    browser.click('a=In progress');
+
+    assert.ok(browser.$('a=PPL application').isExisting());
   });
 
 });

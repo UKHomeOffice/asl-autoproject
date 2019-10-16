@@ -5,7 +5,7 @@ try {
 module.exports = env => ({
   specs: `${__dirname}/specs/index.js`,
   users: {
-    'basic': process.env.KEYCLOAK_PASSWORD
+    'holc': process.env.KEYCLOAK_PASSWORD
   },
   urls: {
     local: 'http://localhost:8080',
