@@ -372,9 +372,6 @@ describe('PPL Application', () => {
     waitForSync(browser);
     browser.click('button=Continue');
 
-    browser.click('input[name="authority"][value="Yes"]');
-    browser.$('input[name="authority-pelholder-name"]').setValue('Bruce Banner');
-    browser.$('input[name="authority-endorsement-date"]').setValue('1/3/2019');
     browser.click('input[name="awerb"][value="Yes"]');
     browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
     browser.click('input[name="ready"][value="Yes"]');
