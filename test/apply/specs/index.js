@@ -377,7 +377,7 @@ describe('PPL Application', () => {
     browser.click('input[name="ready"][value="Yes"]');
     browser.click('button=Submit PPL application');
 
-    assert.ok(browser.isVisible('h1=Application sent'));
+    assert.ok(browser.isVisible('h1=Application submitted'));
     console.log('Submitted application');
 
     browser.url('/');
