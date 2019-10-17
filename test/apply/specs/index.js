@@ -372,15 +372,12 @@ describe('PPL Application', () => {
     waitForSync(browser);
     browser.click('button=Continue');
 
-    browser.click('input[name="authority"][value="Yes"]');
-    browser.$('input[name="authority-pelholder-name"]').setValue('Bruce Banner');
-    browser.$('input[name="authority-endorsement-date"]').setValue('1/3/2019');
     browser.click('input[name="awerb"][value="Yes"]');
     browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
     browser.click('input[name="ready"][value="Yes"]');
     browser.click('button=Submit PPL application');
 
-    assert.ok(browser.isVisible('h1=Application sent'));
+    assert.ok(browser.isVisible('h1=Application submitted'));
     console.log('Submitted application');
 
     browser.url('/');
