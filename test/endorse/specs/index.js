@@ -3,6 +3,7 @@ const assert = require('assert');
 describe('PPL endorsement', () => {
 
   it('can be endorsed by an admin user', () => {
+    browser.timeouts('implicit', 2000);
     browser.withUser('holc');
     browser.url('/');
 

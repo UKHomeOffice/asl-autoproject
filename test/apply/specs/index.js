@@ -86,6 +86,7 @@ const addProtocol = browser => {
 describe('PPL Application', () => {
 
   it('can apply for a PPL', () => {
+    browser.timeouts('implicit', 2000);
     browser.withUser('basic');
 
     browser.url('/');
