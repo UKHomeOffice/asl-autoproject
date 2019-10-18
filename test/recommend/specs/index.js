@@ -3,6 +3,7 @@ const assert = require('assert');
 describe('PPL Recommendation', () => {
 
   it('can recommend a PPL', () => {
+    browser.timeouts('implicit', 2000);
     browser.withUser('inspector');
 
     browser.click('a=In progress');

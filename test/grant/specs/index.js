@@ -3,6 +3,7 @@ const assert = require('assert');
 describe('PPL Grant', () => {
 
   it('can grant a PPL', () => {
+    browser.timeouts('implicit', 2000);
     browser.withUser('licensing');
 
     browser.click('a=In progress');
