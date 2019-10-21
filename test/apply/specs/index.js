@@ -310,8 +310,9 @@ describe('PPL Application', () => {
 
     // complete commercial slaugher
     browser.click('a=Commercial slaughter');
-    browser.click('input[name="commercial-slaughter"][value="false"]');
-
+    browser.click('input[name="commercial-slaughter"][value="true"]'); 
+    completeRichTextField(browser, 'commercial-slaughter-hygiene');	  
+    
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 18);
     console.log('Completed commercial slaughter');
