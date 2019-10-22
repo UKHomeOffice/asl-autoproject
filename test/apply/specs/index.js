@@ -86,6 +86,8 @@ const addProtocol = browser => {
 describe('PPL Application', () => {
 
   it('can apply for a PPL', () => {
+    console.log(process.env.FAST=='true'? '*** Fast mode enabled ***' : '');
+
     browser.timeouts('implicit', 2000);
     browser.withUser('basic');
 

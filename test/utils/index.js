@@ -17,11 +17,14 @@ const sentence = (min = 10, max = 60, newline = true) => {
   return txt.replace(/^\w/, c => c.toUpperCase()) + (newline ? '\n' : '');
 };
 
+
 const paragraphs = (min = 1, max = 3) => {
   const result = [];
   const len = between(min, max);
+  const min_words = (process.env.FAST=='true') ? 1 : 10;
+  const max_words = (process.env.FAST=='true') ? 10 : 100;
   while (result.length < len) {
-    result.push(sentence(10,100));
+    result.push(sentence(min_words,max_words));
   }
   return result;
 };
