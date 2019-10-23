@@ -2,7 +2,8 @@ const assert = require('assert');
 const { words, paragraphs } = require('../../utils');
 
 const completeRichTextField = (browser, name) => {
-  const value = paragraphs();
+  // If the fast flag is set fill in a lot less text
+  const value = process.env.FAST=='true'? paragraphs(1,2,true): paragraphs();
   browser.$(`[name$="${name}"]`).click();
   value.forEach(v => browser.keys(v));
 };

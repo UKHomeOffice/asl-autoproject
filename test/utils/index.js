@@ -18,11 +18,11 @@ const sentence = (min = 10, max = 60, newline = true) => {
 };
 
 
-const paragraphs = (min = 1, max = 3) => {
+const paragraphs = (min = 1, max = 3, fast=false) => {
   const result = [];
+  const min_words = fast?1:10;
+  const max_words = fast?10:100;
   const len = between(min, max);
-  const min_words = (process.env.FAST=='true') ? 1 : 10;
-  const max_words = (process.env.FAST=='true') ? 10 : 100;
   while (result.length < len) {
     result.push(sentence(min_words,max_words));
   }
