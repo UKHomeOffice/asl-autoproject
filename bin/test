@@ -8,7 +8,7 @@ const { sentence } = require('../test/utils');
 const TEST_ENV = args.env || 'local';
 const PROJECT_TITLE = args.title || sentence(6, 15, false);
 const KEYCLOAK_PASSWORD = args.password || process.env.KEYCLOAK_PASSWORD;
-const FAST = !!args.fast;
+const FAST = args.fast ? 'yes' : '';
 const env = { ...process.env, TEST_ENV, PROJECT_TITLE, KEYCLOAK_PASSWORD, FAST };
 
 const proc = spawn('npm', ['run', 'test:run', ...args._], { env, stdio: 'inherit' });
