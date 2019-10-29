@@ -87,7 +87,8 @@ const addProtocol = browser => {
 describe('PPL Application', () => {
 
   it('can apply for a PPL', () => {
-    console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
+    console.log(process.env.FAST ? '*** Fast mode enabled ***' : ''); 
+    console.log(process.env.DRAFT ? '*** Draft mode enabled ***': '');
 
     browser.timeouts('implicit', 2000);
     browser.withUser('basic');
@@ -377,6 +378,11 @@ describe('PPL Application', () => {
     waitForSync(browser);
     browser.click('button=Continue');
 
+    if(process.env.DRAFT)
+    {
+        console.log("Quitting here because Draft mode is enabled");
+        assert(false);
+    }
     browser.click('input[name="awerb"][value="Yes"]');
     browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
     browser.click('input[name="ready"][value="Yes"]');
