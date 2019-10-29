@@ -2,7 +2,8 @@ const assert = require('assert');
 const { words, paragraphs } = require('../../utils');
 
 const completeRichTextField = (browser, name) => {
-  const value = paragraphs();
+  // If the fast flag is set fill in a lot less text
+  const value = process.env.FAST ? paragraphs(1, 2, { words: [5, 10] }) : paragraphs();
   browser.$(`[name$="${name}"]`).click();
   value.forEach(v => browser.keys(v));
 };
@@ -86,6 +87,8 @@ const addProtocol = browser => {
 describe('PPL Application', () => {
 
   it('can apply for a PPL', () => {
+    console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
+
     browser.timeouts('implicit', 2000);
     browser.withUser('basic');
 
@@ -310,9 +313,9 @@ describe('PPL Application', () => {
 
     // complete commercial slaugher
     browser.click('a=Commercial slaughter');
-    browser.click('input[name="commercial-slaughter"][value="true"]'); 
-    completeRichTextField(browser, 'commercial-slaughter-hygiene');	  
-    
+    browser.click('input[name="commercial-slaughter"][value="true"]');
+    completeRichTextField(browser, 'commercial-slaughter-hygiene');
+
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 18);
     console.log('Completed commercial slaughter');
