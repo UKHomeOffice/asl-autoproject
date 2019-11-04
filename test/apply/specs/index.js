@@ -86,7 +86,7 @@ const addProtocol = (browser, title) => {
 
   browser.click('input[name="complete"][value="true"]');
   browser.$('.protocol').click('button=Continue');
-  console.log(`Completed protocol ${title}`);
+  console.log(`Completed protocol '${title}'`);
 };
 
 describe('PPL Application', () => {
@@ -124,7 +124,7 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
-    console.log(`Project title is ${process.env.PROJECT_TITLE}`);
+    console.log(`Project title is '${process.env.PROJECT_TITLE}'`);
     console.log('Completed introductory details');
 
     // complete experience

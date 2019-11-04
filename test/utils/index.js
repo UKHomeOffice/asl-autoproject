@@ -32,6 +32,8 @@ const paragraphs = (min = 1, max = 3, { words } = {}) => {
 
 const protocolTitles = new Array(10).fill(words(between(3, 7)));
 
+console.log('Available protocol titles: ', protocolTitles);
+
 module.exports = {
   words,
   sentence,
