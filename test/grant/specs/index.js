@@ -1,5 +1,16 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../utils/goto-outstanding-tasks');
+const { protocolTitles } = require('../../utils');
+const { downloadFile } = require('../../utils/download');
+
+const gotoGranted = (browser, title) => {
+  browser.url('/');
+  browser.click('a=Projects');
+  browser.$('.search-box input[type="text"]').setValue(title);
+  browser.click('.search-box button');
+  browser.waitForExist('table:not(.loading)');
+  browser.click(`a=${title}`);
+  browser.click('=View granted licence');
+};
 
 describe('PPL Grant', () => {
 
@@ -32,6 +43,18 @@ describe('PPL Grant', () => {
     assert.ok(browser.isVisible('h1=Licence granted'));
     console.log('Granted licence');
 
+    gotoGranted(browser, process.env.PROJECT_TITLE);
+    const pdf = downloadFile(browser, 'pdf');
+
+    assert.ok(pdf.includes(process.env.PROJECT_TITLE), 'Project title is displayed');
+    assert.ok(pdf.includes('Basic User'), 'Licence holder name is displayed');
+    assert.ok(pdf.includes('University of Croydon'), 'Primary establishment name is displayed');
+
+    assert.ok(pdf.includes('General constraints'), 'General constraints section is displayed');
+    assert.ok(pdf.includes('Standard conditions'), 'Standard conditions section is displayed');
+
+    assert.ok(pdf.includes(protocolTitles[0]), 'First protocol title is displayed');
+    assert.ok(pdf.includes(protocolTitles[1]), 'Second protocol title is displayed');
   });
 
 });
