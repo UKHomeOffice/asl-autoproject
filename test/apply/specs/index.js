@@ -37,6 +37,8 @@ const addProtocol = (browser, title) => {
 
   openProtocol.$('input[name$=".title"]').setValue(title);
   openProtocol.click('button=Continue');
+  openProtocol.waitForExist('input[name$=".description"]');
+
   completeRichTextField(openProtocol, '.description');
   openProtocol.click('input[name$=".severity"][value="moderate"]');
   completeRichTextField(openProtocol, '.severity-proportion');
