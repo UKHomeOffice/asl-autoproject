@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sampleSize } = require('lodash');
+const { sampleSize, times } = require('lodash');
 
 const corpus = fs.readFileSync(path.resolve(__dirname, '../../text.txt')).toString('utf8').split(/\W/).filter(Boolean);
 
@@ -30,9 +30,7 @@ const paragraphs = (min = 1, max = 3, { words } = {}) => {
   return result;
 }
 
-const protocolTitles = new Array(10).fill(words(between(3, 7)));
-
-console.log('Available protocol titles: ', protocolTitles);
+const protocolTitles = new Array(10).fill(1).map(() => words(between(3, 7)));
 
 module.exports = {
   words,
