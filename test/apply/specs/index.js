@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { words, paragraphs } = require('../../utils');
+const { paragraphs, protocolTitles } = require('../../utils');
 
 const completeRichTextField = (browser, name) => {
   // If the fast flag is set fill in a lot less text
@@ -27,8 +27,13 @@ const waitForSync = browser => {
   });
 };
 
-const addProtocol = browser => {
-  browser.$('input[name$=".title"]').setValue(words(6));
+const addProtocol = (browser, title) => {
+  if (!browser.$('input[name$=".title"]').isVisible()) {
+    browser.click('button=Add another protocol');
+    browser.waitForExist('input[name$=".title"]');
+  }
+
+  browser.$('input[name$=".title"]').setValue(title);
   browser.$('.protocol').click('button=Continue');
   completeRichTextField(browser, '.description');
   browser.click('input[name$=".severity"][value="moderate"]');
@@ -251,7 +256,8 @@ describe('PPL Application', () => {
     // complete protocols
     browser.click('a=Protocols');
 
-    addProtocol(browser);
+    addProtocol(browser, protocolTitles[0]);
+    addProtocol(browser, protocolTitles[1]);
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 11);

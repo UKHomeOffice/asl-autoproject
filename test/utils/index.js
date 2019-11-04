@@ -30,8 +30,11 @@ const paragraphs = (min = 1, max = 3, { words } = {}) => {
   return result;
 }
 
+const protocolTitles = new Array(10).fill(words(between(3, 7)));
+
 module.exports = {
   words,
   sentence,
-  paragraphs
+  paragraphs,
+  protocolTitles
 };
