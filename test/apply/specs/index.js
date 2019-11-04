@@ -35,7 +35,6 @@ const addProtocol = browser => {
   completeRichTextField(browser, '.severity-proportion');
   completeRichTextField(browser, '.severity-details');
   browser.click('input[name$=".locations"][value="University of Croydon"]');
-  completeRichTextField(browser, '.outputs');
 
   browser.click('h3=Animals used in this protocol');
   browser.click('input[name$=".species"][value="mice"]');
@@ -66,6 +65,7 @@ const addProtocol = browser => {
   completeRichTextField(browser, '.experience-endpoints');
 
   browser.click('h3=Experimental design');
+  completeRichTextField(browser, '.outputs');
   browser.click('input[name$=".quantitative-data"][value="false"]');
 
   browser.click('h3=Protocol justification');
