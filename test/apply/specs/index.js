@@ -33,59 +33,61 @@ const addProtocol = (browser, title) => {
     browser.waitForExist('input[name$=".title"]');
   }
 
-  browser.$('input[name$=".title"]').setValue(title);
-  browser.$('.protocol:not(.complete)').click('button=Continue');
-  completeRichTextField(browser, '.description');
-  browser.click('input[name$=".severity"][value="moderate"]');
-  completeRichTextField(browser, '.severity-proportion');
-  completeRichTextField(browser, '.severity-details');
-  browser.click('input[name$=".locations"][value="University of Croydon"]');
+  const openProtocol = browser.$('.protocol:not(.complete)');
 
-  browser.click('h3=Animals used in this protocol');
-  browser.click('input[name$=".species"][value="mice"]');
-  browser.click('input[name$=".life-stages"][value="adult"]');
-  browser.click('input[name$=".continued-use"][value="false"]');
-  browser.click('input[name$=".reuse"][value="false"]');
-  browser.$('input[name$=".maximum-animals"]').setValue('100');
-  browser.$('input[name$=".maximum-times-used"]').setValue('1');
+  openProtocol.$('input[name$=".title"]').setValue(title);
+  openProtocol.click('button=Continue');
+  completeRichTextField(openProtocol, '.description');
+  openProtocol.click('input[name$=".severity"][value="moderate"]');
+  completeRichTextField(openProtocol, '.severity-proportion');
+  completeRichTextField(openProtocol, '.severity-details');
+  openProtocol.click('input[name$=".locations"][value="University of Croydon"]');
 
-  browser.click('h3=Genetically altered animals (GAA)');
-  browser.click('input[name$=".gaas"][value="false"]');
+  openProtocol.click('h3=Animals used in this protocol');
+  openProtocol.click('input[name$=".species"][value="mice"]');
+  openProtocol.click('input[name$=".life-stages"][value="adult"]');
+  openProtocol.click('input[name$=".continued-use"][value="false"]');
+  openProtocol.click('input[name$=".reuse"][value="false"]');
+  openProtocol.$('input[name$=".maximum-animals"]').setValue('100');
+  openProtocol.$('input[name$=".maximum-times-used"]').setValue('1');
 
-  browser.click('h3=Steps');
-  completeRichTextField(browser, '.title');
-  browser.click('input[name$=".nmbas"][value="false"]');
-  browser.click('input[name$=".optional"][value="false"]');
-  browser.click('input[name$=".adverse"][value="false"]');
-  browser.click('button=Save step');
-  browser.click('button=Add another step');
-  completeRichTextField(browser, '.title');
-  browser.click('input[name$=".nmbas"][value="false"]');
-  browser.click('input[name$=".optional"][value="false"]');
-  browser.click('input[name$=".adverse"][value="false"]');
-  browser.click('button=Save step');
+  openProtocol.click('h3=Genetically altered animals (GAA)');
+  openProtocol.click('input[name$=".gaas"][value="false"]');
 
-  browser.click('h3=Animal experience');
-  completeRichTextField(browser, '.experience-summary');
-  completeRichTextField(browser, '.experience-endpoints');
+  openProtocol.click('h3=Steps');
+  completeRichTextField(openProtocol, '.title');
+  openProtocol.click('input[name$=".nmbas"][value="false"]');
+  openProtocol.click('input[name$=".optional"][value="false"]');
+  openProtocol.click('input[name$=".adverse"][value="false"]');
+  openProtocol.click('button=Save step');
+  openProtocol.click('button=Add another step');
+  completeRichTextField(openProtocol, '.title');
+  openProtocol.click('input[name$=".nmbas"][value="false"]');
+  openProtocol.click('input[name$=".optional"][value="false"]');
+  openProtocol.click('input[name$=".adverse"][value="false"]');
+  openProtocol.click('button=Save step');
 
-  browser.click('h3=Experimental design');
-  completeRichTextField(browser, '.outputs');
-  browser.click('input[name$=".quantitative-data"][value="false"]');
+  openProtocol.click('h3=Animal experience');
+  completeRichTextField(openProtocol, '.experience-summary');
+  completeRichTextField(openProtocol, '.experience-endpoints');
 
-  browser.click('h3=Protocol justification');
-  completeRichTextField(browser, '.most-appropriate');
-  completeRichTextField(browser, '.most-refined');
-  completeRichTextField(browser, '.scientific-endpoints');
-  completeRichTextField(browser, '.scientific-suffering');
-  completeRichTextField(browser, '.scientific-endpoints-justification');
-  browser.click('input[name$=".justification-substances"][value="false"]');
+  openProtocol.click('h3=Experimental design');
+  completeRichTextField(openProtocol, '.outputs');
+  openProtocol.click('input[name$=".quantitative-data"][value="false"]');
 
-  browser.click('h3=Fate of animals');
-  browser.click('input[name$=".fate"][value="killed"]');
+  openProtocol.click('h3=Protocol justification');
+  completeRichTextField(openProtocol, '.most-appropriate');
+  completeRichTextField(openProtocol, '.most-refined');
+  completeRichTextField(openProtocol, '.scientific-endpoints');
+  completeRichTextField(openProtocol, '.scientific-suffering');
+  completeRichTextField(openProtocol, '.scientific-endpoints-justification');
+  openProtocol.click('input[name$=".justification-substances"][value="false"]');
 
-  browser.click('input[name="complete"][value="true"]');
-  browser.$('.protocol').click('button=Continue');
+  openProtocol.click('h3=Fate of animals');
+  openProtocol.click('input[name$=".fate"][value="killed"]');
+
+  openProtocol.click('input[name="complete"][value="true"]');
+  openProtocol.click('button=Continue');
   console.log(`Completed protocol '${title}'`);
 };
 
