@@ -34,7 +34,7 @@ const addProtocol = (browser, title) => {
   }
 
   browser.$('input[name$=".title"]').setValue(title);
-  browser.$('.protocol').click('button=Continue');
+  browser.$('.protocol:not(.complete)').click('button=Continue');
   completeRichTextField(browser, '.description');
   browser.click('input[name$=".severity"][value="moderate"]');
   completeRichTextField(browser, '.severity-proportion');
