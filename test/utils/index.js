@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sampleSize, times } = require('lodash');
+const { sampleSize } = require('lodash');
 
 const corpus = fs.readFileSync(path.resolve(__dirname, '../../text.txt')).toString('utf8').split(/\W/).filter(Boolean);
 
