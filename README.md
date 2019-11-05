@@ -37,6 +37,7 @@ pipeline:
 * `--title` - the title to use for the project - default randomly generated string
 * `--password` - password to use for logging in - default `process.env.KEYCLOAK_PASSWORD`
 * `--fast` - restrict the number of words per answer to 1..10 rather than 10..100 - so that it runs a lot faster
+* `--species` - select all the species on a protocol
 
 ## Notes
 
