@@ -29,8 +29,6 @@ const addProtocol = (browser, title) => {
     browser.waitForExist('input[name$=".title"]');
   }
 
-  browser.scroll(0, 5000);
-
   browser.$('input[name$=".title"]').setValue(title);
   browser.$('.protocol:last-of-type').click('button=Continue');
   waitForSync(browser);
