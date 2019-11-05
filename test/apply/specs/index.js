@@ -141,6 +141,7 @@ describe('PPL Application', () => {
   it('can apply for a PPL', () => {
     console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
     console.log(process.env.SPECIES ? '*** Species mode enabled ***' : '');
+    const speciesSteps = (proces.env.SPECIES ? 2 : 0);
 
     browser.timeouts('implicit', 2000);
     browser.withUser('basic');
@@ -365,7 +366,7 @@ describe('PPL Application', () => {
     browser.click('input[name="endangered-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 15+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 15+speciesSteps;
     console.log('Completed endangered animals');
 
     // complete animals taken from the wild
@@ -381,7 +382,7 @@ describe('PPL Application', () => {
     browser.click('input[name="feral-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 17+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 17+speciesSteps);
     console.log('Completed feral animals');
 
     // complete commercial slaugher
@@ -390,7 +391,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'commercial-slaughter-hygiene');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 18+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 18+speciesSteps);
     console.log('Completed commercial slaughter');
 
     // complete human material
@@ -398,7 +399,7 @@ describe('PPL Application', () => {
     browser.click('input[name="animals-containing-human-material"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 19+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 19+speciesSteps);
     console.log('Completed human material');
 
     // complete replacement
@@ -409,7 +410,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'replacement-justification');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 20+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 20+speciesSteps);
     console.log('Completed replacement');
 
     // complete reduction
@@ -422,7 +423,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'reduction-review');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 21+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 21+speciesSteps);
     console.log('Completed reduction');
 
     // complete refinement
@@ -435,7 +436,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'refinement-published-guidance');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 22+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 22+speciesSteps);
     console.log('Completed refinement');
 
     // complete nts review
@@ -443,7 +444,7 @@ describe('PPL Application', () => {
     browser.click('input[name="complete"][value="true"]');
     browser.click('button=Continue');
 
-    assert.equal(browser.$$('.badge.complete').length, 23+(process.env.SPECIES ? 2 : 0));
+    assert.equal(browser.$$('.badge.complete').length, 23+speciesSteps);
     console.log('Completed NTS review');
 
     // submit application
