@@ -13,6 +13,7 @@ pipeline:
       - keycloak_password
     commands:
       - npm test -- --env dev
+      - npm test -- --env dev --legacy
     when:
       event: push
 
