@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { protocolTitles } = require('../../utils');
+const gotoOutstandingTasks = require('../../utils/goto-outstanding-tasks');
 const { downloadFile } = require('../../utils/download');
 
 const gotoGranted = (browser, title) => {
@@ -53,8 +53,8 @@ describe('PPL Grant', () => {
     assert.ok(pdf.includes('General constraints'), 'General constraints section is displayed');
     assert.ok(pdf.includes('Standard conditions'), 'Standard conditions section is displayed');
 
-    assert.ok(pdf.includes(protocolTitles[0]), 'First protocol title is displayed');
-    assert.ok(pdf.includes(protocolTitles[1]), 'Second protocol title is displayed');
+    assert.ok(pdf.includes('Protocol 1 title'), 'First protocol title is displayed');
+    assert.ok(pdf.includes('Protocol 2 title'), 'Second protocol title is displayed');
   });
 
 });

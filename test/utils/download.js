@@ -38,7 +38,7 @@ const downloadFile = (browser, fileType) => {
       .then(data => {
         switch (fileType) {
           case 'pdf':
-            return parsePDF(data).then(pdf => pdf.text);
+            return parsePDF(data).then(pdf => pdf.text.replace(/\s/g, ' '));
           case 'word':
             return data.toString('utf8');
           default:
