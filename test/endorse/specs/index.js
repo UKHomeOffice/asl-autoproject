@@ -1,4 +1,5 @@
 const assert = require('assert');
+const gotoOutstandingTasks = require('../../utils/goto-outstanding-tasks');
 
 describe('PPL endorsement', () => {
 
@@ -7,14 +8,7 @@ describe('PPL endorsement', () => {
     browser.withUser('holc');
     browser.url('/');
 
-    browser.click('a=In progress');
-    browser.waitForExist('table:not(.loading)');
-    browser.click('a=Outstanding');
-    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
-    browser.click('a=Last changed');
-    browser.waitForExist('table:not(.loading) th a:not(.disabled)');
-    browser.click('a=Last changed');
-    browser.waitForExist('table:not(.loading)');
+    gotoOutstandingTasks(browser);
 
     // find task in task list
     assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
