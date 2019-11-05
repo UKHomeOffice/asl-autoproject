@@ -43,6 +43,58 @@ const addProtocol = browser => {
   browser.click('input[name$=".reuse"][value="false"]');
   browser.$('input[name$=".maximum-animals"]').setValue('100');
   browser.$('input[name$=".maximum-times-used"]').setValue('1');
+   if (process.env.SPECIES) {
+        browser.click('a=Add more animal types');
+        browser.click('summary*=Fish');
+        browser.click('summary*=Birds');
+        browser.click('summary*=Cats');
+        browser.click('summary*=primates');
+        browser.click('summary*=Other');
+        browser.click('input[id="SA-guinea-pigs"]');
+        browser.click('input[id="SA-hamsters"]');
+        browser.click('input[id="SA-gerbils"]');
+        browser.click('input[id="SA-other-rodents"]');
+        browser.$('//input[@id="species-other-rodents-0"]').setValue('Colo colo');
+        browser.click('input[id="SA-rabbits"]');
+        browser.click('input[id="SA-ferrets"]');
+        browser.click('summary=Large animals');
+        browser.click('input[id="LA-pigs"]');
+        browser.click('input[id="LA-goats"]');
+        browser.click('input[id="LA-sheep"]');
+        browser.click('input[id="LA-cattle"]');
+        browser.click('input[id="LA-other-camelids"]');
+        browser.$('//input[@id="species-other-camelids-0"]').setValue('camelopard');
+        browser.click('input[id="AQ-other-reptiles"]');
+        browser.$('//input[@id="species-other-reptiles-0"]').setValue('Idris the dragon');
+        browser.click('input[id="AQ-common-frogs"]');
+        browser.click('input[id="AQ-african-frogs"]');
+        browser.click('input[id="AQ-other-amphibians"]');
+        browser.$('//input[@id="species-other-amphibians-0"]').setValue('Tiddalik');
+        browser.click('input[id="AQ-zebra-fish"]');
+        browser.click('input[id="AQ-other-fish"]');
+        browser.$('//input[@id="species-other-fish-0"]').setValue('shachihoko');
+        browser.click('input[id="AQ-cephalopods"]');
+        browser.click('input[id="AV-other-domestic-fowl"]');
+        browser.$('//input[@id="species-other-domestic-fowl-0"]').setValue('Foghorn Leghorn');
+        browser.click('input[id="AV-other-birds"]');
+        browser.$('//input[@id="species-other-birds-0"]').setValue('phoenix');
+        browser.click('input[id="DOM-beagles"]');
+        browser.click('input[id="DOM-other-dogs"]');
+        browser.$('//input[@id="species-other-dogs-0"]').setValue('cerebrus');
+        browser.click('input[id="DOM-cats"]');
+        browser.click('input[id="DOM-horses"]');
+        browser.click('input[id="DOM-ponies"]');
+        browser.click('input[id="DOM-donkeys"]');
+        browser.click('input[id="DOM-other-equidae"]');
+        browser.$('//input[@id="species-other-equidae-0"]').setValue('Bucephalus');
+        browser.click('input[id="NHP-marmosets"]');
+        browser.click('input[id="NHP-cynomolgus"]');
+        browser.click('input[id="NHP-rhesus"]');
+        browser.click('input[id="NHP-other-nhps"]');
+        browser.$('//input[@id="species-other-nhps-0"]').setValue('Kong');
+    }
+
+
 
   browser.click('h3=Genetically altered animals (GAA)');
   browser.click('input[name$=".gaas"][value="false"]');
@@ -88,6 +140,7 @@ describe('PPL Application', () => {
 
   it('can apply for a PPL', () => {
     console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
+    console.log(process.env.SPECIES ? '*** Species mode enabled ***' : '');
 
     browser.timeouts('implicit', 2000);
     browser.withUser('basic');
@@ -116,6 +169,7 @@ describe('PPL Application', () => {
     browser.click('summary=Small animals');
     browser.click('input[name="SA"][value="mice"]');
     browser.click('input[name="SA"][value="rats"]');
+
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
@@ -287,12 +341,31 @@ describe('PPL Application', () => {
     assert.equal(browser.$$('.badge.complete').length, 14);
     console.log('Completed purpose bred animals');
 
+    if(process.env.SPECIES)
+    {
+        completeCount=2;
+        //Cats Dogs and Equidae
+	browser.click('a*=equidae');
+
+        completeRichTextField(browser, 'domestic');
+        continueAndComplete(browser);
+        assert.equal(browser.$$('.badge.complete').length, 15);
+        console.log('Cats, dogs, and equidae');
+
+        // Non-human primates           
+        browser.click('a*=primates');
+        completeRichTextField(browser, 'nhps');
+        continueAndComplete(browser);
+        assert.equal(browser.$$('.badge.complete').length, 16);
+        console.log('Completed Non-human primates');
+    }	  
+
     // complete endangered animals
     browser.click('a=Endangered animals');
     browser.click('input[name="endangered-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 15);
+    assert.equal(browser.$$('.badge.complete').length, 15+(process.env.SPECIES ? 2 : 0));
     console.log('Completed endangered animals');
 
     // complete animals taken from the wild
@@ -300,7 +373,7 @@ describe('PPL Application', () => {
     browser.click('input[name="wild-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 16);
+    assert.equal(browser.$$('.badge.complete').length, 16+(process.env.SPECIES ? 2 : 0));
     console.log('Completed animals taken from wild');
 
     // complete feral animals
@@ -308,7 +381,7 @@ describe('PPL Application', () => {
     browser.click('input[name="feral-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 17);
+    assert.equal(browser.$$('.badge.complete').length, 17+(process.env.SPECIES ? 2 : 0));
     console.log('Completed feral animals');
 
     // complete commercial slaugher
@@ -317,7 +390,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'commercial-slaughter-hygiene');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 18);
+    assert.equal(browser.$$('.badge.complete').length, 18+(process.env.SPECIES ? 2 : 0));
     console.log('Completed commercial slaughter');
 
     // complete human material
@@ -325,7 +398,7 @@ describe('PPL Application', () => {
     browser.click('input[name="animals-containing-human-material"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 19);
+    assert.equal(browser.$$('.badge.complete').length, 19+(process.env.SPECIES ? 2 : 0));
     console.log('Completed human material');
 
     // complete replacement
@@ -336,7 +409,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'replacement-justification');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 20);
+    assert.equal(browser.$$('.badge.complete').length, 20+(process.env.SPECIES ? 2 : 0));
     console.log('Completed replacement');
 
     // complete reduction
@@ -349,7 +422,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'reduction-review');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 21);
+    assert.equal(browser.$$('.badge.complete').length, 21+(process.env.SPECIES ? 2 : 0));
     console.log('Completed reduction');
 
     // complete refinement
@@ -362,7 +435,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'refinement-published-guidance');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 22);
+    assert.equal(browser.$$('.badge.complete').length, 22+(process.env.SPECIES ? 2 : 0));
     console.log('Completed refinement');
 
     // complete nts review
@@ -370,7 +443,7 @@ describe('PPL Application', () => {
     browser.click('input[name="complete"][value="true"]');
     browser.click('button=Continue');
 
-    assert.equal(browser.$$('.badge.complete').length, 23);
+    assert.equal(browser.$$('.badge.complete').length, 23+(process.env.SPECIES ? 2 : 0));
     console.log('Completed NTS review');
 
     // submit application
