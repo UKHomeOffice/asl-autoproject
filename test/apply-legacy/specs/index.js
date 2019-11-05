@@ -32,7 +32,7 @@ const addProtocol = (browser, title) => {
   browser.scroll(0, 5000);
 
   browser.$('input[name$=".title"]').setValue(title);
-  browser.$('.protocol:last-of-type button').click();
+  browser.$('.protocol:last-of-type').click('button=Continue');
   waitForSync(browser);
 
   const openProtocol = browser.$('.protocol:last-of-type');
