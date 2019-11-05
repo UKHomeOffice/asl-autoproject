@@ -22,33 +22,43 @@ const waitForSync = browser => {
   });
 };
 
-const addProtocol = browser => {
-  browser.$('input[name$=".title"]').setValue(words(6));
-  browser.$('.protocol').click('button=Continue');
-  browser.setValue('input[name$=".severity"]', sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
+const addProtocol = (browser, title) => {
+  if (!browser.$('input[name$=".title"]').isVisible()) {
+    console.log('Adding another protocol');
+    browser.click('button=Add another protocol');
+    browser.waitForExist('input[name$=".title"]');
+  }
 
-  browser
+  browser.scroll(0, 5000);
+
+  browser.$('input[name$=".title"]').setValue(title);
+  browser.$('.protocol:last-of-type button').click();
+  waitForSync(browser);
+
+  const openProtocol = browser.$('.protocol:last-of-type');
+  openProtocol.setValue('input[name$=".severity"]', sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
+
+  openProtocol
     .click('h3=Type of animals')
     .selectByVisibleText('select[name$=".speciesId"]', 'Camelids')
     .click('label[for$=".genetically-altered-true"]')
     .setValue('input[name$=".quantity"]', Math.ceil(Math.random() * 1000))
     .setValue('input[name$=".life-stages"]', sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
 
-  browser.click('h3=Continued use/re-use')
-  completeRichTextField(browser, '.continued-use');
-  completeRichTextField(browser, '.reuse');
+  openProtocol.click('h3=Continued use/re-use')
+  completeRichTextField(openProtocol, '.continued-use');
+  completeRichTextField(openProtocol, '.reuse');
 
-  browser.click('h3=Steps');
-  completeRichTextField(browser, '.steps');
+  openProtocol.click('h3=Steps');
+  completeRichTextField(openProtocol, '.steps');
 
-  browser
+  openProtocol
     .click('h3=Fate of animals')
     .click('label[for$=".fate-continued-use"]')
-  completeRichTextField(browser, '.fate-justification');
+  completeRichTextField(openProtocol, '.fate-justification');
 
-  browser.click('h3=Adverse effects');
-  completeRichTextField(browser, '.adverse-effects');
-  browser.click('button=Continue');
+  openProtocol.click('h3=Adverse effects');
+  completeRichTextField(openProtocol, '.adverse-effects');
 };
 
 describe('PPL Application', () => {
@@ -221,7 +231,11 @@ describe('PPL Application', () => {
 
     // protocols
     browser.click('a=Protocols');
-    addProtocol(browser);
+
+    addProtocol(browser, 'Protocol 1 title');
+    addProtocol(browser, 'Protocol 2 title');
+
+    browser.click('a.sections-link');
 
     console.log('Completed protocols');
 
