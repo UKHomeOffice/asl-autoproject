@@ -5,7 +5,7 @@ const { words, paragraphs } = require('../../utils');
 const completeRichTextField = (browser, name) => {
   // If the fast flag is set fill in a lot less text
   const value = process.env.FAST ? paragraphs(1, 2, { words: [5, 10] }) : paragraphs();
-  browser.$(`[id$="${name}"]`).click();
+  browser.$(`[name$="${name}"]`).click();
   value.forEach(v => browser.keys(v));
 };
 
@@ -57,7 +57,7 @@ describe('PPL Application', () => {
     console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
 
     browser.timeouts('implicit', 2000);
-    browser.withUser('holc');
+    browser.withUser('basic');
 
     browser.url('/');
 
@@ -68,9 +68,9 @@ describe('PPL Application', () => {
       .click('=View establishment information')
       .click('a=Projects')
       .click('a=Drafts')
-      .click('a=Legacy Autoproject Draft');
+      .click(`a=${process.env.PROJECT_TITLE}`);
 
-    assert.ok(browser.isVisible('h1=Legacy Autoproject Draft'));
+    assert.ok(browser.isVisible(`h1=${process.env.PROJECT_TITLE}`));
 
     browser.click('a=Open draft');
 
