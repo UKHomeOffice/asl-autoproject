@@ -12,10 +12,23 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
+      - npm test -- --env dev --fast
+      - npm test -- --env dev --legacy --fast
+    when:
+      event: push
+      branch:
+        exclude: master
+
+  test:
+    image: node:10
+    secrets:
+      - keycloak_password
+    commands:
       - npm test -- --env dev
       - npm test -- --env dev --legacy
     when:
       event: push
+      branch: master
 
   build:
     image: docker:17.09.1
