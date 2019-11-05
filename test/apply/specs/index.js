@@ -170,7 +170,6 @@ describe('PPL Application', () => {
     browser.click('summary=Small animals');
     browser.click('input[name="SA"][value="mice"]');
     browser.click('input[name="SA"][value="rats"]');
-
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
@@ -344,7 +343,6 @@ describe('PPL Application', () => {
 
     if(process.env.SPECIES)
     {
-        completeCount=2;
         //Cats Dogs and Equidae
 	browser.click('a*=equidae');
 
