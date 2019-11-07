@@ -30,20 +30,20 @@ const addProtocol = (browser, title) => {
   }
 
   browser.$('input[name$=".title"]').setValue(title);
-  browser.$('.protocol:last-of-type').click('button=Continue');
-  waitForSync(browser);
+  browser.$('.protocol.panel').click('button=Continue');
 
-  const openProtocol = browser.$('.protocol:last-of-type');
+  browser.waitForVisible(`h2*=${title}`);
+
+  const openProtocol = browser.$('section.protocol:last-of-type');
   openProtocol.setValue('input[name$=".severity"]', sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
 
-  openProtocol
-    .click('h3=Type of animals')
-    .selectByVisibleText('select[name$=".speciesId"]', 'Camelids')
-    .click('label[for$=".genetically-altered-true"]')
-    .setValue('input[name$=".quantity"]', Math.ceil(Math.random() * 1000))
-    .setValue('input[name$=".life-stages"]', sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
+  openProtocol.click('h3=Type of animals');
+  openProtocol.selectByVisibleText('select[name$=".speciesId"]', 'Camelids');
+  openProtocol.click('label[for$=".genetically-altered-true"]');
+  openProtocol.setValue('input[name$=".quantity"]', Math.ceil(Math.random() * 1000));
+  openProtocol.setValue('input[name$=".life-stages"]', sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
 
-  openProtocol.click('h3=Continued use/re-use')
+  openProtocol.click('h3=Continued use/re-use');
   completeRichTextField(openProtocol, '.continued-use');
   completeRichTextField(openProtocol, '.reuse');
 
@@ -72,11 +72,10 @@ describe('PPL Application', () => {
     browser.click('h3=University of Croydon');
     browser.waitForExist('=View establishment information');
 
-    browser
-      .click('=View establishment information')
-      .click('a=Projects')
-      .click('a=Drafts')
-      .click(`a=${process.env.PROJECT_TITLE}`);
+    browser.click('=View establishment information');
+    browser.click('a=Projects');
+    browser.click('a=Drafts');
+    browser.click(`a=${process.env.PROJECT_TITLE}`);
 
     assert.ok(browser.isVisible(`h1=${process.env.PROJECT_TITLE}`));
 
