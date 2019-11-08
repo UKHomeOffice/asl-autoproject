@@ -9,10 +9,22 @@ pipeline:
 
   test:
     image: node:10
+    group: test
     secrets:
       - keycloak_password
     commands:
       - npm test -- --env dev --fast
+    when:
+      event: push
+      branch:
+        exclude: master
+
+  test_legacy:
+    image: node:10
+    group: test
+    secrets:
+      - keycloak_password
+    commands:
       - npm test -- --env dev --legacy --fast
     when:
       event: push
@@ -21,10 +33,21 @@ pipeline:
 
   test:
     image: node:10
+    group: test
     secrets:
       - keycloak_password
     commands:
       - npm test -- --env dev
+    when:
+      event: push
+      branch: master
+
+  test_legacy:
+    group: test
+    image: node:10
+    secrets:
+      - keycloak_password
+    commands:
       - npm test -- --env dev --legacy
     when:
       event: push
