@@ -5,13 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "bin/test",
-    "test:run": "npm run test:apply && npm run test:endorse && npm run test:recommend && npm run test:grant",
-    "test:run:legacy": "npm run test:apply:legacy && npm run test:endorse && npm run test:recommend npm run test:grant",
-    "test:apply": "asl-test ./test/apply/config.js",
-    "test:apply:legacy": "asl-test ./test/apply-legacy/config.js",
-    "test:endorse": "asl-test ./test/endorse/config.js",
-    "test:recommend": "asl-test ./test/recommend/config.js",
-    "test:grant": "asl-test ./test/grant/config.js"
+    "test:run": "asl-test"
   },
   "repository": {
     "type": "git",
