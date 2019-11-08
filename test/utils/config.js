@@ -17,6 +17,7 @@ module.exports = (specs, env) => {
   return {
     specs,
     users: {
+      'autoproject': process.env.KEYCLOAK_PASSWORD,
       'holc': process.env.KEYCLOAK_PASSWORD,
       'ntco': process.env.KEYCLOAK_PASSWORD,
       'basic': process.env.KEYCLOAK_PASSWORD,

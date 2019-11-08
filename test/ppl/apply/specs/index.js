@@ -102,11 +102,10 @@ describe('PPL Application', () => {
     console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
 
     browser.timeouts('implicit', 2000);
-    browser.withUser('basic');
+    browser.withUser('autoproject');
 
     browser.url('/');
 
-    browser.click('h3=University of Croydon');
     browser.waitForExist('=View establishment information');
     browser.click('=View establishment information');
     browser.click('a=Projects');
