@@ -8,7 +8,8 @@ module.exports = ({ env, args }) => {
     'apply',
     'endorse',
     'recommend',
-    'grant'
+    'grant',
+    'verify'
   ];
   const FAST = args.fast ? 'yes' : '';
   const PROJECT_TITLE = args.title || args.legacy
