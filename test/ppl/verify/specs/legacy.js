@@ -4,15 +4,16 @@ const { downloadFile } = require('../../../utils/download');
 describe('PPL Verify', () => {
 
   it('can see granted PPL content', () => {
+    browser.withUser('holc');
     browser.click('h3=University of Croydon');
     browser.waitForExist('=View establishment information');
     browser.click('=View establishment information');
     browser.click('a=Projects');
 
-    browser.$('.search-box input[type="text"]').setValue(title);
+    browser.$('.search-box input[type="text"]').setValue(process.env.PROJECT_TITLE);
     browser.click('.search-box button');
     browser.waitForExist('table:not(.loading)');
-    browser.click(`a=${title}`);
+    browser.click(`a=${process.env.PROJECT_TITLE}`);
     browser.click('=View granted licence');
 
     const pdf = downloadFile(browser, 'pdf');
