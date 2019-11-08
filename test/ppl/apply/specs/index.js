@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { paragraphs } = require('../../utils');
+const { paragraphs } = require('../../../utils');
 
 const completeRichTextField = (browser, name) => {
   // If the fast flag is set fill in a lot less text
@@ -110,7 +110,6 @@ describe('PPL Application', () => {
     browser.waitForExist('=View establishment information');
     browser.click('=View establishment information');
     browser.click('a=Projects');
-
     browser.click('button=Apply for project licence');
 
     assert.ok(browser.isVisible('h2=Untitled project'));

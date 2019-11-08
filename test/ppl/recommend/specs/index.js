@@ -1,5 +1,5 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../utils/goto-outstanding-tasks');
+const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 
 describe('PPL Recommendation', () => {
 

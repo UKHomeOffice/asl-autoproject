@@ -7,13 +7,24 @@ pipeline:
     when:
       event: push
 
+  test_pil:
+    image: node:10
+    secrets:
+      - keycloak_password
+    commands:
+      - npm test -- pil --env dev
+    when:
+      event: push
+      branch:
+        exclude: master
+
   test:
     image: node:10
     group: test
     secrets:
       - keycloak_password
     commands:
-      - npm test -- --env dev --fast
+      - npm test -- ppl --env dev --fast
     when:
       event: push
       branch:
@@ -25,11 +36,21 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
-      - npm test -- --env dev --legacy --fast
+      - npm test -- ppl --env dev --legacy --fast
     when:
       event: push
       branch:
         exclude: master
+
+  test_pil:
+    image: node:10
+    secrets:
+      - keycloak_password
+    commands:
+      - npm test -- pil --env dev
+    when:
+      event: push
+      branch: master
 
   test:
     image: node:10
@@ -37,7 +58,7 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
-      - npm test -- --env dev
+      - npm test -- ppl --env dev
     when:
       event: push
       branch: master
@@ -48,7 +69,7 @@ pipeline:
     secrets:
       - keycloak_password
     commands:
-      - npm test -- --env dev --legacy
+      - npm test -- ppl --env dev --legacy
     when:
       event: push
       branch: master

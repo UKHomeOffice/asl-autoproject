@@ -1,22 +1,23 @@
 #!/usr/bin/env node
 
-const { spawn } = require('child_process');
 const args = require('minimist')(process.argv.slice(2));
 
-const { sentence } = require('../test/utils');
-
-const LEGACY_TITLE = 'Legacy Autoproject Draft'
+const ppl = require('../test/ppl');
+const pil = require('../test/pil');
 
 const TEST_ENV = args.env || 'local';
 const KEYCLOAK_PASSWORD = args.password || process.env.KEYCLOAK_PASSWORD;
-const FAST = args.fast ? 'yes' : '';
-const PROJECT_TITLE = args.title || args.legacy
-  ? LEGACY_TITLE
-  : sentence(6, 15, false);
-const env = { ...process.env, TEST_ENV, PROJECT_TITLE, KEYCLOAK_PASSWORD, FAST };
+const env = { TEST_ENV, KEYCLOAK_PASSWORD };
 
-const proc = args.legacy
-  ? spawn('npm', ['run', 'test:run:legacy', ...args._], { env, stdio: 'inherit' })
-  : spawn('npm', ['run', 'test:run', ...args._], { env, stdio: 'inherit' });
+const runners = { pil, ppl };
+const suite = args._[0] || 'ppl';
+const runner = runners[suite];
 
-proc.on('close', code => process.exit(code));
+if (!runner) {
+  throw new Error(`Unrecognised test runner: ${suite}`);
+}
+
+Promise.resolve()
+  .then(() => runner({ env, args }))
+  .then(() => process.exit())
+  .catch(err => process.exit(err.code || 1));

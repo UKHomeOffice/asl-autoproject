@@ -1,6 +1,6 @@
 const assert = require('assert');
 const { sample } = require('lodash');
-const { words, paragraphs } = require('../../utils');
+const { words, paragraphs } = require('../../../utils');
 
 const completeRichTextField = (browser, name) => {
   // If the fast flag is set fill in a lot less text

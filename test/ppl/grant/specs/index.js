@@ -1,6 +1,6 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../utils/goto-outstanding-tasks');
-const { downloadFile } = require('../../utils/download');
+const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
+const { downloadFile } = require('../../../utils/download');
 
 const gotoGranted = (browser, title) => {
   browser.url('/');
