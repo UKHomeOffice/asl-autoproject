@@ -19,7 +19,7 @@ describe('PPL Verify', () => {
     const pdf = downloadFile(browser, 'pdf');
 
     assert.ok(pdf.includes(process.env.PROJECT_TITLE), 'Project title is displayed');
-    assert.ok(pdf.includes('Basic User'), 'Licence holder name is displayed');
+    assert.ok(pdf.includes('Auto Project'), 'Licence holder name is displayed');
     assert.ok(pdf.includes('University of Croydon'), 'Primary establishment name is displayed');
 
     assert.ok(pdf.includes('General constraints'), 'General constraints section is displayed');
