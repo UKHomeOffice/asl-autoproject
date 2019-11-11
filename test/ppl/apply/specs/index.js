@@ -28,16 +28,20 @@ const waitForSync = browser => {
 };
 
 const addProtocol = (browser, title) => {
+  console.log(`Starting protocol '${title}'`);
   if (!browser.$('input[name$=".title"]').isVisible()) {
-    console.log('Adding another protocol');
+    console.log('  Clicking add...');
     browser.click('button=Add another protocol');
+    console.log('  Clicked add');
     browser.waitForExist('input[name$=".title"]');
   }
 
   let openProtocol = browser.$('.protocol:not(.complete)');
 
   openProtocol.$('input[name$=".title"]').setValue(title);
+    console.log('  Clicking continue...');
   openProtocol.click('button=Continue');
+    console.log('  Clicked continue');
 
   waitForSync(browser);
   openProtocol = browser.$('.protocol:not(.complete)');
@@ -47,6 +51,7 @@ const addProtocol = (browser, title) => {
   completeRichTextField(openProtocol, '.severity-proportion');
   completeRichTextField(openProtocol, '.severity-details');
   openProtocol.click('input[name$=".locations"][value="University of Croydon"]');
+  console.log('  Completed details');
 
   openProtocol.click('h3=Animals used in this protocol');
   openProtocol.click('input[name$=".species"][value="mice"]');
@@ -55,9 +60,11 @@ const addProtocol = (browser, title) => {
   openProtocol.click('input[name$=".reuse"][value="false"]');
   openProtocol.$('input[name$=".maximum-animals"]').setValue('100');
   openProtocol.$('input[name$=".maximum-times-used"]').setValue('1');
+  console.log('  Completed animals');
 
   openProtocol.click('h3=Genetically altered animals (GAA)');
   openProtocol.click('input[name$=".gaas"][value="false"]');
+  console.log('  Completed GAAs');
 
   openProtocol.click('h3=Steps');
   completeRichTextField(openProtocol, '.title');
@@ -71,14 +78,17 @@ const addProtocol = (browser, title) => {
   openProtocol.click('input[name$=".optional"][value="false"]');
   openProtocol.click('input[name$=".adverse"][value="false"]');
   openProtocol.click('button=Save step');
+  console.log('  Completed steps');
 
   openProtocol.click('h3=Animal experience');
   completeRichTextField(openProtocol, '.experience-summary');
   completeRichTextField(openProtocol, '.experience-endpoints');
+  console.log('  Completed experience');
 
   openProtocol.click('h3=Experimental design');
   completeRichTextField(openProtocol, '.outputs');
   openProtocol.click('input[name$=".quantitative-data"][value="false"]');
+  console.log('  Completed experimental design');
 
   openProtocol.click('h3=Protocol justification');
   completeRichTextField(openProtocol, '.most-appropriate');
@@ -87,9 +97,11 @@ const addProtocol = (browser, title) => {
   completeRichTextField(openProtocol, '.scientific-suffering');
   completeRichTextField(openProtocol, '.scientific-endpoints-justification');
   openProtocol.click('input[name$=".justification-substances"][value="false"]');
+  console.log('  Completed justification');
 
   openProtocol.click('h3=Fate of animals');
   openProtocol.click('input[name$=".fate"][value="killed"]');
+  console.log('  Completed fate');
 
   openProtocol.click('input[name="complete"][value="true"]');
   openProtocol.click('button=Continue');
@@ -113,7 +125,6 @@ describe('PPL Application', () => {
 
     assert.ok(browser.isVisible('h2=Untitled project'));
     console.log('Created project');
-
     // complete introductory details
     browser.click('a=Introductory details');
     browser.$('.nts').click('button=Continue');
