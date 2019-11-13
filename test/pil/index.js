@@ -4,7 +4,8 @@ module.exports = ({ env, args }) => {
   const steps = [
     'apply',
     'endorse',
-    'grant'
+    'grant',
+    'verify'
   ];
   return pipeline(steps, { root: __dirname, env });
 };
