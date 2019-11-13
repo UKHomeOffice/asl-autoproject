@@ -1,5 +1,6 @@
 const assert = require('assert');
 const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
+const { taskAssertions } = require('../../utils');
 
 describe('PPL Application', () => {
 
@@ -11,6 +12,8 @@ describe('PPL Application', () => {
     assert.ok(browser.isVisible('td*=Auto Project'));
     console.log('Found task for PIL');
     browser.$('td*=Auto Project').click('a=PIL application');
+
+    taskAssertions(browser);
 
     browser
       .click('label=Grant licence')
