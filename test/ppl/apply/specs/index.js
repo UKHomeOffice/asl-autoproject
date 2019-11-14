@@ -29,22 +29,19 @@ const waitForSync = browser => {
 
 const addProtocol = (browser, title) => {
   console.log(`Starting protocol '${title}'`);
-  if (!browser.$('input[name$=".title"]').isVisible()) {
-    console.log('  Clicking add...');
+
+  // if there's a completed protocol then add another
+  if (browser.isVisible('section.protocol.complete')) {
     browser.click('button=Add another protocol');
-    console.log('  Clicked add');
     browser.waitForExist('input[name$=".title"]');
   }
 
-  let openProtocol = browser.$('.protocol:not(.complete)');
-
-  openProtocol.$('input[name$=".title"]').setValue(title);
-    console.log('  Clicking continue...');
-  openProtocol.click('button=Continue');
-    console.log('  Clicked continue');
+  browser.$('.protocol.panel').$('input[name$=".title"]').setValue(title);
+  browser.pause(500);
+  browser.$('.protocol.panel').click('button=Continue');
 
   waitForSync(browser);
-  openProtocol = browser.$('.protocol:not(.complete)');
+  const openProtocol = browser.$('.protocol:not(.complete)');
 
   completeRichTextField(openProtocol, '.description');
   openProtocol.click('input[name$=".severity"][value="moderate"]');
