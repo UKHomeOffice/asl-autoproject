@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { paragraphs } = require('../../../utils');
+const { paragraphs, waitForSync } = require('../../../utils');
 
 const completeRichTextField = (browser, name) => {
   // If the fast flag is set fill in a lot less text
@@ -12,19 +12,6 @@ const continueAndComplete = browser => {
   browser.$('.control-panel').click('button=Continue');
   browser.click('input[name="complete"][value="true"]');
   browser.click('button=Continue');
-};
-
-const waitForSync = browser => {
-  browser.waitUntil(() => {
-    browser.refresh();
-    try {
-      browser.$('.header-title a').getText();
-      return true;
-    } catch (err) {
-      browser.alertDismiss();
-      return false;
-    }
-  });
 };
 
 const addProtocol = (browser, title) => {
@@ -48,24 +35,32 @@ const addProtocol = (browser, title) => {
   completeRichTextField(openProtocol, '.severity-proportion');
   completeRichTextField(openProtocol, '.severity-details');
   openProtocol.click('input[name$=".locations"][value="University of Croydon"]');
+  // results in POLE condition being added to protocol
+  openProtocol.click('input[name$=".locations"][value="First POLE"]');
   console.log('  Completed details');
 
   openProtocol.click('h3=Animals used in this protocol');
   openProtocol.click('input[name$=".species"][value="mice"]');
   openProtocol.click('input[name$=".life-stages"][value="adult"]');
-  openProtocol.click('input[name$=".continued-use"][value="false"]');
-  openProtocol.click('input[name$=".reuse"][value="false"]');
+  // results in "continued use on to a protocol" condition being added to protocol
+  openProtocol.click('input[name$=".continued-use"][value="true"]');
+  // results in reuse condition being added to protocol
+  openProtocol.click('input[name$=".reuse"][value="true"]');
   openProtocol.$('input[name$=".maximum-animals"]').setValue('100');
   openProtocol.$('input[name$=".maximum-times-used"]').setValue('1');
   console.log('  Completed animals');
 
   openProtocol.click('h3=Genetically altered animals (GAA)');
-  openProtocol.click('input[name$=".gaas"][value="false"]');
+  // results in transfer authorisation being added to project, if one of the following species are also selected:
+  // mice, rats, guinea-pigs, hamsters, gerbils, other-rodents, common-frogs, african-frogs, zebra-fish
+  openProtocol.click('input[name$=".gaas"][value="true"]');
   console.log('  Completed GAAs');
 
   openProtocol.click('h3=Steps');
   completeRichTextField(openProtocol, '.title');
-  openProtocol.click('input[name$=".nmbas"][value="false"]');
+  // results in NMBAs condition being added to protocol
+  // results in NMBAs condition being added to project
+  openProtocol.click('input[name$=".nmbas"][value="true"]');
   openProtocol.click('input[name$=".optional"][value="false"]');
   openProtocol.click('input[name$=".adverse"][value="false"]');
   openProtocol.click('button=Save step');
@@ -98,6 +93,10 @@ const addProtocol = (browser, title) => {
 
   openProtocol.click('h3=Fate of animals');
   openProtocol.click('input[name$=".fate"][value="killed"]');
+  // results in continued use on another protocol in same project
+  openProtocol.click('input[name$=".fate"][value="continued-use"]');
+  // results in continued use in another project
+  openProtocol.click('input[name$=".fate"][value="continued-use-2"]')
   console.log('  Completed fate');
 
   openProtocol.click('input[name="complete"][value="true"]');
@@ -134,6 +133,9 @@ describe('PPL Application', () => {
     browser.click('summary=Small animals');
     browser.click('input[name="SA"][value="mice"]');
     browser.click('input[name="SA"][value="rats"]');
+    browser.click('summary=Non-human primates');
+    // results in marmosets condition if "marmoset-colony" is also false.
+    browser.click('input[name="NHP"][value="marmosets"]');
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 1);
@@ -175,7 +177,9 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'establishment-supervisor');
     browser.$('.control-panel').click('button=Continue');
 
-    browser.click('input[name="establishments-care-conditions"][value="true"]');
+    // resuls in code-of-practice condition being added to project
+    browser.click('input[name="establishments-care-conditions"][value="false"]');
+    completeRichTextField(browser, 'establishments-care-conditions-justification');
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 4);
@@ -200,6 +204,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'poles-justification');
     browser.$('.control-panel').click('button=Continue');
 
+    // results in the POLEs condition being added to the project
     browser.$('input[name$=".title"]').setValue('First POLE');
     completeRichTextField(browser, '.pole-info');
     browser.$('.control-panel').click('button=Continue');
@@ -223,7 +228,9 @@ describe('PPL Application', () => {
     browser.click('input[name="scientific-background-non-regulatory"][value="false"]');
     browser.click('input[name="scientific-background-genetically-altered"][value="false"]');
     browser.click('input[name="scientific-background-vaccines"][value="false"]');
-    browser.click('input[name="transfer-expiring"][value="false"]');
+    // results in continuation authorisation being added to project
+    browser.click('input[name="transfer-expiring"][value="true"]');
+    completeRichTextField(browser, 'expiring-yes');
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 7);
@@ -293,18 +300,45 @@ describe('PPL Application', () => {
     // complete fate of animals
     browser.click('a=Fate of animals');
     browser.$('.nts').click('button=Continue');
-    browser.click('input[name="fate-of-animals-nts"][value="false"]');
+    browser.click('input[name="fate-of-animals-nts"][value="true"]');
+    // results in rehoming authorisation being added to project.
+    browser.click('input[name="fate-of-animals"][value="rehomed"]');
+    // results in setting-free authorisation being added to project.
+    browser.click('input[name="fate-of-animals"][value="set-free"]');
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 13);
     console.log('Completed fate of animals');
 
-    // complete purpose bred animals
-    browser.click('a=Purpose bred animals');
-    browser.click('input[name="purpose-bred"][value="true"]');
+    // complete NHPs
+    browser.click('a=Non-human primates');
+    completeRichTextField(browser, 'nhps');
+    browser.click('input[name="nhps-endangered"][value="false"]');
+    // there are 2 fields with the same name "nhps-justification", we only want the visible one
+    browser.$$('[name="nhps-justification"]')
+      .find(elem => elem.isVisible())
+      .click();
+    const nhpsJustificationValue = process.env.FAST ? paragraphs(1, 2, { words: [5, 10] }) : paragraphs();
+    nhpsJustificationValue.forEach(v => browser.keys(v));
+
+    browser.click('input[name="wild-caught-primates"][value="false"]');
+    // results in marmosets condition being added (if marmosets also selected in species)
+    browser.click('input[name="marmoset-colony"][value="false"]');
+    completeRichTextField(browser, 'marmoset-colony-justification');
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 14);
+    console.log('Completed NHPs');
+
+    // complete purpose bred animals
+    browser.click('a=Purpose bred animals');
+    // results in 'non-purpose-bred-sched-2' condition being added to project
+    browser.click('input[name="purpose-bred"][value="false"]');
+    completeRichTextField(browser, 'purpose-bred-sourced');
+    completeRichTextField(browser, 'purpose-bred-justification');
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, 15);
     console.log('Completed purpose bred animals');
 
     // complete endangered animals
@@ -312,32 +346,78 @@ describe('PPL Application', () => {
     browser.click('input[name="endangered-animals"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 15);
+    assert.equal(browser.$$('.badge.complete').length, 16);
     console.log('Completed endangered animals');
 
     // complete animals taken from the wild
     browser.click('a=Animals taken from the wild');
-    browser.click('input[name="wild-animals"][value="false"]');
+    // results in wild condition being added to project
+    browser.click('input[name="wild-animals"][value="true"]');
+    completeRichTextField(browser, 'wild-animals-justification');
+    completeRichTextField(browser, 'wild-animals-caught');
+    completeRichTextField(browser, 'wild-animals-potential-harms');
+    browser.click('input[name="non-target-species-capture-methods"][value="false"]');
+    completeRichTextField(browser, 'wild-animals-competence');
+    completeRichTextField(browser, 'wild-animals-examine');
+    browser.click('input[name="wild-animals-vet"][value="true"]');
+    browser.click('input[name="wild-animals-poor-health"][value="false"]');
+
+    browser.click('button=Continue');
+    completeRichTextField(browser, 'wild-animals-transport');
+    completeRichTextField(browser, 'wild-animals-killing-method');
+    browser.click('input[name="wild-animals-marked"][value="false"]');
+    browser.click('input[name="wild-animals-devices"][value="false"]');
+    browser.click('input[name="wild-animals-declaration"][value="true"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 16);
+    assert.equal(browser.$$('.badge.complete').length, 17);
     console.log('Completed animals taken from wild');
 
     // complete feral animals
     browser.click('a=Feral animals');
-    browser.click('input[name="feral-animals"][value="false"]');
+    // results in feral condition being added to project
+    browser.click('input[name="feral-animals"][value="true"]');
+    completeRichTextField(browser, 'feral-animals-justification');
+    completeRichTextField(browser, 'feral-animals-essential');
+    completeRichTextField(browser, 'feral-animals-procedures');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 17);
+    assert.equal(browser.$$('.badge.complete').length, 18);
     console.log('Completed feral animals');
+
+    // complete NMBAs
+    browser.click('a=Neuromuscular blocking agents (NMBAs)');
+    browser.click('button=Continue');
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, 19);
+    console.log('Completed NMBAs');
+
+    // complete reusing-animals
+    browser.click('a=Re-using animals');
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, 20);
+    console.log('Completed re-using animals');
+
+    // complete setting free
+    browser.click('a=Setting animals free');
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, 21);
+    console.log('Completed setting animals free');
+
+    // complete rehoming
+    browser.click('a=Rehoming animals');
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, 22);
+    console.log('Completed Rehoming animals');
 
     // complete commercial slaugher
     browser.click('a=Commercial slaughter');
+    // results in slaughter authorisation being added to project
     browser.click('input[name="commercial-slaughter"][value="true"]');
     completeRichTextField(browser, 'commercial-slaughter-hygiene');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 18);
+    assert.equal(browser.$$('.badge.complete').length, 23);
     console.log('Completed commercial slaughter');
 
     // complete human material
@@ -345,7 +425,7 @@ describe('PPL Application', () => {
     browser.click('input[name="animals-containing-human-material"][value="false"]');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 19);
+    assert.equal(browser.$$('.badge.complete').length, 24);
     console.log('Completed human material');
 
     // complete replacement
@@ -356,7 +436,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'replacement-justification');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 20);
+    assert.equal(browser.$$('.badge.complete').length, 25);
     console.log('Completed replacement');
 
     // complete reduction
@@ -369,7 +449,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'reduction-review');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 21);
+    assert.equal(browser.$$('.badge.complete').length, 26);
     console.log('Completed reduction');
 
     // complete refinement
@@ -382,7 +462,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'refinement-published-guidance');
 
     continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, 22);
+    assert.equal(browser.$$('.badge.complete').length, 27);
     console.log('Completed refinement');
 
     // complete nts review
@@ -390,7 +470,7 @@ describe('PPL Application', () => {
     browser.click('input[name="complete"][value="true"]');
     browser.click('button=Continue');
 
-    assert.equal(browser.$$('.badge.complete').length, 23);
+    assert.equal(browser.$$('.badge.complete').length, 28);
     console.log('Completed NTS review');
 
     // submit application
