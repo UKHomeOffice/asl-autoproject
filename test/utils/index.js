@@ -30,8 +30,22 @@ const paragraphs = (min = 1, max = 3, { words } = {}) => {
   return result;
 }
 
+const waitForSync = browser => {
+  browser.waitUntil(() => {
+    browser.refresh();
+    try {
+      browser.$('.header-title a').getText();
+      return true;
+    } catch (err) {
+      browser.alertDismiss();
+      return false;
+    }
+  });
+};
+
 module.exports = {
   words,
   sentence,
-  paragraphs
+  paragraphs,
+  waitForSync
 };

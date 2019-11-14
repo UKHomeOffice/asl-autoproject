@@ -27,6 +27,28 @@ describe('PPL Verify', () => {
 
     assert.ok(pdf.includes('Protocol 1 title'), 'First protocol title is displayed');
     assert.ok(pdf.includes('Protocol 2 title'), 'Second protocol title is displayed');
+
+    // conditions
+    [
+      'Marmosets',
+      'Animals taken from the wild',
+      'POLEs',
+      'Non purpose bred schedule 2 animals',
+      'Establishment licences not meeting Code of Practice',
+      'Batch testing'
+    ].forEach(condition => {
+      assert.ok(pdf.includes(condition));
+    });
+
+    const removedConditionText = 'Standard condition 13(a) of this licence shall not apply';
+    assert.ok(!pdf.includes(removedConditionText));
+
+    const amendedConditions = 'Standard condition 13(b) of this licence shall not apply in cases when mice bred for use in procedures are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.';
+    assert.ok(pdf.includes(amendedConditions));
+
+    const customProtocolConditions = 'Custom condition protocol 1';
+    assert.ok(pdf.includes(customProtocolConditions));
+
   });
 
 });
