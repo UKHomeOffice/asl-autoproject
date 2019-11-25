@@ -25,7 +25,7 @@ describe('PPL Recommendation', () => {
     // complete conditions
     browser.click('h3=Additional conditions');
     browser.click('a=Additional conditions');
-
+    browser.pause(2000);
     [
       'Marmosets',
       'Animals taken from the wild',
@@ -34,7 +34,7 @@ describe('PPL Recommendation', () => {
       'Non purpose bred schedule 2 animals',
       'Establishment licences not meeting Code of Practice'
     ].forEach(condition => {
-      assert.ok(browser.$(`h3=${condition}`).isExisting());
+      assert.ok(browser.$(`h3=${condition}`).isExisting(), `Condition "${condition}" should be visible`);
     });
 
     // Animals taken from the wild
