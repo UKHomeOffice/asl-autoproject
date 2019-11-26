@@ -81,8 +81,8 @@ describe('PPL Recommendation', () => {
       'Continued use on to a protocol',
       'Continued use off a protocol on to another in this project',
       'Continued use off protocol on to another project'
-    ].forEach(condition => {
-      assert.ok(browser.$(`h3=${condition}`).isExisting());
+    ].forEach(authorisation => {
+      assert.ok(browser.$(`h3=${authorisation}`).isExisting(), `Authorisation "${condition}" should be visible`);
     });
 
     waitForSync(browser);
