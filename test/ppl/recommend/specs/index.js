@@ -25,7 +25,6 @@ describe('PPL Recommendation', () => {
     // complete conditions
     browser.click('h3=Additional conditions');
     browser.click('a=Additional conditions');
-
     [
       'Marmosets',
       'Animals taken from the wild',
@@ -34,7 +33,7 @@ describe('PPL Recommendation', () => {
       'Non purpose bred schedule 2 animals',
       'Establishment licences not meeting Code of Practice'
     ].forEach(condition => {
-      assert.ok(browser.$(`h3=${condition}`).isExisting());
+      assert.ok(browser.$(`h3=${condition}`).isExisting(), `Condition "${condition}" should be visible`);
     });
 
     // Animals taken from the wild
@@ -79,10 +78,10 @@ describe('PPL Recommendation', () => {
     [
       'Re-use',
       'Continued use on to a protocol',
-      'Continued use off a protocol on to another in this project',
+      'Continued use off a protocol on to another protocol in this project',
       'Continued use off protocol on to another project'
-    ].forEach(condition => {
-      assert.ok(browser.$(`h3=${condition}`).isExisting());
+    ].forEach(authorisation => {
+      assert.ok(browser.$(`h3=${authorisation}`).isExisting(), `Authorisation "${authorisation}" should be visible`);
     });
 
     waitForSync(browser);
