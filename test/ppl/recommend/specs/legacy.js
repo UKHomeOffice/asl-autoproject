@@ -18,6 +18,7 @@ describe('PPL Recommendation', () => {
 
     browser.click('a=Introductory details');
 
+    assert.ok(browser.isVisible('a=Auto Project'), 'Licence holder should be visible on introductory details page');
     assert.ok(browser.isVisible(`p=${process.env.PROJECT_TITLE}`), 'Project title should be visible on introductory details review page');
     console.log('Reviewed project');
 
