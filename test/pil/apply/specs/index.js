@@ -77,7 +77,7 @@ describe('PIL Application', () => {
 
     // submit
     browser
-      .click('[name="declarations"]')
+      .click('[name="declaration"]')
       .click('button=Submit to NTCO')
 
     console.log('Submitted PIL application');
