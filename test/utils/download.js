@@ -5,15 +5,12 @@ const assert = require('assert');
 const parsePDF = data => pdf(Buffer.from(data, 'binary'));
 
 const downloadFile = (browser, fileType) => {
-  const isLicence = browser.isExisting('a=Download licence');
 
-  const selector = isLicence ? 'a=Download licence' : 'a=Download application';
-
-  browser.click(selector);
+  browser.click('a=View download options');
 
   const downloadLinks = {
-    pdf: 'a=As PDF',
-    word: 'a*=As Word'
+    pdf: 'a*=.pdf',
+    word: 'a*=.docx'
   };
 
   const mimeTypes = {
@@ -22,7 +19,7 @@ const downloadFile = (browser, fileType) => {
   };
 
   const url = browser.$(downloadLinks[fileType]).getAttribute('href');
-  browser.click(selector); // close it again so we can call this function multiple times
+  browser.click('a=Hide download options'); // close it again so we can call this function multiple times
 
   const allCookies = browser.getCookie();
   const sid = allCookies.find(c => c.name === 'sid').value;
