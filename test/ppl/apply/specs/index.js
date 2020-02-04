@@ -119,7 +119,7 @@ describe('PPL Application', () => {
     browser.click('a=Projects');
     browser.click('button=Apply for project licence');
 
-    assert.ok(browser.isVisible('h2=Untitled project'));
+    assert.ok(browser.isVisible('h1=Untitled project'));
     console.log('Created project');
     // complete introductory details
     browser.click('a=Introductory details');
