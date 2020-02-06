@@ -7,6 +7,8 @@ module.exports = ({ env, args }) => {
   const steps = [
     'apply',
     'endorse',
+    'return',
+    'resubmit',
     'recommend',
     'grant',
     'verify'
