@@ -192,6 +192,7 @@ describe('PPL Application', () => {
     completeRichTextField(browser, 'transfer-how');
     completeRichTextField(browser, 'transfer-measures');
     browser.click('input[name="transfer-recovery"][value="true"]');
+    browser.click('input[name="transfer-surgically-prepared"][value="true"]');
     browser.click('input[name="transfer-acclimatisation"][value="true"]');
     continueAndComplete(browser);
 
