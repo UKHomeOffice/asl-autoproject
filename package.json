@@ -20,7 +20,7 @@
   "dependencies": {
     "@ukhomeoffice/asl-functional-testing": "^1.2.4",
     "lodash": "^4.17.15",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.2",
     "pdf-parse": "^1.1.1",
     "r2": "^2.0.1",
     "wdio-tap-reporter": "0.0.5"
