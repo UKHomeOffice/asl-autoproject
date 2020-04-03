@@ -35,7 +35,8 @@ describe('PPL Verify', () => {
       'POLEs',
       'Non purpose bred schedule 2 animals',
       'Establishment licences not meeting Code of Practice',
-      'Batch testing'
+      'Batch testing',
+      'Neuromuscular blocking agents (NMBAs)'
     ].forEach(condition => {
       assert.ok(pdf.includes(condition));
     });

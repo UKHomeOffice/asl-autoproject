@@ -65,7 +65,6 @@ describe('PPL Recommendation', () => {
     browser.$$('section.protocol')[0].click();
     let protocol = browser.$$('section.protocol')[0];
     protocol.click('h3=Additional conditions');
-    assert.ok(browser.$('h3=Neuromuscular blocking agents (NMBAs)').isExisting());
     assert.ok(browser.$('h3=POLEs').isExisting());
 
     // add custom condition
