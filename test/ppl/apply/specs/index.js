@@ -388,7 +388,6 @@ describe('PPL Application', () => {
     browser.click('input[name="nmbas-used"][value="true"]');
     browser.click('button=Continue');
     browser.click('button=Continue');
-    browser.click('button=Continue');
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 19);
     console.log('Completed NMBAs');
