@@ -58,15 +58,12 @@ const addProtocol = (browser, title) => {
 
   openProtocol.click('h3=Steps');
   completeRichTextField(openProtocol, '.title');
-  // results in NMBAs condition being added to protocol
-  // results in NMBAs condition being added to project
-  openProtocol.click('input[name$=".nmbas"][value="true"]');
+
   openProtocol.click('input[name$=".optional"][value="false"]');
   openProtocol.click('input[name$=".adverse"][value="false"]');
   openProtocol.click('button=Save step');
   openProtocol.click('button=Add another step');
   completeRichTextField(openProtocol, '.title');
-  openProtocol.click('input[name$=".nmbas"][value="false"]');
   openProtocol.click('input[name$=".optional"][value="false"]');
   openProtocol.click('input[name$=".adverse"][value="false"]');
   openProtocol.click('button=Save step');
@@ -388,6 +385,9 @@ describe('PPL Application', () => {
 
     // complete NMBAs
     browser.click('a=Neuromuscular blocking agents (NMBAs)');
+    browser.click('input[name="nmbas-used"][value="true"]');
+    browser.click('button=Continue');
+    browser.click('button=Continue');
     browser.click('button=Continue');
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 19);
