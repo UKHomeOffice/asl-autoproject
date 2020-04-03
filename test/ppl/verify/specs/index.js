@@ -38,7 +38,7 @@ describe('PPL Verify', () => {
       'Batch testing',
       'Neuromuscular blocking agents (NMBAs)'
     ].forEach(condition => {
-      assert.ok(pdf.includes(condition));
+      assert.ok(pdf.includes(condition), `PDF should contain condition: "${condition}"`);
     });
 
     const removedConditionText = 'Standard condition 13(a) of this licence shall not apply';
