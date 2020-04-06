@@ -37,7 +37,7 @@ describe('PPL Recommendation', () => {
     });
 
     // Animals taken from the wild
-    browser.$$('button=Edit')[1].click();
+    browser.$('.wild').$('button=Edit').click();
     const textarea = browser.$('textarea');
     const value = textarea.getValue();
     textarea.setValue(value.replace('<<<INSERT animal type(s) HERE>>>', 'mice'));
@@ -47,7 +47,7 @@ describe('PPL Recommendation', () => {
     console.log('Updated animals taken from the wild condition')
 
     // Feral animals
-    browser.$$('button=Remove')[2].click();
+    browser.$('.feral').$('button=Remove').click();
 
     waitForSync(browser);
     console.log('Removed feral animals condition');
@@ -65,7 +65,6 @@ describe('PPL Recommendation', () => {
     browser.$$('section.protocol')[0].click();
     let protocol = browser.$$('section.protocol')[0];
     protocol.click('h3=Additional conditions');
-    assert.ok(browser.$('h3=Neuromuscular blocking agents (NMBAs)').isExisting());
     assert.ok(browser.$('h3=POLEs').isExisting());
 
     // add custom condition
