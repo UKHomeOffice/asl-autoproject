@@ -298,7 +298,6 @@ describe('PPL Application', () => {
     // complete fate of animals
     browser.click('a=Fate of animals');
     browser.$('.nts').click('button=Continue');
-    browser.click('input[name="fate-of-animals-nts"][value="true"]');
     // results in rehoming authorisation being added to project.
     browser.click('input[name="fate-of-animals"][value="rehomed"]');
     // results in setting-free authorisation being added to project.
