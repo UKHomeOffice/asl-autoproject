@@ -15,6 +15,14 @@ describe('PPL Recommendation', () => {
     console.log('Found task for project');
     browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
 
+    // extend deadline
+    browser.click('a=Extend deadline');
+    browser.setValue('textarea[name="comment"]', 'Reason for extending deadline');
+    browser.click('button=Extend deadline');
+    assert.equal(browser.$('.activity-log').$('span.badge').getText(), 'DEADLINE EXTENDED');
+    assert.ok(browser.isVisible('p=Reason for extending deadline'));
+    console.log('Extended deadline');
+
     browser.click('a=View latest submission');
 
     browser.click('a=Introductory details');
