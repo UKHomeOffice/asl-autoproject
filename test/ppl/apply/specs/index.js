@@ -228,7 +228,11 @@ describe('PPL Application', () => {
     browser.click('input[name="scientific-background-vaccines"][value="false"]');
     // results in continuation authorisation being added to project
     browser.click('input[name="transfer-expiring"][value="true"]');
-    completeRichTextField(browser, 'expiring-yes');
+    browser.$('input[name$=".licence-number"]').setValue('P12345678');
+    browser.$('input[name$=".expiry-date-day"]').setValue('01');
+    browser.$('input[name$=".expiry-date-month"]').setValue('01');
+    browser.$('input[name$=".expiry-date-year"]').setValue('2022');
+
 
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 7);
