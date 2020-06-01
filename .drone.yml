@@ -3,7 +3,7 @@ pipeline:
   install:
     image: node:12
     commands:
-      - npm ci --production
+      - npm ci
 
   lint:
     image: node:12

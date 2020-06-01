@@ -225,7 +225,6 @@ describe('PPL Application', () => {
     browser.$('input[name$=".expiry-date-month"]').setValue('01');
     browser.$('input[name$=".expiry-date-year"]').setValue('2022');
 
-
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, 7);
     console.log('Completed scientific background');

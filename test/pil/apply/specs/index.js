@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 describe('PIL Application', () => {
 
   it('can apply for a PIL', () => {
@@ -15,9 +13,9 @@ describe('PIL Application', () => {
     browser.$('a=Procedures').click();
     browser.$('label*=B.').click();
     browser.$('label*=D.').click();
-    browser.$('[name="notesCatD"]').setValue('Category D competency')
+    browser.$('[name="notesCatD"]').setValue('Category D competency');
     browser.$('label*=F.').click();
-    browser.$('[name="notesCatF"]').setValue('Category F type of procedure')
+    browser.$('[name="notesCatF"]').setValue('Category F type of procedure');
     browser.$('button=Continue').click();
 
     console.log('Procedures completed');
@@ -28,9 +26,9 @@ describe('PIL Application', () => {
     browser.$('label=Mice').click();
     browser.$('label=Rats').click();
     browser.$('summary=Other').click();
-    browser.$('.multi-input-item input').setValue('Jabu')
+    browser.$('.multi-input-item input').setValue('Jabu');
     browser.$('button=Add another').click();
-    browser.$('.multi-input-item:last-of-type input').setValue('Babu')
+    browser.$('.multi-input-item:last-of-type input').setValue('Babu');
     browser.$('button=Continue').click();
 
     console.log('Animal types completed');
@@ -52,7 +50,7 @@ describe('PIL Application', () => {
     browser.$('label=Mice').click();
     browser.$('button=Continue').click();
 
-    console.log('Training completed')
+    console.log('Training completed');
 
     // complete exemptions
     browser.$('a=Exemptions').click();
@@ -60,7 +58,7 @@ describe('PIL Application', () => {
     browser.$('button=Continue').click();
     browser.$('label=PILA (skills)').click();
     browser.$('[name="module-pilaskills-reason"]').setValue('Reason for PILA (skills) exemption');
-    browser.$('select[name="module-pilaskills-species-0"]').selectByVisibleText('Cats (Felis catus)')
+    browser.$('select[name="module-pilaskills-species-0"]').selectByVisibleText('Cats (Felis catus)');
 
     browser.$$('a=Add another').find(elem => elem.isDisplayed()).click();
 

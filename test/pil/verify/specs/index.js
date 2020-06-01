@@ -21,7 +21,7 @@ describe('PIL Verify', () => {
     assert.ok(pdf.includes('University of Croydon'), 'Primary establishment name is displayed');
 
     ['Mice', 'Rats', 'Jabu', 'Babu'].forEach(type => {
-      assert.ok(pdf.includes(type), `${type} is displayed`)
+      assert.ok(pdf.includes(type), `${type} is displayed`);
     });
 
     assert.ok(pdf.includes('Category F type of procedure'), 'Cat F type displayed');

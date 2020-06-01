@@ -279,7 +279,7 @@ describe('PPL Application', () => {
     console.log('Completed project summary');
 
     // complete NTS replacement
-    browser.$$('a=Replacement')[1].click()
+    browser.$$('a=Replacement')[1].click();
     browser.$('[name="nts-replacement"]').completeRichText();
 
     browser.$('button=Continue').click();
@@ -288,7 +288,7 @@ describe('PPL Application', () => {
     console.log('Completed NTS replacement');
 
     // complete NTS reduction
-    browser.$$('a=Reduction')[1].click()
+    browser.$$('a=Reduction')[1].click();
     browser.$('[name="nts-reduction"]').completeRichText();
 
     browser.$('button=Continue').click();
@@ -297,7 +297,7 @@ describe('PPL Application', () => {
     console.log('Completed NTS reduction');
 
     // complete NTS refinement
-    browser.$$('a=Refinement')[1].click()
+    browser.$$('a=Refinement')[1].click();
     browser.$('[name="nts-refinement"]').completeRichText();
 
     browser.$('button=Continue').click();

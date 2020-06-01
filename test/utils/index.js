@@ -17,7 +17,6 @@ const sentence = (min = 10, max = 60, newline = true) => {
   return txt.replace(/^\w/, c => c.toUpperCase()) + (newline ? '\n' : '');
 };
 
-
 const paragraphs = (min = 1, max = 3, { words } = {}) => {
   words = words || [];
   const result = [];
@@ -28,7 +27,7 @@ const paragraphs = (min = 1, max = 3, { words } = {}) => {
     result.push(sentence(minWords, maxWords));
   }
   return result;
-}
+};
 
 module.exports = {
   words,

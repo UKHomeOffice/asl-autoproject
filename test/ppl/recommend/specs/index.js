@@ -49,7 +49,7 @@ describe('PPL Recommendation', () => {
     browser.$('button=Save').click();
 
     browser.waitForSync();
-    console.log('Updated animals taken from the wild condition')
+    console.log('Updated animals taken from the wild condition');
 
     // Feral animals
     browser.$('.feral').$('button=Remove').click();
