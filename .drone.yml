@@ -1,25 +1,26 @@
 pipeline:
 
   install:
-    image: node:10
+    image: node:12
     commands:
       - npm ci --production
-    when:
-      event: push
+
+  lint:
+    image: node:12
+    commands:
+      - npm run test:lint
 
   test_pil:
-    image: node:10
+    image: node:12
     secrets:
       - keycloak_password
     commands:
       - npm test -- pil --env dev
     when:
       event: push
-      branch:
-        exclude: master
 
   test:
-    image: node:10
+    image: node:12
     group: test
     secrets:
       - keycloak_password
@@ -27,11 +28,9 @@ pipeline:
       - npm test -- ppl --env dev --fast
     when:
       event: push
-      branch:
-        exclude: master
 
   test_legacy:
-    image: node:10
+    image: node:12
     group: test
     secrets:
       - keycloak_password
@@ -39,40 +38,6 @@ pipeline:
       - npm test -- ppl --env dev --legacy --fast
     when:
       event: push
-      branch:
-        exclude: master
-
-  test_pil:
-    image: node:10
-    secrets:
-      - keycloak_password
-    commands:
-      - npm test -- pil --env dev
-    when:
-      event: push
-      branch: master
-
-  test:
-    image: node:10
-    group: test
-    secrets:
-      - keycloak_password
-    commands:
-      - npm test -- ppl --env dev
-    when:
-      event: push
-      branch: master
-
-  test_legacy:
-    group: test
-    image: node:10
-    secrets:
-      - keycloak_password
-    commands:
-      - npm test -- ppl --env dev --legacy
-    when:
-      event: push
-      branch: master
 
   build:
     image: docker:17.09.1

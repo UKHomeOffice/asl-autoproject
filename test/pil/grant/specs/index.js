@@ -1,26 +1,24 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 const { taskAssertions } = require('../../utils');
 
 describe('PPL Application', () => {
 
   it('can grant a PPL', () => {
     browser.withUser('licensing');
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible('td*=Auto Project'));
+    assert.ok(browser.$('td*=Auto Project').isDisplayed());
     console.log('Found task for PIL');
-    browser.$('td*=Auto Project').click('a=PIL application');
+    browser.$('td*=Auto Project').$('a=PIL application').click();
 
     taskAssertions(browser);
 
-    browser
-      .click('label=Grant licence')
-      .click('button=Continue')
-      .click('button=Grant licence');
+    browser.$('label=Grant licence').click();
+    browser.$('button=Continue').click();
+    browser.$('button=Grant licence').click();
 
-    assert.ok(browser.isVisible('h1=Licence granted'));
+    assert.ok(browser.$('h1=Licence granted').isDisplayed());
     console.log('Granted licence');
   });
 

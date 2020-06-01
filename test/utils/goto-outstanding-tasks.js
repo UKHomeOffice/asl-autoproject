@@ -1,20 +1,18 @@
-const gotoOutstandingTasks = browser => {
-  browser.click('a=In progress');
-  browser.waitUntil(() => {
-    if (browser.isExisting('table:not(.loading)')) {
+module.exports = function () {
+  this.$('a=In progress').click();
+  this.waitUntil(() => {
+    if (this.$('table:not(.loading)').isDisplayed()) {
       return true;
     }
-    if (browser.isExisting('p=You have no tasks in progress')) {
+    if (this.$('p=You have no tasks in progress').isDisplayed()) {
       return true;
     }
     return false;
   });
-  browser.click('a=Outstanding');
-  browser.waitForExist('table:not(.loading) th a:not(.disabled)');
-  browser.click('a=Last changed');
-  browser.waitForExist('table:not(.loading) th a:not(.disabled)');
-  browser.click('a=Last changed');
-  browser.waitForExist('table:not(.loading)');
+  this.$('a=Outstanding').click();
+  this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
+  this.$('a=Last changed').click();
+  this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
+  this.$('a=Last changed').click();
+  this.$('table:not(.loading)').waitForExist();
 };
-
-module.exports = gotoOutstandingTasks;

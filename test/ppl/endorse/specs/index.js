@@ -1,26 +1,23 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 
 describe('PPL endorsement', () => {
 
   it('can be endorsed by an admin user', () => {
-    browser.timeouts('implicit', 2000);
     browser.withUser('holc');
     browser.url('/');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
-    browser
-      .click('label=Endorse application')
-      .click('button=Continue')
-      .click('button=Endorse application');
+    browser.$('label=Endorse application').click();
+    browser.$('button=Continue').click();
+    browser.$('button=Endorse application').click();
 
-    assert.equal(browser.getText('h1'), 'Application endorsed');
+    assert.equal(browser.$('h1').getText(), 'Application endorsed');
 
     console.log('Endorsed application');
   });

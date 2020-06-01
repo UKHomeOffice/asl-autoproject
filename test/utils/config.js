@@ -1,3 +1,6 @@
+const { helpers } = require('@ukhomeoffice/asl-functional-testing');
+const install = require('./install');
+
 module.exports = (specs, env) => {
 
   const urls = {
@@ -14,8 +17,8 @@ module.exports = (specs, env) => {
     });
   }
 
-  return {
-    specs,
+  return helpers.config({
+    specs: [ specs ],
     users: {
       'autoproject': process.env.KEYCLOAK_PASSWORD,
       'holc': process.env.KEYCLOAK_PASSWORD,
@@ -25,13 +28,8 @@ module.exports = (specs, env) => {
       'inspector': process.env.KEYCLOAK_PASSWORD
     },
     urls,
-    wdio: {
-      maxInstances: 1,
-      reporters: ['tap'],
-      mochaOpts: {
-        timeout: 60 * 60 * 1000
-      }
-    }
-  }
+    sample: false,
+    before: () => install()
+  });
 
 };

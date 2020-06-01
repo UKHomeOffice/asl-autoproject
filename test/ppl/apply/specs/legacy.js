@@ -1,62 +1,40 @@
 const assert = require('assert');
 const { sample } = require('lodash');
-const { words, paragraphs } = require('../../../utils');
-
-const completeRichTextField = (browser, name) => {
-  // If the fast flag is set fill in a lot less text
-  const value = process.env.FAST ? paragraphs(1, 2, { words: [5, 10] }) : paragraphs();
-  browser.$(`[name$="${name}"]`).click();
-  value.forEach(v => browser.keys(v));
-};
-
-const waitForSync = browser => {
-  browser.waitUntil(() => {
-    browser.refresh();
-    try {
-      browser.$('.header-title a').getText();
-      return true;
-    } catch (err) {
-      browser.alertDismiss();
-      return false;
-    }
-  });
-};
 
 const addProtocol = (browser, title) => {
-  if (!browser.$('input[name$=".title"]').isVisible()) {
+  if (!browser.$('input[name$=".title"]').isDisplayed()) {
     console.log('Adding another protocol');
-    browser.click('button=Add another protocol');
-    browser.waitForExist('input[name$=".title"]');
+    browser.$('button=Add another protocol').click();
+    browser.$('input[name$=".title"]').waitForExist();
   }
 
   browser.$('input[name$=".title"]').setValue(title);
-  browser.$('.protocol.panel').click('button=Continue');
+  browser.$('.protocol.panel').$('button=Continue').click();
 
-  browser.waitForVisible(`h2*=${title}`);
+  browser.$(`h2*=${title}`).waitForDisplayed();
 
   const openProtocol = browser.$('section.protocol:last-of-type');
-  openProtocol.setValue('input[name$=".severity"]', sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
+  openProtocol.$('input[name$=".severity"]').setValue(sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
 
-  openProtocol.click('h3=Type of animals');
-  openProtocol.selectByVisibleText('select[name$=".speciesId"]', 'Camelids');
-  openProtocol.click('label[for$=".genetically-altered-true"]');
-  openProtocol.setValue('input[name$=".quantity"]', Math.ceil(Math.random() * 1000));
-  openProtocol.setValue('input[name$=".life-stages"]', sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
+  openProtocol.$('h3=Type of animals').click();
+  openProtocol.$('select[name$=".speciesId"]').selectByVisibleText('Camelids');
+  openProtocol.$('label[for$=".genetically-altered-true"]').click();
+  openProtocol.$('input[name$=".quantity"]').setValue(Math.ceil(Math.random() * 1000));
+  openProtocol.$('input[name$=".life-stages"]').setValue(sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
 
-  openProtocol.click('h3=Continued use/re-use');
-  completeRichTextField(openProtocol, '.continued-use');
-  completeRichTextField(openProtocol, '.reuse');
+  openProtocol.$('h3=Continued use/re-use').click();
+  openProtocol.$('[name$=".continued-use"]').completeRichText();
+  openProtocol.$('[name$=".reuse"]').completeRichText();
 
-  openProtocol.click('h3=Steps');
-  completeRichTextField(openProtocol, '.steps');
+  openProtocol.$('h3=Steps').click();
+  openProtocol.$('[name$=".steps"]').completeRichText();
 
-  openProtocol
-    .click('h3=Fate of animals')
-    .click('label[for$=".fate-continued-use"]')
-  completeRichTextField(openProtocol, '.fate-justification');
+  openProtocol.$('h3=Fate of animals').click();
+  openProtocol.$('label[for$=".fate-continued-use"]').click();
+  openProtocol.$('[name$=".fate-justification"]').completeRichText();
 
-  openProtocol.click('h3=Adverse effects');
-  completeRichTextField(openProtocol, '.adverse-effects');
+  openProtocol.$('h3=Adverse effects').click();
+  openProtocol.$('[name$=".adverse-effects"]').completeRichText();
 };
 
 describe('PPL Application', () => {
@@ -64,286 +42,285 @@ describe('PPL Application', () => {
   it('can apply for a PPL', () => {
     console.log(process.env.FAST ? '*** Fast mode enabled ***' : '');
 
-    browser.timeouts('implicit', 2000);
     browser.withUser('autoproject');
 
     browser.url('/');
 
-    browser.waitForExist('=View establishment information');
+    browser.$('=View establishment information').waitForExist();
 
-    browser.click('=View establishment information');
-    browser.click('a=Projects');
-    browser.click('a=Drafts');
-    browser.click(`a=${process.env.PROJECT_TITLE}`);
+    browser.$('=View establishment information').click();
+    browser.$('a=Projects').click();
+    browser.$('a=Drafts').click();
+    browser.$(`a=${process.env.PROJECT_TITLE}`).click();
 
-    assert.ok(browser.isVisible(`h1=${process.env.PROJECT_TITLE}`));
+    assert.ok(browser.$(`h1=${process.env.PROJECT_TITLE}`).isDisplayed());
 
-    browser.click('a=Open draft');
+    browser.$('a=Open draft').click();
 
     // complete introductory details
-    browser
-      .click('a=Introductory details')
-      .selectByVisibleText('select[name="years"]', '5')
-      .selectByVisibleText('select[name="months"]', '0')
-      .click('label[for="continuation-false"]')
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Introductory details').click();
+    browser.$('select[name="years"]').selectByVisibleText('5');
+    browser.$('select[name="months"]').selectByVisibleText('0');
+    browser.$('label[for="continuation-false"]').click();
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed introductory details');
 
     // complete experience
-    browser.click('a=Experience');
-    completeRichTextField(browser, 'experience-knowledge');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Experience').click();
+    browser.$('[name="experience-knowledge"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed experience');
 
     // complete resources
-    browser.click('a=Resources');
-    completeRichTextField(browser, 'other-resources')
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Resources').click();
+    browser.$('[name="other-resources"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed resources');
 
     // complete establishments
-    browser.click('a=Establishments');
-    browser.click('input[name="other-establishments"][value="true"]');
-    browser.$('.control-panel').click('button=Continue');
+    browser.$('a=Establishments').click();
+    browser.$('input[name="other-establishments"][value="true"]').click();
+    browser.$('.control-panel').$('button=Continue').click();
 
     browser.$('input[name$="establishment-name"]').setValue('Marvell Pharmaceutical');
-    completeRichTextField(browser, 'establishment-about');
-    completeRichTextField(browser, 'establishment-supervisor');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('[name$="establishment-about"]').completeRichText();
+    browser.$('[name$="establishment-supervisor"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed establishments');
 
     // complete POLES
-    browser.click('a=Places other than a licensed establishment (POLES)');
-    completeRichTextField(browser, 'poles-list');
-    completeRichTextField(browser, 'poles-justification');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Places other than a licensed establishment (POLES)').click();
+    browser.$('[name="poles-list"]').completeRichText();
+    browser.$('[name="poles-justification"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed POLES');
 
     // complete background
-    browser.click('a=Background');
-    completeRichTextField(browser, 'background');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Background').click();
+    browser.$('[name="background"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed background');
 
     // complete benefits
-    browser.click('a=Benefits');
-    completeRichTextField(browser, 'benefits');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Benefits').click();
+    browser.$('[name="benefits"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed benefits');
 
     // complete references
-    browser.click('a=References');
-    completeRichTextField(browser, 'references');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=References').click();
+    browser.$('[name="references"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed references');
 
     // complete purpose
-    browser.click('a=Purpose');
-    browser
-      .click('label[for="purpose-purpose-a"]')
-      .click('label[for="purpose-purpose-b"]')
-      .click('label[for="purpose-b-purpose-b1"]')
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Purpose').click();
+
+    browser.$('label[for="purpose-purpose-a"]').click();
+    browser.$('label[for="purpose-purpose-b"]').click();
+    browser.$('label[for="purpose-b-purpose-b1"]').click();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed purpose');
 
     // complete aims and objectives
-    browser.click('a=Aims and objectives');
-    completeRichTextField(browser, 'aims');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Aims and objectives').click();
+    browser.$('[name="aims"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed aims and objectives');
 
     // complete project plan
-    browser.click('a=Project plan');
-    completeRichTextField(browser, 'plan');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Project plan').click();
+    browser.$('[name="plan"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed project plan');
 
     // complete replacement
-    browser.click('a=Replacement');
-    completeRichTextField(browser, 'replacement');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Replacement').click();
+    browser.$('[name="replacement"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed replacement');
 
     // complete reduction
-    browser.click('a=Reduction');
-    completeRichTextField(browser, 'reduction');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Reduction').click();
+    browser.$('[name="reduction"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed reduction');
 
     // complete refinement
-    browser.click('a=Refinement');
-    completeRichTextField(browser, 'refinement');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Refinement').click();
+    browser.$('[name="refinement"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed refinement');
 
     // complete refinement
-    browser.click('a=Origin');
-    completeRichTextField(browser, 'origin');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Origin').click();
+    browser.$('[name="origin"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed origin');
 
     // protocols
-    browser.click('a=Protocols');
+    browser.$('a=Protocols').click();
 
     addProtocol(browser, 'Protocol 1 title');
     addProtocol(browser, 'Protocol 2 title');
 
-    browser.click('a.sections-link');
+    browser.$('a.sections-link').click();
 
     console.log('Completed protocols');
 
     // complete Cats, dogs, primates, and equidae
-    browser.click('a=Cats, dogs, primates, and equidae');
-    completeRichTextField(browser, 'domestic');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Cats, dogs, primates, and equidae').click();
+    browser.$('[name="domestic"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed cats, dogs, primates and equidae');
 
     // complete endangered animals
-    browser.click('a=Endangered animals');
-    completeRichTextField(browser, 'endangered');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Endangered animals').click();
+    browser.$('[name="endangered"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed endangered animals');
 
     // complete animals taken from the wild
-    browser.click('a=Animals taken from the wild');
-    completeRichTextField(browser, 'wild');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Animals taken from the wild').click();
+    browser.$('[name="wild"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed animals taken from the wild');
 
     // complete marmosets
-    browser.click('a=Marmosets');
-    completeRichTextField(browser, 'marmosets');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Marmosets').click();
+    browser.$('[name="marmosets"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed marmosets');
 
     // complete feral animals
-    browser.click('a=Feral animals');
-    completeRichTextField(browser, 'feral');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Feral animals').click();
+    browser.$('[name="feral"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed feral animals');
 
     // complete neuromuscular blocking agents (NMBAs)
-    browser.click('a=Neuromuscular blocking agents (NMBAs)');
-    completeRichTextField(browser, 'nmbas');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Neuromuscular blocking agents (NMBAs)').click();
+    browser.$('[name="nmbas"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed neuromuscular blocking agents (NMBAs)');
 
     // complete NTS project summary
-    browser.click('a=Project summary');
-    completeRichTextField(browser, 'nts-objectives');
-    completeRichTextField(browser, 'nts-benefits');
-    completeRichTextField(browser, 'nts-numbers');
-    completeRichTextField(browser, 'nts-adverse-effects');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('a=Project summary').click();
+    browser.$('[name="nts-objectives"]').completeRichText();
+    browser.$('[name="nts-benefits"]').completeRichText();
+    browser.$('[name="nts-numbers"]').completeRichText();
+    browser.$('[name="nts-adverse-effects"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed project summary');
 
     // complete NTS replacement
     browser.$$('a=Replacement')[1].click()
-    completeRichTextField(browser, 'nts-replacement');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('[name="nts-replacement"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed NTS replacement');
 
     // complete NTS reduction
     browser.$$('a=Reduction')[1].click()
-    completeRichTextField(browser, 'nts-reduction');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('[name="nts-reduction"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed NTS reduction');
 
     // complete NTS refinement
     browser.$$('a=Refinement')[1].click()
-    completeRichTextField(browser, 'nts-refinement');
-    browser
-      .click('button=Continue')
-      .click('button=Continue');
+    browser.$('[name="nts-refinement"]').completeRichText();
+
+    browser.$('button=Continue').click();
+    browser.$('button=Continue').click();
 
     console.log('Completed NTS refinement');
 
     // submit application
-    waitForSync(browser);
-    browser.click('button=Continue');
+    browser.waitForSync();
+    browser.$('button=Continue').click();
 
-    browser.click('label[for="awerb-notyet"]');
-    browser.click('label[for="ready-no"]');
+    browser.$('label[for="awerb-notyet"]').click();
+    browser.$('label[for="ready-no"]').click();
 
-    browser.click('button=Submit PPL application');
+    browser.$('button=Submit PPL application').click();
 
-    assert.ok(browser.isVisible('h1=Application submitted'));
+    assert.ok(browser.$('h1=Application submitted').isDisplayed());
     console.log('Submitted application');
 
     browser.url('/');
-    browser.click('a=In progress');
+    browser.$('a=In progress').click();
 
-    assert.ok(browser.$('a=PPL application').isExisting());
+    assert.ok(browser.$('a=PPL application').isDisplayed());
   });
 
 });

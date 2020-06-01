@@ -1,38 +1,35 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
-const { waitForSync } = require('../../../utils');
 
 describe('PPL Recommendation', () => {
 
   it('can recommend a PPL', () => {
-    browser.timeouts('implicit', 2000);
     browser.withUser('inspector');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
     // extend deadline
-    browser.click('a=Extend deadline');
-    browser.setValue('textarea[name="comment"]', 'Reason for extending deadline');
-    browser.click('button=Extend deadline');
+    browser.$('a=Extend deadline').click();
+    browser.$('textarea[name="comment"]').setValue('Reason for extending deadline');
+    browser.$('button=Extend deadline').click();
     assert.equal(browser.$('.activity-log').$('span.badge').getText(), 'DEADLINE EXTENDED');
-    assert.ok(browser.isVisible('p=Reason for extending deadline'));
+    assert.ok(browser.$('p=Reason for extending deadline').isDisplayed());
     console.log('Extended deadline');
 
-    browser.click('a=View latest submission');
+    browser.$('a=View latest submission').click();
 
-    browser.click('a=Introductory details');
+    browser.$('a=Introductory details').click();
 
-    assert.ok(browser.isVisible(`p=${process.env.PROJECT_TITLE}`), 'Project title should be visible on introductory details review page');
+    assert.ok(browser.$(`p=${process.env.PROJECT_TITLE}`).isDisplayed(), 'Project title should be visible on introductory details review page');
     console.log('Reviewed project');
 
     // complete conditions
-    browser.click('h3=Additional conditions');
-    browser.click('a=Additional conditions');
+    browser.$('h3=Additional conditions').click();
+    browser.$('a=Additional conditions').click();
     [
       'Marmosets',
       'Animals taken from the wild',
@@ -41,7 +38,7 @@ describe('PPL Recommendation', () => {
       'Non purpose bred schedule 2 animals',
       'Establishment licences not meeting Code of Practice'
     ].forEach(condition => {
-      assert.ok(browser.$(`h3=${condition}`).isExisting(), `Condition "${condition}" should be visible`);
+      assert.ok(browser.$(`h3=${condition}`).isDisplayed(), `Condition "${condition}" should be visible`);
     });
 
     // Animals taken from the wild
@@ -49,58 +46,58 @@ describe('PPL Recommendation', () => {
     const textarea = browser.$('textarea');
     const value = textarea.getValue();
     textarea.setValue(value.replace('<<<INSERT animal type(s) HERE>>>', 'mice'));
-    browser.click('button=Save');
+    browser.$('button=Save').click();
 
-    waitForSync(browser);
+    browser.waitForSync();
     console.log('Updated animals taken from the wild condition')
 
     // Feral animals
     browser.$('.feral').$('button=Remove').click();
 
-    waitForSync(browser);
+    browser.waitForSync();
     console.log('Removed feral animals condition');
 
-    browser.click('button=Add more additional conditions');
-    browser.click('input[name="conditions"][value="batch-testing"]');
-    browser.click('button=Confirm');
+    browser.$('button=Add more additional conditions').click();
+    browser.$('input[name="conditions"][value="batch-testing"]').click();
+    browser.$('button=Confirm').click();
 
-    waitForSync(browser);
+    browser.waitForSync();
     console.log('Added batch testing condition');
 
     // protocol conditions
-    browser.click('h3=Protocols');
-    browser.click('a=Protocols');
+    browser.$('h3=Protocols').click();
+    browser.$('a=Protocols').click();
     browser.$$('section.protocol')[0].click();
     let protocol = browser.$$('section.protocol')[0];
-    protocol.click('h3=Additional conditions');
-    assert.ok(browser.$('h3=POLEs').isExisting());
+    protocol.$('h3=Additional conditions').click();
+    assert.ok(browser.$('h3=POLEs').isDisplayed());
 
     // add custom condition
-    browser.click('button=Add another additional condition');
-    browser.setValue('textarea', 'Custom condition protocol 1');
-    browser.click('button=Save');
+    browser.$('button=Add another additional condition').click();
+    browser.$('textarea').setValue('Custom condition protocol 1');
+    browser.$('button=Save').click();
     console.log('custom condition added to first protocol');
 
-    browser.$$('section.protocol')[0].click('h3=Authorisations');
+    browser.$$('section.protocol')[0].$('h3=Authorisations').click();
     [
       'Re-use',
       'Continued use on to a protocol',
       'Continued use off a protocol on to another protocol in this project',
       'Continued use off protocol on to another project'
     ].forEach(authorisation => {
-      assert.ok(browser.$(`h3=${authorisation}`).isExisting(), `Authorisation "${authorisation}" should be visible`);
+      assert.ok(browser.$(`h3=${authorisation}`).isDisplayed(), `Authorisation "${authorisation}" should be visible`);
     });
 
-    waitForSync(browser);
-    browser.click('a=Next steps');
+    browser.waitForSync();
+    browser.$('a=Next steps').click();
 
-    browser.click('input[name="status"][value="inspector-recommended"]');
+    browser.$('input[name="status"][value="inspector-recommended"]').click();
 
-    browser.click('button=Continue');
+    browser.$('button=Continue').click();
 
-    browser.click('button=Recommend for approval');
+    browser.$('button=Recommend for approval').click();
 
-    assert.ok(browser.isVisible('h1=Recommendation sent'));
+    assert.ok(browser.$('h1=Recommendation sent').isDisplayed());
     console.log('Recommended application');
 
   });
