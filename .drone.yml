@@ -12,6 +12,8 @@ pipeline:
 
   test_pil:
     image: node:12
+    environment:
+      SELENIUM_HOST: selenium
     secrets:
       - keycloak_password
     commands:
@@ -21,6 +23,8 @@ pipeline:
 
   test:
     image: node:12
+    environment:
+      SELENIUM_HOST: selenium
     group: test
     secrets:
       - keycloak_password
@@ -31,6 +35,8 @@ pipeline:
 
   test_legacy:
     image: node:12
+    environment:
+      SELENIUM_HOST: selenium
     group: test
     secrets:
       - keycloak_password
