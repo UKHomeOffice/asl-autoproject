@@ -1,28 +1,25 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 
 describe('Resubmit PPL', () => {
 
   it('can be resubmitted', () => {
-    browser.timeouts('implicit', 2000);
     browser.withUser('autoproject');
     browser.url('/');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
-    browser
-      .click('label=Edit and resubmit the application')
-      .click('button=Continue');
+    browser.$('label=Edit and resubmit the application').click();
+    browser.$('button=Continue').click();
 
-    browser.click('button=Continue');
-    browser.click('button=Submit PPL application');
+    browser.$('button=Continue').click();
+    browser.$('button=Submit PPL application').click();
 
-    assert.ok(browser.isVisible('h1=Application submitted'));
+    assert.ok(browser.$('h1=Application submitted').isDisplayed());
     console.log('Resubmitted application');
   });
 

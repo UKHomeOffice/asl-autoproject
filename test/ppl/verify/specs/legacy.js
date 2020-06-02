@@ -1,22 +1,21 @@
 const assert = require('assert');
-const { downloadFile } = require('../../../utils/download');
 
 describe('PPL Verify', () => {
 
   it('can see granted PPL content', () => {
     browser.withUser('holc');
-    browser.click('h3=University of Croydon');
-    browser.waitForExist('=View establishment information');
-    browser.click('=View establishment information');
-    browser.click('a=Projects');
+    browser.$('h3=University of Croydon').click();
+    browser.$('=View establishment information').waitForExist();
+    browser.$('=View establishment information').click();
+    browser.$('a=Projects').click();
 
     browser.$('.search-box input[type="text"]').setValue(process.env.PROJECT_TITLE);
-    browser.click('.search-box button');
-    browser.waitForExist('table:not(.loading)');
-    browser.click(`a=${process.env.PROJECT_TITLE}`);
-    browser.click('=View granted licence');
+    browser.$('.search-box button').click();
+    browser.$('table:not(.loading)').waitForExist();
+    browser.$(`a=${process.env.PROJECT_TITLE}`).click();
+    browser.$('=View granted licence').click();
 
-    const pdf = downloadFile(browser, 'pdf');
+    const pdf = browser.downloadFile('pdf');
 
     assert.ok(pdf.includes(process.env.PROJECT_TITLE), 'Project title is displayed');
     assert.ok(pdf.includes('Auto Project'), 'Licence holder name is displayed');

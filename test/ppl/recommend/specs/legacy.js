@@ -1,36 +1,35 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 
 describe('PPL Recommendation', () => {
 
   it('can recommend a PPL', () => {
-    browser.timeouts('implicit', 2000);
+
     browser.withUser('inspector');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
-    browser.click('a=View latest submission');
+    browser.$('a=View latest submission').click();
 
-    browser.click('a=Introductory details');
+    browser.$('a=Introductory details').click();
 
-    assert.ok(browser.isVisible('a=Auto Project'), 'Licence holder should be visible on introductory details page');
-    assert.ok(browser.isVisible(`p=${process.env.PROJECT_TITLE}`), 'Project title should be visible on introductory details review page');
+    assert.ok(browser.$('a=Auto Project').isDisplayed(), 'Licence holder should be visible on introductory details page');
+    assert.ok(browser.$(`p=${process.env.PROJECT_TITLE}`).isDisplayed(), 'Project title should be visible on introductory details review page');
     console.log('Reviewed project');
 
-    browser.click('a=Next steps');
+    browser.$('a=Next steps').click();
 
-    browser.click('input[name="status"][value="inspector-recommended"]');
+    browser.$('input[name="status"][value="inspector-recommended"]').click();
 
-    browser.click('button=Continue');
+    browser.$('button=Continue').click();
 
-    browser.click('button=Recommend for approval');
+    browser.$('button=Recommend for approval').click();
 
-    assert.ok(browser.isVisible('h1=Recommendation sent'));
+    assert.ok(browser.$('h1=Recommendation sent').isDisplayed());
     console.log('Recommended application');
 
   });

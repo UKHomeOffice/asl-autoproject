@@ -1,7 +1,7 @@
 const pipeline = require('../utils/pipeline');
 const { sentence } = require('../utils');
 
-const LEGACY_TITLE = 'Legacy Autoproject Draft'
+const LEGACY_TITLE = 'Legacy Autoproject Draft';
 
 module.exports = ({ env, args }) => {
   const steps = [

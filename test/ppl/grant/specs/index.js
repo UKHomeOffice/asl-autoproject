@@ -1,46 +1,34 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
-const { downloadFile } = require('../../../utils/download');
-
-const gotoGranted = (browser, title) => {
-  browser.url('/');
-  browser.click('a=Projects');
-  browser.$('.search-box input[type="text"]').setValue(title);
-  browser.click('.search-box button');
-  browser.waitForExist('table:not(.loading)');
-  browser.click(`a=${title}`);
-  browser.click('=View granted licence');
-};
 
 describe('PPL Grant', () => {
 
   it('can grant a PPL', () => {
-    browser.timeouts('implicit', 2000);
+
     browser.withUser('licensing');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
-    browser.click('a=View latest submission');
+    browser.$('a=View latest submission').click();
 
-    browser.click('a=Introductory details');
+    browser.$('a=Introductory details').click();
 
-    assert.ok(browser.isVisible(`p=${process.env.PROJECT_TITLE}`), 'Project title should be visible on introductory details review page');
+    assert.ok(browser.$(`p=${process.env.PROJECT_TITLE}`).isDisplayed(), 'Project title should be visible on introductory details review page');
     console.log('Reviewed project');
 
-    browser.click('a=Next steps');
+    browser.$('a=Next steps').click();
 
-    browser.click('input[name="status"][value="resolved"]');
+    browser.$('input[name="status"][value="resolved"]').click();
 
-    browser.click('button=Continue');
+    browser.$('button=Continue').click();
 
-    browser.click('button=Grant licence');
+    browser.$('button=Grant licence').click();
 
-    assert.ok(browser.isVisible('h1=Licence granted'));
+    assert.ok(browser.$('h1=Licence granted').isDisplayed());
     console.log('Granted licence');
 
   });

@@ -1,27 +1,25 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 
 describe('Return PPL to applicant', () => {
 
   it('can be returned to applicant', () => {
-    browser.timeouts('implicit', 2000);
+
     browser.withUser('inspector');
     browser.url('/');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible(`[title="${process.env.PROJECT_TITLE}"]`));
+    assert.ok(browser.$(`[title="${process.env.PROJECT_TITLE}"]`).isDisplayed());
     console.log('Found task for project');
-    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).click('a=PPL application');
+    browser.$(`[title="${process.env.PROJECT_TITLE}"]`).$('a=PPL application').click();
 
-    browser
-      .click('label=Return to applicant')
-      .click('button=Continue')
-      .setValue('[name="comment"]', 'No way José')
-      .click('button=Return to applicant');
+    browser.$('label=Return to applicant').click();
+    browser.$('button=Continue').click();
+    browser.$('[name="comment"]').setValue('No way José');
+    browser.$('button=Return to applicant').click();
 
-    assert.equal(browser.getText('h1'), 'Application returned');
+    assert.equal(browser.$('h1').getText(), 'Application returned');
 
     console.log('Returned application');
   });

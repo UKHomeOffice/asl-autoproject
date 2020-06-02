@@ -1,5 +1,4 @@
 const assert = require('assert');
-const gotoOutstandingTasks = require('../../../utils/goto-outstanding-tasks');
 const { taskAssertions } = require('../../utils');
 
 describe('PIL Application', () => {
@@ -9,23 +8,22 @@ describe('PIL Application', () => {
 
     browser.url('/');
 
-    gotoOutstandingTasks(browser);
+    browser.gotoOutstandingTasks();
 
     // find task in task list
-    assert.ok(browser.isVisible('td*=Auto Project'));
+    assert.ok(browser.$('td*=Auto Project').isDisplayed());
     console.log('Found task for PIL');
-    browser.$('td*=Auto Project').click('a=PIL application');
+    browser.$('td*=Auto Project').$('a=PIL application').click();
 
     taskAssertions(browser);
 
     console.log('Completed assertions');
 
-    browser
-      .click('label=Endorse application')
-      .click('button=Continue')
-      .click('button=Endorse application');
+    browser.$('label=Endorse application').click();
+    browser.$('button=Continue').click();
+    browser.$('button=Endorse application').click();
 
-    assert.equal(browser.getText('h1'), 'Application endorsed');
+    assert.equal(browser.$('h1').getText(), 'Application endorsed');
 
     console.log('Endorsed application');
   });
