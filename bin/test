@@ -4,12 +4,13 @@ const args = require('minimist')(process.argv.slice(2));
 
 const ppl = require('../test/ppl');
 const pil = require('../test/pil');
+const place = require('../test/place');
 
 const TEST_ENV = args.env || 'local';
 const KEYCLOAK_PASSWORD = args.password || process.env.KEYCLOAK_PASSWORD;
 const env = { TEST_ENV, KEYCLOAK_PASSWORD };
 
-const runners = { pil, ppl };
+const runners = { pil, ppl, place };
 const suite = args._[0] || 'ppl';
 const runner = runners[suite];
 
