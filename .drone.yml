@@ -10,6 +10,17 @@ pipeline:
     commands:
       - npm run test:lint
 
+  test_place:
+    image: node:12
+    environment:
+      SELENIUM_HOST: selenium
+    secrets:
+      - keycloak_password
+    commands:
+      - npm test -- place --env dev
+    when:
+      event: push
+
   test_pil:
     image: node:12
     environment:

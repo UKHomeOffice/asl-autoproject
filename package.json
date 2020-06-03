@@ -19,13 +19,14 @@
   },
   "homepage": "https://github.com/UKHomeOffice/asl-autoproject#readme",
   "dependencies": {
-    "@ukhomeoffice/asl-functional-testing": "^2.0.2",
+    "@ukhomeoffice/asl-functional-testing": "^2.0.3",
     "@wdio/cli": "^6.1.15",
     "@wdio/local-runner": "^6.1.14",
     "@wdio/mocha-framework": "^6.1.14",
     "@wdio/sync": "^6.1.14",
     "lodash": "^4.17.15",
     "minimist": "^1.2.3",
+    "moment": "^2.26.0",
     "pdf-parse": "^1.1.1",
     "r2": "^2.0.1"
   },
