@@ -1,4 +1,5 @@
-module.exports = function () {
+module.exports = (type = 'Outstanding') => function () {
+  const latestLabel = type === 'Completed' ? 'Completed' : 'Last changed';
   this.$('a=In progress').click();
   this.waitUntil(() => {
     if (this.$('table:not(.loading)').isDisplayed()) {
@@ -9,10 +10,10 @@ module.exports = function () {
     }
     return false;
   });
-  this.$('a=Outstanding').click();
+  this.$(`a=${type}`).click();
   this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
-  this.$('a=Last changed').click();
+  this.$('th').$(`a=${latestLabel}`).click();
   this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
-  this.$('a=Last changed').click();
+  this.$('th').$(`a=${latestLabel}`).click();
   this.$('table:not(.loading)').waitForExist();
 };
