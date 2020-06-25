@@ -49,6 +49,10 @@ describe('PPL Verify', () => {
     const customProtocolConditions = 'Custom condition protocol 1';
     assert.ok(pdf.includes(customProtocolConditions));
 
+    const nts = browser.downloadFile('nts');
+
+    assert.ok(nts.includes('keyword-0, keyword-1, keyword-2, keyword-3, keyword-4'));
+
   });
 
 });

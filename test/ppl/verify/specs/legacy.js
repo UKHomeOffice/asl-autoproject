@@ -25,6 +25,10 @@ describe('PPL Verify', () => {
 
     assert.ok(pdf.includes('Protocol 1 title'), 'First protocol title is displayed');
     assert.ok(pdf.includes('Protocol 2 title'), 'Second protocol title is displayed');
+
+    const nts = browser.downloadFile('nts');
+
+    assert.ok(nts.includes('keyword-0, keyword-1, keyword-2, keyword-3, keyword-4'));
   });
 
 });

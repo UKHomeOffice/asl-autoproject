@@ -59,6 +59,13 @@ describe('PPL Application', () => {
 
     // complete introductory details
     browser.$('a=Introductory details').click();
+
+    browser.$('input[name="keyword-0"]').setValue('keyword-0');
+    browser.$('input[name="keyword-1"]').setValue('keyword-1');
+    browser.$('input[name="keyword-2"]').setValue('keyword-2');
+    browser.$('input[name="keyword-3"]').setValue('keyword-3');
+    browser.$('input[name="keyword-4"]').setValue('keyword-4');
+
     browser.$('select[name="years"]').selectByVisibleText('5');
     browser.$('select[name="months"]').selectByVisibleText('0');
     browser.$('label[for="continuation-false"]').click();
