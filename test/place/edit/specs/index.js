@@ -5,12 +5,22 @@ describe('Edit place', () => {
     browser.withUser('holc');
     browser.gotoPlaces();
     browser.$('a=Filter by').click();
+    browser.$('#site-label').click();
     browser.$('label=Autoproject site').click();
     browser.$('button=Apply filters').click();
 
-    browser.$(`tr*=${process.env.PLACE_NAME}`).click();
-    browser.$$('a=Amend').find(el => el.isDisplayed()).waitForClickable();
-    browser.$$('a=Amend').find(el => el.isDisplayed()).click();
+    browser.$('table:not(.loading) th a:not(.disabled)').waitForExist();
+
+    // sort table twice so most recently created _should_ be at the top
+    browser.$('thead').$('a=Name').click();
+    browser.$('table:not(.loading) th a:not(.disabled)').waitForExist();
+
+    browser.$('thead').$('a=Name').click();
+    browser.$('table:not(.loading) th a:not(.disabled)').waitForExist();
+
+    browser.$(`a=${process.env.PLACE_NAME}`).click();
+
+    browser.$('a=Amend area').click();
 
     // deselect SA
     browser
