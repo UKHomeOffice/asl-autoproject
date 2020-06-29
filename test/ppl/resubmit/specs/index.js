@@ -17,6 +17,7 @@ describe('Resubmit PPL', () => {
     browser.$('button=Continue').click();
 
     browser.$('button=Continue').click();
+    browser.$('input[name="ready"][value="Yes"]').click();
     browser.$('button=Submit PPL application').click();
 
     assert.ok(browser.$('h1=Application submitted').isDisplayed());
