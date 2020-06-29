@@ -317,7 +317,6 @@ describe('PPL Application', () => {
     browser.$('button=Continue').click();
 
     browser.$('label[for="awerb-notyet"]').click();
-    browser.$('label[for="ready-no"]').click();
 
     browser.$('button=Submit PPL application').click();
 
