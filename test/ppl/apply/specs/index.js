@@ -478,7 +478,6 @@ describe('PPL Application', () => {
 
     browser.$('input[name="awerb"][value="Yes"]').click();
     browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
-    browser.$('input[name="ready"][value="Yes"]').click();
     browser.$('button=Submit PPL application').click();
 
     assert.ok(browser.$('h1=Application submitted').isDisplayed());
