@@ -11,6 +11,7 @@ pipeline:
       - npm run test:lint
 
   test_place:
+    group: placeandpil
     image: node:12
     environment:
       SELENIUM_HOST: selenium
@@ -22,6 +23,7 @@ pipeline:
       event: push
 
   test_pil:
+    group: placeandpil
     image: node:12
     environment:
       SELENIUM_HOST: selenium
@@ -33,6 +35,7 @@ pipeline:
       event: push
 
   test:
+    group: ppls
     image: node:12
     environment:
       SELENIUM_HOST: selenium
@@ -44,6 +47,7 @@ pipeline:
       event: push
 
   test_legacy:
+    group: ppls
     image: node:12
     environment:
       SELENIUM_HOST: selenium
