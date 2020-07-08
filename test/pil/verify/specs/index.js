@@ -4,9 +4,7 @@ describe('PIL Verify', () => {
 
   it('can see granted PIL content', () => {
     browser.withUser('holc');
-    browser.$('h3=University of Croydon').click();
-    browser.$('=View establishment information').waitForExist();
-    browser.$('=View establishment information').click();
+    browser.gotoEstablishment();
     browser.$('a=People').click();
 
     browser.$('.search-box input[type="text"]').setValue('Auto Project');
