@@ -100,10 +100,7 @@ describe('PPL Application', () => {
 
     browser.withUser('autoproject');
 
-    browser.url('/');
-
-    browser.$('=View establishment information').waitForExist();
-    browser.$('=View establishment information').click();
+    browser.gotoEstablishment();
     browser.$('a=Projects').click();
     browser.$('button=Apply for project licence').click();
 

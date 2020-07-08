@@ -4,9 +4,7 @@ describe('PPL Verify', () => {
 
   it('can see granted PPL content', () => {
     browser.withUser('holc');
-    browser.$('h3=University of Croydon').click();
-    browser.$('=View establishment information').waitForExist();
-    browser.$('=View establishment information').click();
+    browser.gotoEstablishment();
     browser.$('a=Projects').click();
 
     browser.$('.search-box input[type="text"]').setValue(process.env.PROJECT_TITLE);
