@@ -144,7 +144,6 @@ describe('PPL Application', () => {
     browser.$('[name$="experience-experimental-design"]').completeRichText();
     browser.$('[name$="experience-others"]').completeRichText();
     browser.$('[name$="funding-previous"]').completeRichText();
-    browser.$('[name$="other-people"]').completeRichText();
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 2);
