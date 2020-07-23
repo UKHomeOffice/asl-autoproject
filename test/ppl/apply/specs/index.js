@@ -112,6 +112,7 @@ describe('PPL Application', () => {
     browser.$('input[name="title"]').setValue(process.env.PROJECT_TITLE);
     browser.$('[name$="project-aim"]').completeRichText();
     browser.$('[name$="project-importance"]').completeRichText();
+    browser.$('[name="training-licence"][value="false"]').click();
     browser.$('[name="permissible-purpose"][value="basic-research"]').click();
 
     browser.$('input[name="keyword-0"]').setValue('keyword-0');
@@ -143,7 +144,6 @@ describe('PPL Application', () => {
     browser.$('[name$="experience-experimental-design"]').completeRichText();
     browser.$('[name$="experience-others"]').completeRichText();
     browser.$('[name$="funding-previous"]').completeRichText();
-    browser.$('[name$="other-people"]').completeRichText();
     continueAndComplete(browser);
 
     assert.equal(browser.$$('.badge.complete').length, 2);
