@@ -16,7 +16,7 @@ describe('Recommend place', () => {
 
     browser.$('button=Amend licence').click();
 
-    assert.ok(browser.$('h1=Amendment approved').isDisplayed());
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Approved');
     console.log('Granted amendment');
   });
 

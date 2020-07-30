@@ -97,7 +97,8 @@ describe('PPL Recommendation', () => {
 
     browser.$('button=Recommend for approval').click();
 
-    assert.ok(browser.$('h1=Recommendation sent').isDisplayed());
+    assert.equal(browser.$('.page-header h1').getText(), 'Project application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Recommendation made');
     console.log('Recommended application');
 
   });

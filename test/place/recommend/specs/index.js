@@ -16,7 +16,7 @@ describe('Recommend place', () => {
 
     browser.$('button=Recommend for approval').click();
 
-    assert.ok(browser.$('h1=Recommendation sent').isDisplayed());
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Recommendation made');
     console.log('Recommended task');
   });
 

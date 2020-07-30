@@ -19,7 +19,8 @@ describe('Return PPL to applicant', () => {
     browser.$('[name="comment"]').setValue('No way José');
     browser.$('button=Return to applicant').click();
 
-    assert.equal(browser.$('h1').getText(), 'Application returned');
+    assert.equal(browser.$('.page-header h1').getText(), 'Project application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Returned');
 
     console.log('Returned application');
   });

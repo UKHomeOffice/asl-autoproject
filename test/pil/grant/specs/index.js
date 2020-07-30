@@ -18,7 +18,8 @@ describe('PPL Application', () => {
     browser.$('button=Continue').click();
     browser.$('button=Grant licence').click();
 
-    assert.ok(browser.$('h1=Licence granted').isDisplayed());
+    assert.equal(browser.$('.page-header h1').getText(), 'Personal licence application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Approved');
     console.log('Granted licence');
   });
 
