@@ -23,7 +23,8 @@ describe('PIL Application', () => {
     browser.$('button=Continue').click();
     browser.$('button=Endorse application').click();
 
-    assert.equal(browser.$('h1').getText(), 'Application endorsed');
+    assert.equal(browser.$('.page-header h1').getText(), 'Personal licence application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Endorsed');
 
     console.log('Endorsed application');
   });

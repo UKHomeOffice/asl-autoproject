@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 describe('PIL Application', () => {
 
   it('can apply for a PIL', () => {
@@ -71,6 +73,8 @@ describe('PIL Application', () => {
     browser.$('[name="declaration"]').click();
     browser.$('button=Submit to NTCO').click();
 
+    assert.equal(browser.$('.page-header h1').getText(), 'Personal licence application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Submitted');
     console.log('Submitted PIL application');
   });
 

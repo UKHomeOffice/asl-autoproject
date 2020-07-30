@@ -42,6 +42,7 @@ describe('Create place', () => {
     browser.$('input[name="declaration"]').click();
     browser.$('button*=Submit').click();
 
-    assert.equal(browser.$('h1').getText(), 'Amendment submitted');
+    assert.equal(browser.$('.page-header h1').getText(), 'New approved area');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Submitted');
   });
 });

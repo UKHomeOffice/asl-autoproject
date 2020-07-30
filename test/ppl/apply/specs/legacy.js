@@ -316,7 +316,8 @@ describe('PPL Application', () => {
 
     browser.$('button=Submit PPL application').click();
 
-    assert.ok(browser.$('h1=Application submitted').isDisplayed());
+    assert.equal(browser.$('.page-header h1').getText(), 'Project application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Submitted');
     console.log('Submitted application');
 
     browser.url('/');
