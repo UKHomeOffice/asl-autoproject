@@ -1,11 +1,11 @@
 const assert = require('assert');
 
 const taskAssertions = browser => {
-  assert.ok(browser.$('dd=Category D competency').isDisplayed());
-  assert.ok(browser.$('dd=Category F type of procedure').isDisplayed());
+  assert.ok(browser.$('.procedures-diff').$('li*=Category D competency').isDisplayed());
+  assert.ok(browser.$('.procedures-diff').$('li*=Category F type of procedure').isDisplayed());
 
   ['Mice', 'Rats', 'Jabu', 'Babu'].forEach(type => {
-    assert.ok(browser.$('#species').$(`p=${type}`).isDisplayed(), `Expected ${type} to be in species list`);
+    assert.ok(browser.$('#species').$(`li=${type}`).isDisplayed(), `Expected ${type} to be in species list`);
   });
 
   const training = browser.$('#training');
