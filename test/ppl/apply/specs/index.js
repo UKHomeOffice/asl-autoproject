@@ -159,6 +159,12 @@ describe('PPL Application', () => {
     assert.equal(browser.$$('.badge.complete').length, 3);
     console.log('Completed funding');
 
+    // complete training
+    browser.$('a=Training').click();
+    browser.$('label[for="update-training-false"]').click();
+    browser.$('button=Continue').click();
+    console.log('Completed training');
+
     // complete establishments
     browser.$('a=Establishments').click();
     browser.$('input[name="other-establishments"][value="true"]').click();

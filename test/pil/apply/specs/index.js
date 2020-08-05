@@ -37,37 +37,10 @@ describe('PIL Application', () => {
 
     // complete training
     browser.$('a=Training').click();
-    browser.$('label=Yes').click();
-    browser.$('button=Continue').click();
-    browser.$('[name="certificateNumber"]').setValue('12345');
-    browser.$('label=Royal Society of Biology').click();
-    browser.$('[name="passDate-day"]').setValue('01');
-    browser.$('[name="passDate-month"]').setValue('01');
-    browser.$('[name="passDate-year"]').setValue('1999');
-    browser.$('button=Continue').click();
-    browser.$('label=PILA (theory)').click();
-    browser.$('label=PILB').click();
-    browser.$('button=Continue').click();
-    browser.$('summary=Small animals').click();
-    browser.$('label=Mice').click();
+    browser.$('label[for="update-false"]').click();
     browser.$('button=Continue').click();
 
     console.log('Training completed');
-
-    // complete exemptions
-    browser.$('a=Exemptions').click();
-    browser.$('label=Yes').click();
-    browser.$('button=Continue').click();
-    browser.$('label=PILA (skills)').click();
-    browser.$('[name="module-pilaskills-reason"]').setValue('Reason for PILA (skills) exemption');
-    browser.$('select[name="module-pilaskills-species-0"]').selectByVisibleText('Cats (Felis catus)');
-
-    browser.$$('a=Add another').find(elem => elem.isDisplayed()).click();
-
-    browser.$('select[name="module-pilaskills-species-1"]').selectByVisibleText('Reptiles (Reptilia)');
-    browser.$('button=Continue').click();
-
-    console.log('Exemptions complete');
 
     // submit
     browser.$('[name="declaration"]').click();
