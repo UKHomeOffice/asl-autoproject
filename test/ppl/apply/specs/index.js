@@ -162,7 +162,7 @@ describe('PPL Application', () => {
 
     // complete training
     browser.$('a=Training').click();
-    browser.$('label[for="update-training-false"]').click();
+    browser.$('label[for="training-complete-true"]').click();
     browser.$('button=Continue').click();
 
     assert.equal(browser.$$('.badge.complete').length, ++complete);
