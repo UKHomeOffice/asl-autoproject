@@ -312,8 +312,6 @@ describe('PPL Application', () => {
     browser.waitForSync();
     browser.$('button=Continue').click();
 
-    browser.$('label[for="awerb-notyet"]').click();
-
     browser.$('button=Submit PPL application').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Project application');
