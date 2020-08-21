@@ -471,7 +471,7 @@ describe('PPL Application', () => {
     console.log('Completed refinement');
 
     // complete nts review
-    browser.$('a=Review').click();
+    browser.$('a=Non-technical summary').click();
     browser.$('input[name="complete"][value="true"]').click();
     browser.$('button=Continue').click();
 
