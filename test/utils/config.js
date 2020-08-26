@@ -29,6 +29,7 @@ module.exports = (specs, env) => {
     },
     urls,
     sample: false,
+    flags: ['--whitelisted-ips', '--disable-dev-shm-usage'],
     before: () => install()
   });
 

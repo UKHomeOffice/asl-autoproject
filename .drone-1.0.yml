@@ -6,7 +6,7 @@ services:
   - name: selenium
     image: selenium/standalone-chrome:3.141.0
     environment:
-      START_XVFB: False
+      START_XVFB: "FALSE"
   - name: docker
     image: docker:dind
     environment:
