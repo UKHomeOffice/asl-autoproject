@@ -16,7 +16,7 @@ describe('PPL Recommendation', () => {
     browser.$('a=Extend deadline').click();
     browser.$('textarea[name="comment"]').setValue('Reason for extending deadline');
     browser.$('button=Extend deadline').click();
-    assert.equal(browser.$('.activity-log').$('span.badge').getText(), 'DEADLINE EXTENDED');
+    assert.equal(browser.$('.task-status').$('span.badge').getText(), 'DEADLINE EXTENDED');
     assert.ok(browser.$('p=Reason for extending deadline').isDisplayed());
     console.log('Extended deadline');
 
