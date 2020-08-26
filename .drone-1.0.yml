@@ -1,0 +1,89 @@
+---
+kind: pipeline
+name: default
+type: kubernetes
+services:
+  - name: selenium
+    image: selenium/standalone-chrome:3.141.0
+    environment:
+      START_XVFB: "FALSE"
+  - name: docker
+    image: docker:dind
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+steps:
+  - name: install
+    image: node:12
+    commands:
+      - npm ci
+  - name: lint
+    image: node:12
+    commands:
+      - npm run test:lint
+    depends_on:
+      - install
+  - name: ppl
+    image: node:12
+    environment:
+      KEYCLOAK_PASSWORD:
+        from_secret: keycloak_password
+    commands:
+      - npm test -- ppl --env dev --fast
+    depends_on:
+      - lint
+  - name: legacy ppl
+    image: node:12
+    environment:
+      KEYCLOAK_PASSWORD:
+        from_secret: keycloak_password
+    commands:
+      - npm test -- ppl --env dev --fast --legacy
+    depends_on:
+      - lint
+  - name: place
+    image: node:12
+    environment:
+      KEYCLOAK_PASSWORD:
+        from_secret: keycloak_password
+    commands:
+      - npm test -- place --env dev
+    depends_on:
+      - lint
+  - name: pil
+    image: node:12
+    environment:
+      KEYCLOAK_PASSWORD:
+        from_secret: keycloak_password
+    commands:
+      - npm test -- pil --env dev
+    depends_on:
+      - lint
+  - name: docker build
+    image: docker:dind
+    environment:
+      DOCKER_HOST: tcp://docker:2375
+    commands:
+      - docker build -t asl-autoproject .
+    depends_on:
+      - ppl
+      - legacy ppl
+      - place
+      - pil
+  - name: docker push
+    image: docker:dind
+    environment:
+      DOCKER_HOST: tcp://docker:2375
+      DOCKER_PASSWORD:
+        from_secret: docker_password
+    commands:
+      - docker login -u="ukhomeofficedigital+asl" -p=$${DOCKER_PASSWORD} quay.io
+      - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/asl-autoproject:$${DRONE_COMMIT_SHA}
+      - docker tag asl-autoproject quay.io/ukhomeofficedigital/asl-autoproject:latest
+      - docker push quay.io/ukhomeofficedigital/asl-autoproject:latest
+    when:
+      branch: master
+    depends_on:
+      - docker build
+trigger:
+  event: push
