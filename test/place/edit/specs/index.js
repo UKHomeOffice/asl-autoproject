@@ -48,7 +48,7 @@ describe('Edit place', () => {
     browser.$('.editable-field button').click();
 
     browser.$('textarea[name=comments]').setValue('Edited comment');
-    browser.$('button*=Submit').click();
+    browser.$('button*=Continue').click();
 
     browser.$('input[name="declaration"]').click();
     browser.$('button*=Submit').click();

@@ -32,7 +32,7 @@ describe('Create place', () => {
     browser.$('.editable-field button').click();
 
     browser.$('textarea[name=comments]').setValue('test');
-    browser.$('button*=Submit').click();
+    browser.$('button*=Continue').click();
 
     assert.equal(browser.$('h1').getText(), 'Confirm addition');
 
