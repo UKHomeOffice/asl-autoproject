@@ -44,6 +44,7 @@ describe('PIL Application', () => {
 
     // submit
     browser.$('[name="declaration"]').click();
+    browser.$('button=Continue').click();
     browser.$('button=Submit to NTCO').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Personal licence application');
