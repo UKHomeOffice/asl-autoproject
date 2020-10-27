@@ -4,7 +4,7 @@ describe('Edit place', () => {
   it('can edit a place', () => {
     browser.withUser('holc');
     browser.gotoPlaces();
-    browser.$('a=Filter by').click();
+    browser.$('a=Filter areas').click();
     browser.$('#site-label').click();
     browser.$('label=Autoproject site').click();
     browser.$('button=Apply filters').click();
