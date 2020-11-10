@@ -1,10 +1,10 @@
-module.exports = function () {
+module.exports = function (establishment = 'University of Croydon') {
   this.url('/');
 
   if (this.$('.expanding-panel.open').isDisplayed()) {
-    return this.$('.expanding-panel.open').$('a=Go to University of Croydon').click();
+    return this.$('.expanding-panel.open').$(`a=Go to ${establishment}`).click();
   }
 
-  this.$('.panel-list').$(`h3=University of Croydon`).click();
-  this.$('.expanding-panel.open').$('a=Go to University of Croydon').click();
+  this.$('.panel-list').$(`h3=${establishment}`).click();
+  this.$('.expanding-panel.open').$(`a=Go to ${establishment}`).click();
 };
