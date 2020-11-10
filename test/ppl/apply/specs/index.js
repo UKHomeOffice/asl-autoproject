@@ -173,7 +173,7 @@ describe('PPL Application', () => {
     browser.$('input[name="other-establishments"][value="true"]').click();
     browser.$('.control-panel').$('button=Continue').click();
 
-    browser.$('input[name$="establishment-name"]').setValue('Marvell Pharmaceutical');
+    browser.$('label=Marvell Pharmaceutical').click();
     browser.$('[name$="establishment-about"]').completeRichText();
     browser.$('[name$="establishment-supervisor"]').completeRichText();
     browser.$('.control-panel').$('button=Continue').click();

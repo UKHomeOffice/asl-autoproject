@@ -25,7 +25,8 @@ module.exports = (specs, env) => {
       'ntco': process.env.KEYCLOAK_PASSWORD,
       'basic': process.env.KEYCLOAK_PASSWORD,
       'licensing': process.env.KEYCLOAK_PASSWORD,
-      'inspector': process.env.KEYCLOAK_PASSWORD
+      'inspector': process.env.KEYCLOAK_PASSWORD,
+      'pharmaadmin': process.env.KEYCLOAK_PASSWORD
     },
     urls,
     sample: false,
