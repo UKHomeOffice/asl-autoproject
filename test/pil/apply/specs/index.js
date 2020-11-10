@@ -6,7 +6,8 @@ describe('PIL Application', () => {
     browser.withUser('autoproject');
 
     browser.url('/');
-    browser.$('a=Apply for personal licence').click();
+    browser.$('h3=University of Croydon').click();
+    browser.$('.expanding-panel.open').$('a=Apply for personal licence').click();
     browser.$('button=Apply now').click();
 
     console.log('Application started');
