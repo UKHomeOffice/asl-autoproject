@@ -11,7 +11,7 @@ describe('PPL Verify', () => {
     browser.$('.search-box button').click();
     browser.$('table:not(.loading)').waitForExist();
     browser.$(`a=${process.env.PROJECT_TITLE}`).click();
-    browser.$('=View granted licence').click();
+    browser.$('=View licence').click();
 
     const pdf = browser.downloadFile('pdf');
 
@@ -40,7 +40,7 @@ describe('PPL Verify', () => {
     browser.$('.search-box button').click();
     browser.$('table:not(.loading)').waitForExist();
     browser.$(`a=${process.env.PROJECT_TITLE}`).click();
-    browser.$('=View granted licence').click();
+    browser.$('=View licence').click();
     assert.ok(browser.$(`h1=${process.env.PROJECT_TITLE}`).isDisplayed());
   });
 

@@ -51,7 +51,7 @@ describe('PPL Application', () => {
 
     assert.ok(browser.$(`h1=${process.env.PROJECT_TITLE}`).isDisplayed());
 
-    browser.$('a=Open draft').click();
+    browser.$('a=Open application').click();
 
     // complete introductory details
     browser.$('a=Introductory details').click();
