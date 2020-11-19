@@ -109,18 +109,11 @@ describe('PPL Application', () => {
     console.log('Created project');
     // complete introductory details
     browser.$('a=Introductory details').click();
-    browser.$('.nts').$('button=Continue').click();
+
     browser.$('input[name="title"]').setValue(process.env.PROJECT_TITLE);
-    browser.$('[name$="project-aim"]').completeRichText();
-    browser.$('[name$="project-importance"]').completeRichText();
+
     browser.$('[name="training-licence"][value="false"]').click();
     browser.$('[name="permissible-purpose"][value="basic-research"]').click();
-
-    browser.$('input[name="keyword-0"]').setValue('keyword-0');
-    browser.$('input[name="keyword-1"]').setValue('keyword-1');
-    browser.$('input[name="keyword-2"]').setValue('keyword-2');
-    browser.$('input[name="keyword-3"]').setValue('keyword-3');
-    browser.$('input[name="keyword-4"]').setValue('keyword-4');
 
     browser.$('select[name="years"]').selectByVisibleText('5');
     browser.$('select[name="months"]').selectByVisibleText('0');
@@ -135,6 +128,96 @@ describe('PPL Application', () => {
     assert.equal(browser.$$('.badge.complete').length, ++complete);
     console.log(`Project title is '${process.env.PROJECT_TITLE}'`);
     console.log('Completed introductory details');
+
+    // complete aims
+    browser.$('a=Aims').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('[name$="project-aim"]').completeRichText();
+    browser.$('[name$="project-importance"]').completeRichText();
+
+    browser.$('input[name="keyword-0"]').setValue('keyword-0');
+    browser.$('input[name="keyword-1"]').setValue('keyword-1');
+    browser.$('input[name="keyword-2"]').setValue('keyword-2');
+    browser.$('input[name="keyword-3"]').setValue('keyword-3');
+    browser.$('input[name="keyword-4"]').setValue('keyword-4');
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed aims');
+
+    // complete benefits
+    browser.$('a=Benefits').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('[name$="benefit-outputs"]').completeRichText();
+    browser.$('[name$="benefit-who"]').completeRichText();
+    browser.$('input[name="benefit-service"][value="true"]').click();
+    browser.$('[name$="benefit-service-benefits"]').completeRichText();
+    browser.$('[name$="benefit-maximise-outputs"]').completeRichText();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed benefits');
+
+    // complete project harms
+    browser.$('a=Project harms').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('[name$="project-harms-animals"]').completeRichText();
+    browser.$('[name$="project-harms-summary"]').completeRichText();
+    browser.$('[name$="project-harms-effects"]').completeRichText();
+    browser.$('[name$="project-harms-severity"]').completeRichText();
+    browser.$('[name$="project-harms-animals"]').completeRichText();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed project harms');
+
+    // complete fate of animals
+    browser.$('a=Fate of animals').click();
+    browser.$('.nts').$('button=Continue').click();
+    // results in rehoming authorisation being added to project.
+    browser.$('input[name="fate-of-animals"][value="rehomed"]').click();
+    // results in setting-free authorisation being added to project.
+    browser.$('input[name="fate-of-animals"][value="set-free"]').click();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed fate of animals');
+
+    // complete replacement
+    browser.$('a=Replacement').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('[name$="replacement-why"]').completeRichText();
+    browser.$('[name$="replacement-alternatives"]').completeRichText();
+    browser.$('[name$="replacement-justification"]').completeRichText();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed replacement');
+
+    // complete reduction
+    browser.$('a=Reduction').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('input[name="reduction-quantities-mice"]').setValue('100');
+    browser.$('input[name="reduction-quantities-rats"]').setValue('100');
+    browser.$('[name$="reduction-estimation"]').completeRichText();
+    browser.$('[name$="reduction-steps"]').completeRichText();
+    browser.$('[name$="reduction-review"]').completeRichText();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed reduction');
+
+    // complete refinement
+    browser.$('a=Refinement').click();
+    browser.$('.nts').$('button=Continue').click();
+    browser.$('[name$="refinement-models"]').completeRichText();
+    browser.$('[name$="refinement-less-sentient"]').completeRichText();
+    browser.$('[name$="refinement-3rs-advances"]').completeRichText();
+    browser.$('[name$="refinement-explaination"]').completeRichText();
+    browser.$('[name$="refinement-published-guidance"]').completeRichText();
+
+    continueAndComplete(browser);
+    assert.equal(browser.$$('.badge.complete').length, ++complete);
+    console.log('Completed refinement');
 
     // complete experience
     browser.$('a=Experience').click();
@@ -267,19 +350,6 @@ describe('PPL Application', () => {
     assert.equal(browser.$$('.badge.complete').length, ++complete);
     console.log('Completed general principles');
 
-    // complete benefits
-    browser.$('a=Benefits').click();
-    browser.$('.nts').$('button=Continue').click();
-    browser.$('[name$="benefit-outputs"]').completeRichText();
-    browser.$('[name$="benefit-who"]').completeRichText();
-    browser.$('input[name="benefit-service"][value="true"]').click();
-    browser.$('[name$="benefit-service-benefits"]').completeRichText();
-    browser.$('[name$="benefit-maximise-outputs"]').completeRichText();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed benefits');
-
     // complete protocols
     browser.$('a=Protocols').click();
 
@@ -289,31 +359,6 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, ++complete);
     console.log('Completed protocols');
-
-    // complete project harms
-    browser.$('a=Project harms').click();
-    browser.$('.nts').$('button=Continue').click();
-    browser.$('[name$="project-harms-animals"]').completeRichText();
-    browser.$('[name$="project-harms-summary"]').completeRichText();
-    browser.$('[name$="project-harms-effects"]').completeRichText();
-    browser.$('[name$="project-harms-severity"]').completeRichText();
-    browser.$('[name$="project-harms-animals"]').completeRichText();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed project harms');
-
-    // complete fate of animals
-    browser.$('a=Fate of animals').click();
-    browser.$('.nts').$('button=Continue').click();
-    // results in rehoming authorisation being added to project.
-    browser.$('input[name="fate-of-animals"][value="rehomed"]').click();
-    // results in setting-free authorisation being added to project.
-    browser.$('input[name="fate-of-animals"][value="set-free"]').click();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed fate of animals');
 
     // complete NHPs
     browser.$('a=Non-human primates').click();
@@ -432,51 +477,6 @@ describe('PPL Application', () => {
     continueAndComplete(browser);
     assert.equal(browser.$$('.badge.complete').length, ++complete);
     console.log('Completed human material');
-
-    // complete replacement
-    browser.$('a=Replacement').click();
-    browser.$('.nts').$('button=Continue').click();
-    browser.$('[name$="replacement-why"]').completeRichText();
-    browser.$('[name$="replacement-alternatives"]').completeRichText();
-    browser.$('[name$="replacement-justification"]').completeRichText();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed replacement');
-
-    // complete reduction
-    browser.$('a=Reduction').click();
-    browser.$('.nts').$('button=Continue').click();
-    browser.$('input[name="reduction-quantities-mice"]').setValue('100');
-    browser.$('input[name="reduction-quantities-rats"]').setValue('100');
-    browser.$('[name$="reduction-estimation"]').completeRichText();
-    browser.$('[name$="reduction-steps"]').completeRichText();
-    browser.$('[name$="reduction-review"]').completeRichText();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed reduction');
-
-    // complete refinement
-    browser.$('a=Refinement').click();
-    browser.$('.nts').$('button=Continue').click();
-    browser.$('[name$="refinement-models"]').completeRichText();
-    browser.$('[name$="refinement-less-sentient"]').completeRichText();
-    browser.$('[name$="refinement-3rs-advances"]').completeRichText();
-    browser.$('[name$="refinement-explaination"]').completeRichText();
-    browser.$('[name$="refinement-published-guidance"]').completeRichText();
-
-    continueAndComplete(browser);
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed refinement');
-
-    // complete nts review
-    browser.$('a=Non-technical summary').click();
-    browser.$('input[name="complete"][value="true"]').click();
-    browser.$('button=Continue').click();
-
-    assert.equal(browser.$$('.badge.complete').length, ++complete);
-    console.log('Completed NTS review');
 
     // submit application
     browser.waitForSync();
