@@ -49,7 +49,7 @@ describe('PPL Application', () => {
     browser.$('a=Drafts').click();
     browser.$(`a=${process.env.PROJECT_TITLE}`).click();
 
-    assert.ok(browser.$(`h1=${process.env.PROJECT_TITLE}`).isDisplayed());
+    assert.ok(browser.$(`h2=${process.env.PROJECT_TITLE}`).isDisplayed());
 
     browser.$('a=Open application').click();
 
