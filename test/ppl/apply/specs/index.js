@@ -105,7 +105,7 @@ describe('PPL Application', () => {
     browser.$('a=Projects').click();
     browser.$('button=Apply for project licence').click();
 
-    assert.ok(browser.$('h1=Untitled project').isDisplayed());
+    assert.ok(browser.$('h2=Untitled project').isDisplayed());
     console.log('Created project');
     // complete introductory details
     browser.$('a=Introductory details').click();

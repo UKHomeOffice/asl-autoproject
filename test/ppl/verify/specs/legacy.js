@@ -23,6 +23,17 @@ describe('PPL Verify', () => {
 
     assert.ok(pdf.includes('Protocol 1 title'), 'First protocol title is displayed');
     assert.ok(pdf.includes('Protocol 2 title'), 'Second protocol title is displayed');
+  });
+
+  it('can download NTS', () => {
+    browser.gotoEstablishment();
+    browser.$('a=Projects').click();
+
+    browser.$('.search-box input[type="text"]').setValue(process.env.PROJECT_TITLE);
+    browser.$('.search-box button').click();
+    browser.$('table:not(.loading)').waitForExist();
+    browser.$(`a=${process.env.PROJECT_TITLE}`).click();
+    browser.$('a=Non-technical summary').click();
 
     const nts = browser.downloadFile('nts');
 
@@ -41,7 +52,7 @@ describe('PPL Verify', () => {
     browser.$('table:not(.loading)').waitForExist();
     browser.$(`a=${process.env.PROJECT_TITLE}`).click();
     browser.$('=View licence').click();
-    assert.ok(browser.$(`h1=${process.env.PROJECT_TITLE}`).isDisplayed());
+    assert.ok(browser.$(`h2=${process.env.PROJECT_TITLE}`).isDisplayed());
   });
 
 });
