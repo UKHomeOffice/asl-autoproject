@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { sampleSize } = require('lodash');
 
 const corpus = fs.readFileSync(path.resolve(__dirname, '../../text.txt')).toString('utf8').split(/\W/).filter(Boolean);
 
@@ -8,8 +7,24 @@ const between = (min, max) => {
   return min + Math.floor(Math.random() * (max - min));
 };
 
+const randomWord = predecessor => {
+  if (predecessor) {
+    const successors = corpus
+      .map((word, i) => word.toLowerCase() === predecessor.toLowerCase() ? corpus[i + 1] : null)
+      .filter(Boolean);
+    return successors[between(0, successors.length)];
+  }
+  return corpus[between(0, corpus.length)];
+};
+
 const words = n => {
-  return sampleSize(corpus, n).join(' ');
+  const output = [];
+  let last;
+  while (output.length < n) {
+    last = randomWord(last);
+    output.push(last);
+  }
+  return output.join(' ');
 };
 
 const sentence = (min = 10, max = 60, newline = true) => {
