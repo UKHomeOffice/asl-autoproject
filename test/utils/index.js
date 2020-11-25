@@ -12,7 +12,9 @@ const randomWord = predecessor => {
     const successors = corpus
       .map((word, i) => word.toLowerCase() === predecessor.toLowerCase() ? corpus[i + 1] : null)
       .filter(Boolean);
-    return successors[between(0, successors.length)];
+    if (successors.length) {
+      return successors[between(0, successors.length)];
+    }
   }
   return corpus[between(0, corpus.length)];
 };
