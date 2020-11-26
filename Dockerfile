@@ -1,7 +1,8 @@
-FROM node:12
+FROM quay.io/ukhomeofficedigital/asl-base:v12
 
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN apk upgrade --no-cache
+
+USER 999
 
 WORKDIR /app
 

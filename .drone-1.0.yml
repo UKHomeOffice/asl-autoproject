@@ -8,22 +8,22 @@ services:
     environment:
       START_XVFB: "FALSE"
   - name: docker
-    image: docker:dind
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
       DOCKER_TLS_CERTDIR: ""
 steps:
   - name: install
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     commands:
       - npm ci
   - name: lint
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     commands:
       - npm run test:lint
     depends_on:
       - install
   - name: ppl
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     environment:
       KEYCLOAK_PASSWORD:
         from_secret: keycloak_password
@@ -32,7 +32,7 @@ steps:
     depends_on:
       - lint
   - name: legacy ppl
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     environment:
       KEYCLOAK_PASSWORD:
         from_secret: keycloak_password
@@ -41,7 +41,7 @@ steps:
     depends_on:
       - lint
   - name: place
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     environment:
       KEYCLOAK_PASSWORD:
         from_secret: keycloak_password
@@ -50,7 +50,7 @@ steps:
     depends_on:
       - lint
   - name: pil
-    image: node:12
+    image: quay.io/ukhomeofficedigital/asl-base:v12
     environment:
       KEYCLOAK_PASSWORD:
         from_secret: keycloak_password
@@ -59,9 +59,7 @@ steps:
     depends_on:
       - lint
   - name: docker build
-    image: docker:dind
-    environment:
-      DOCKER_HOST: tcp://docker:2375
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     commands:
       - docker build -t asl-autoproject .
     depends_on:
@@ -70,9 +68,8 @@ steps:
       - place
       - pil
   - name: docker push
-    image: docker:dind
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
-      DOCKER_HOST: tcp://docker:2375
       DOCKER_PASSWORD:
         from_secret: docker_password
     commands:
