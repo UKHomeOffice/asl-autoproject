@@ -16,12 +16,6 @@ describe('Verify place', () => {
     assert.ok(browser.$('td=STH').isDisplayed());
     assert.equal(browser.$('span=LTH').getAttribute('class'), 'highlight');
 
-    assert.ok(browser.$('td=John Sharp, Ian Ayers').isDisplayed());
-    assert.equal(browser.$('span=Benjamin Patton').getAttribute('class'), 'highlight');
-
-    assert.ok(browser.$('td=Nathan Peters').isDisplayed());
-    assert.equal(browser.$('span=Aaron Harris').getAttribute('class'), 'highlight');
-
     assert.ok(browser.$('p=Dogs should be kept out of sight of cats').isDisplayed());
     assert.equal(browser.$('div=Dogs should be kept with cats for company.').getAttribute('class'), 'highlight');
 
