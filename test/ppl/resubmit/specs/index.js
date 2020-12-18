@@ -38,10 +38,6 @@ describe('Resubmit PPL', () => {
 
     browser.$('label=Endorse application').click();
     browser.$('button=Continue').click();
-
-    browser.$('input[name="awerb"][value="Yes"]').click();
-    browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
-
     browser.$('button=Endorse application').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Project application');
