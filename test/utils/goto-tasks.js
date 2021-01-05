@@ -12,8 +12,8 @@ module.exports = (type = 'Outstanding') => function () {
   });
   this.$(`a=${type}`).click();
   this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
-  this.$('th').$(`a=${latestLabel}`).click();
-  this.$('table:not(.loading) th a:not(.disabled)').waitForExist();
-  this.$('th').$(`a=${latestLabel}`).click();
-  this.$('table:not(.loading)').waitForExist();
+  if (this.$(`th=${latestLabel}`).getAttribute('aria-sort') === 'ascending') {
+    this.$('th').$(`a=${latestLabel}`).click();
+    this.$('table:not(.loading)').waitForExist();
+  }
 };
