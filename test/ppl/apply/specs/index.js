@@ -277,7 +277,6 @@ describe('PPL Application', () => {
     browser.$('[name$="transfer-how"]').completeRichText();
     browser.$('[name$="transfer-measures"]').completeRichText();
     browser.$('input[name="transfer-recovery"][value="true"]').click();
-    browser.$('input[name="transfer-surgically-prepared"][value="true"]').click();
     browser.$('input[name="transfer-acclimatisation"][value="true"]').click();
     continueAndComplete(browser);
 
