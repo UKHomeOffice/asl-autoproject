@@ -13,6 +13,9 @@ describe('PPL Verify', () => {
     browser.$(`a=${process.env.PROJECT_TITLE}`).click();
     browser.$('=View licence').click();
 
+    // RA is required because marmosets
+    assert.ok(browser.$(`p=The Secretary of State has determined that a retrospective assessment of this licence is required, and should be submitted within 6 months of the licence's revocation date.`).isDisplayed());
+
     const pdf = browser.downloadFile('pdf');
 
     assert.ok(pdf.includes(process.env.PROJECT_TITLE), 'Project title is displayed');
