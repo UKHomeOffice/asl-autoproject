@@ -24,7 +24,7 @@
     "@wdio/local-runner": "^6.1.14",
     "@wdio/mocha-framework": "^6.1.14",
     "@wdio/sync": "^6.1.14",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.3",
     "moment": "^2.26.0",
     "pdf-parse": "^1.1.1",
