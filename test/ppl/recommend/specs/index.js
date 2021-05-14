@@ -89,6 +89,7 @@ describe('PPL Recommendation', () => {
     });
 
     browser.waitForSync();
+    browser.$('a=View all sections').click();
     browser.$('a=Next steps').click();
 
     browser.$('input[name="status"][value="inspector-recommended"]').click();

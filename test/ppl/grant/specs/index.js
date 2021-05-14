@@ -20,6 +20,7 @@ describe('PPL Grant', () => {
     assert.ok(browser.$(`p=${process.env.PROJECT_TITLE}`).isDisplayed(), 'Project title should be visible on introductory details review page');
     console.log('Reviewed project');
 
+    browser.$('a=View all sections').click();
     browser.$('a=Next steps').click();
 
     browser.$('input[name="status"][value="resolved"]').click();
