@@ -6,8 +6,8 @@ describe('Create place', () => {
     browser.gotoPlaces();
 
     browser.$('a*=Create').click();
-    browser.$('input[name=site]').setValue('Autoproject site');
-    browser.$('input[name=area]').setValue('Autoproject area');
+    browser.$('input#site').setValue('Autoproject site');
+    browser.$('input#area').setValue('Autoproject area');
     browser.$('input[name=name]').setValue(process.env.PLACE_NAME);
     browser
       .$('#suitability')
