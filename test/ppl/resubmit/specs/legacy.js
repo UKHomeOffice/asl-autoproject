@@ -39,12 +39,7 @@ describe('Resubmit PPL', () => {
     browser.$('label=Endorse application').click();
     browser.$('button=Continue').click();
 
-    browser.$$('.govuk-date-input').forEach(dateGroup => {
-      const inputs = dateGroup.$$('input[type="number"]');
-      inputs.find(i => i.getAttribute('name').includes('day')).setValue('01');
-      inputs.find(i => i.getAttribute('name').includes('month')).setValue('01');
-      inputs.find(i => i.getAttribute('name').includes('year')).setValue('2021');
-    });
+    browser.$('textarea[name="awerb-review-date"]').setValue('University of Croydon - 2/3/2019');
     browser.$('button=Endorse application').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Project application');
