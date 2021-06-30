@@ -2,7 +2,7 @@ const assert = require('assert');
 
 describe('Recommend place', () => {
   it('can recommend a place', () => {
-    browser.withUser('licensing');
+    browser.withUser('inspector');
     browser.gotoOutstandingTasks();
 
     // find task in task list

@@ -9,7 +9,6 @@ module.exports = ({ env, args }) => {
     'endorse',
     'return',
     'resubmit',
-    'recommend',
     'grant',
     'verify'
   ];
