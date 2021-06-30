@@ -7,7 +7,6 @@ module.exports = ({ env, args }) => {
     'recommend',
     'grant',
     'edit',
-    'recommend',
     'grant',
     'verify'
   ];

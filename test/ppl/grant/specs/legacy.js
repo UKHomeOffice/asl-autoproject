@@ -1,8 +1,8 @@
 const assert = require('assert');
 
-describe('PPL Recommendation', () => {
+describe('PPL Grant', () => {
 
-  it('can recommend a PPL', () => {
+  it('can grant a PPL', () => {
 
     browser.withUser('inspector');
 
@@ -24,15 +24,15 @@ describe('PPL Recommendation', () => {
     browser.$('a=View all sections').click();
     browser.$('a=Next steps').click();
 
-    browser.$('input[name="status"][value="inspector-recommended"]').click();
+    browser.$('input[name="status"][value="resolved"]').click();
 
     browser.$('button=Continue').click();
 
-    browser.$('button=Recommend for approval').click();
+    browser.$('button=Grant licence').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Project application');
-    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Recommendation made');
-    console.log('Recommended application');
+    assert.equal(browser.$('h1.govuk-panel__title').getText(), 'Approved');
+    console.log('Granted licence');
 
   });
 
