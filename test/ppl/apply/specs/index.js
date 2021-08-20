@@ -31,7 +31,7 @@ const addProtocol = (browser, title) => {
   openProtocol.$('input[name$=".locations"][value="First POLE"]').click();
   console.log('  Completed details');
 
-  openProtocol.$('h3=Animals used in this protocol').click();
+  openProtocol.$('h3*=Animals used in this protocol').click();
   openProtocol.$('input[name$=".species"][value="mice"]').click();
   openProtocol.$('input[name$=".life-stages"][value="adult"]').click();
   // results in "continued use on to a protocol" condition being added to protocol
@@ -42,13 +42,13 @@ const addProtocol = (browser, title) => {
   openProtocol.$('input[name$=".maximum-times-used"]').setValue('1');
   console.log('  Completed animals');
 
-  openProtocol.$('h3=Genetically altered animals (GAA)').click();
+  openProtocol.$('h3*=Genetically altered animals (GAA)').click();
   // results in transfer authorisation being added to project, if one of the following species are also selected:
   // mice, rats, guinea-pigs, hamsters, gerbils, other-rodents, common-frogs, african-frogs, zebra-fish
   openProtocol.$('input[name$=".gaas"][value="true"]').click();
   console.log('  Completed GAAs');
 
-  openProtocol.$('h3=Steps').click();
+  openProtocol.$('h3*=Steps').click();
   openProtocol.$('[name$=".title"]').completeRichText();
 
   openProtocol.$('input[name$=".optional"][value="false"]').click();
@@ -61,17 +61,17 @@ const addProtocol = (browser, title) => {
   openProtocol.$('button=Save step').click();
   console.log('  Completed steps');
 
-  openProtocol.$('h3=Animal experience').click();
+  openProtocol.$('h3*=Animal experience').click();
   openProtocol.$('[name$=".experience-summary"]').completeRichText();
   openProtocol.$('[name$=".experience-endpoints"]').completeRichText();
   console.log('  Completed experience');
 
-  openProtocol.$('h3=Experimental design').click();
+  openProtocol.$('h3*=Experimental design').click();
   openProtocol.$('[name$=".outputs"]').completeRichText();
   openProtocol.$('input[name$=".quantitative-data"][value="false"]').click();
   console.log('  Completed experimental design');
 
-  openProtocol.$('h3=Protocol justification').click();
+  openProtocol.$('h3*=Protocol justification').click();
   openProtocol.$('[name$=".most-appropriate"]').completeRichText();
   openProtocol.$('[name$=".most-refined"]').completeRichText();
   openProtocol.$('[name$=".scientific-endpoints"]').completeRichText();
@@ -80,7 +80,7 @@ const addProtocol = (browser, title) => {
   openProtocol.$('input[name$=".justification-substances"][value="false"]').click();
   console.log('  Completed justification');
 
-  openProtocol.$('h3=Fate of animals').click();
+  openProtocol.$('h3*=Fate of animals').click();
   openProtocol.$('input[name$=".fate"][value="killed"]').click();
   // results in continued use on another protocol in same project
   openProtocol.$('input[name$=".fate"][value="continued-use"]').click();
