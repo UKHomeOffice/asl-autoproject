@@ -16,24 +16,24 @@ const addProtocol = (browser, title) => {
   const openProtocol = browser.$('section.protocol:last-of-type');
   openProtocol.$('input[name$=".severity"]').setValue(sample(['Mild', 'Moderate', 'Severe', 'Non-recovery']));
 
-  openProtocol.$('h3=Type of animals').click();
+  openProtocol.$('h3*=Type of animals').click();
   openProtocol.$('select[name$=".speciesId"]').selectByVisibleText('Camelids');
   openProtocol.$('label[for$=".genetically-altered-true"]').click();
   openProtocol.$('input[name$=".quantity"]').setValue(Math.ceil(Math.random() * 1000));
   openProtocol.$('input[name$=".life-stages"]').setValue(sample('Juvenile', 'Adult', 'Pregnant female', 'Neonate'));
 
-  openProtocol.$('h3=Continued use/re-use').click();
+  openProtocol.$('h3*=Continued use/re-use').click();
   openProtocol.$('[name$=".continued-use"]').completeRichText();
   openProtocol.$('[name$=".reuse"]').completeRichText();
 
-  openProtocol.$('h3=Steps').click();
+  openProtocol.$('h3*=Steps').click();
   openProtocol.$('[name$=".steps"]').completeRichText();
 
-  openProtocol.$('h3=Fate of animals').click();
+  openProtocol.$('h3*=Fate of animals').click();
   openProtocol.$('label[for$=".fate-continued-use"]').click();
   openProtocol.$('[name$=".fate-justification"]').completeRichText();
 
-  openProtocol.$('h3=Adverse effects').click();
+  openProtocol.$('h3*=Adverse effects').click();
   openProtocol.$('[name$=".adverse-effects"]').completeRichText();
 };
 

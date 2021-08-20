@@ -29,7 +29,7 @@ describe('PPL Grant', () => {
     console.log('Reviewed project');
 
     // complete conditions
-    browser.$('h3=Additional conditions').click();
+    browser.$('h3*=Additional conditions').click();
     browser.$('a=Additional conditions').click();
     [
       'Marmosets',
@@ -70,7 +70,7 @@ describe('PPL Grant', () => {
     browser.$('a=Protocols').click();
     browser.$$('section.protocol')[0].click();
     let protocol = browser.$$('section.protocol')[0];
-    protocol.$('h3=Additional conditions').click();
+    protocol.$('h3*=Additional conditions').click();
     assert.ok(browser.$('h3=POLEs').isDisplayed());
 
     // add custom condition
@@ -79,7 +79,7 @@ describe('PPL Grant', () => {
     browser.$('button=Save').click();
     console.log('custom condition added to first protocol');
 
-    browser.$$('section.protocol')[0].$('h3=Authorisations').click();
+    browser.$$('section.protocol')[0].$('h3*=Authorisations').click();
     [
       'Re-use',
       'Continued use on to a protocol',
