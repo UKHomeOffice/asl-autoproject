@@ -17,7 +17,7 @@ describe('Resubmit PPL', () => {
     browser.$('button=Continue').click();
 
     browser.$('button=Continue').click();
-    browser.$('input[name="ready"][value="Yes"]').click();
+    browser.$('input[name="ready"][value="true"]').click();
     browser.$('button=Submit PPL application').click();
 
     assert.equal(browser.$('.page-header h1').getText(), 'Project application');
