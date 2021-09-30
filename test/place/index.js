@@ -4,7 +4,6 @@ const moment = require('moment');
 module.exports = ({ env, args }) => {
   const steps = [
     'create',
-    'recommend',
     'grant',
     'edit',
     'grant',
